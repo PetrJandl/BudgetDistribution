@@ -11,7 +11,7 @@
         <b-navbar-brand class="offset-md-1 offset-lg-2 offset-xl-3">
           <router-link
             to="/eshop/nakupniKosik"
-            v-slot="{ href, route, navigate, isExactActive }"
+            v-slot="{ href, navigate, isExactActive }"
             custom
           >
             <li class="nav-link d-block d-sm-none">
@@ -36,7 +36,7 @@
           <b-navbar-nav>
             <router-link
               to="/eshop/"
-              v-slot="{ href, route, navigate, isExactActive }"
+              v-slot="{ href, navigate, isExactActive }"
               custom
             >
               <li v-bind:class="{ 'nav-link': true }">
@@ -50,7 +50,7 @@
             </router-link>
             <router-link
               to="/eshop/knihy"
-              v-slot="{ href, route, navigate, isExactActive }"
+              v-slot="{ href, navigate, isExactActive }"
               custom
             >
               <li class="nav-link">
@@ -64,7 +64,7 @@
             </router-link>
             <router-link
               to="/eshop/pomucky"
-              v-slot="{ href, route, navigate, isExactActive }"
+              v-slot="{ href, navigate, isExactActive }"
               custom
             >
               <li
@@ -83,7 +83,7 @@
             </router-link>
             <router-link
               to="/eshop/nakupniKosik"
-              v-slot="{ href, route, navigate, isExactActive }"
+              v-slot="{ href, navigate, isExactActive }"
               custom
             >
               <li
@@ -320,22 +320,12 @@ nav a:hover {
 .items {
   font-size: 130%;
 }
-.items div {
-  /*text-align: left;
-  display: block;
-  border: 1px solid gray;*/
-  /*min-height: 40pt;*/
-}
 .numAdd {
   font-size: 90%;
 }
 .items input {
   text-align: right;
 }
-.items button {
-  /*text-align: center;*/
-}
-
 .home {
   width: 100%;
   max-width: 1044px;
@@ -357,11 +347,6 @@ nav a:hover {
 }
 .text-right {
   text-align: right;
-}
-.book,
-.tool {
-  /*min-height: 200pt;*/
-  /*min-width: 600px;*/
 }
 .nahledPomucky {
   max-height: 200pt;

@@ -453,7 +453,6 @@ var render = function() {
                     key: "default",
                     fn: function(ref) {
                       var href = ref.href
-                      var route = ref.route
                       var navigate = ref.navigate
                       return [
                         _c(

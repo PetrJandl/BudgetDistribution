@@ -12,15 +12,21 @@
         <div class="row">
           <label for="library" class="col-md-3">Vyberte knihovnu :</label>
           <div class="col-md-9">
-            <select id="library" class="form-control valid">
-              <option value="volvo">
-                Knihovna Karla Dvořáčka, příspěvková organizace
+            <select
+              v-model="libSelected"
+              id="library"
+              class="form-control valid"
+              @change="libChange()"
+              autofocus
+            >
+              <option value="" disabled>-</option>
+              <option
+                v-for="(library, index) in this.librarys"
+                :value="index"
+                :key="library.idlibrary"
+              >
+                {{ library.libName }}
               </option>
-              <option value="cerniloc">Místní knihovna v Černilově</option>
-              <option value="opel">
-                Městská knihovna Slavoj ve Dvoře Králové nad Labem
-              </option>
-              <option value="slavoj">4</option>
             </select>
           </div>
         </div>
@@ -33,7 +39,7 @@
               name="ic"
               maxlength="8"
               placeholder="IČ"
-              value=""
+              :value="this.ic"
               required=""
               list="firmy"
               disabled
@@ -48,12 +54,12 @@
               name="dic"
               maxlength="14"
               placeholder="DIČ"
-              value=""
+              :value="this.dic"
               disabled
             />
           </div>
 
-          <div class="col-md-6">
+          <div class="col-md-12">
             <input
               type="text"
               class="form-control"
@@ -61,7 +67,7 @@
               name="oName"
               maxlength="200"
               placeholder="Obchodní název"
-              value=""
+              :value="this.oName"
               required=""
               disabled
             />
@@ -75,7 +81,7 @@
               name="libStreet"
               maxlength="200"
               placeholder="Ulice a číslo"
-              value=""
+              :value="this.libStreet"
               required=""
               disabled
             />
@@ -88,8 +94,8 @@
               id="libCity"
               name="libCity"
               maxlength="200"
-              placeholder="Celý oficiální název města"
-              value=""
+              placeholder="Město"
+              :value="this.libCity"
               required=""
               disabled
             />
@@ -101,7 +107,7 @@
               id="libPSC"
               name="libPSC"
               placeholder="PSČ"
-              value=""
+              :value="this.libPSC"
               required=""
               disabled
             />
@@ -133,7 +139,7 @@
               name="deliveryName"
               maxlength="200"
               placeholder="Název místa doručení"
-              value=""
+              :value="this.deliveryName"
             />
           </div>
         </div>
@@ -148,7 +154,7 @@
               name="deliveryStreet"
               maxlength="200"
               placeholder="Ulice doručení"
-              value=""
+              :value="this.deliveryStreet"
             />
           </div>
         </div>
@@ -162,7 +168,7 @@
               name="deliveryCity"
               maxlength="200"
               placeholder="Město doručení"
-              value=""
+              :value="this.deliveryCity"
             />
           </div>
           <div class="col-md-3">
@@ -172,7 +178,7 @@
               id="deliveryPSC"
               name="deliveryPSC"
               placeholder="PSČ"
-              value=""
+              :value="this.deliveryPSC"
             />
           </div>
         </div>
@@ -187,11 +193,9 @@
               name="libName"
               maxlength="200"
               placeholder="Celý oficiální název knihovny"
-              value=""
+              :value="this.libName"
               required=""
-              list="libNames"
             />
-            <datalist id="libNames"></datalist>
           </div>
         </div>
 
@@ -205,7 +209,7 @@
               name="libEmail"
               maxlength="200"
               placeholder="Email knihovny"
-              value=""
+              :value="this.libEmail"
               required=""
             />
           </div>
@@ -220,7 +224,7 @@
               name="contactPerson"
               maxlength="200"
               placeholder="Jméno kontaktní osoby"
-              value=""
+              :value="this.contactPerson"
               required=""
             />
           </div>
@@ -237,7 +241,7 @@
               name="contactPersonEmail"
               maxlength="200"
               placeholder="Email kontaktní osoby"
-              value=""
+              :value="this.contactPersonEmail"
               required=""
             />
           </div>
@@ -253,7 +257,7 @@
               id="contactPersonTele"
               name="contactPersonTele"
               placeholder="9 místné číslo bez mezer na kontaktní osobu"
-              value=""
+              :value="this.contactPersonTele"
               required=""
             />
           </div>
@@ -273,7 +277,7 @@
         <div class="row">
           <router-link
             to="/eshop/nakupniKosik"
-            v-slot="{ href, route, navigate }"
+            v-slot="{ href, navigate }"
             custom
             v-show="this.$parent.sumPrice > 0"
           >
@@ -325,14 +329,77 @@
 export default {
   data() {
     return {
+      librarys: [],
+      libSelected: "",
+      contactPerson: "",
+      contactPersonEmail: "",
+      contactPersonTele: "",
+      deliveryCity: "",
+      deliveryName: "",
+      deliveryPSC: "",
+      deliveryStreet: "",
+      dic: "",
+      ic: "",
+      libCity: "",
+      libEmail: "",
+      libName: "",
+      libPSC: "",
+      libStreet: "",
+      oName: "",
       deliveryAddress: false,
     };
   },
   methods: {
-    checkForm: function () {
-      console.log("yes");
-      alert("bohužel");
+    getLibrarys() {
+      axios
+        .get("/api/librarys.json")
+        .then((response) => {
+          response.data.forEach((library) => {
+            this.librarys.push(library);
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      //console.log(this.librarys);
     },
+    libChange: function () {
+      this.ic = this.librarys[this.libSelected].ic;
+      this.dic = this.librarys[this.libSelected].dic;
+      this.libCity = this.librarys[this.libSelected].libCity;
+      this.libEmail = this.librarys[this.libSelected].libEmail;
+      this.oName = this.librarys[this.libSelected].oName;
+      this.libName = this.librarys[this.libSelected].libName;
+      this.libStreet = this.librarys[this.libSelected].libStreet;
+      this.libPSC = this.librarys[this.libSelected].libPSC;
+
+      this.deliveryName = this.librarys[this.libSelected].deliveryName;
+      this.deliveryCity = this.librarys[this.libSelected].deliveryCity;
+      this.deliveryPSC = this.librarys[this.libSelected].deliveryPSC;
+      this.deliveryStreet = this.librarys[this.libSelected].deliveryStreet;
+      if (this.deliveryName === null) {
+        this.deliveryAddress = false;
+      } else {
+        this.deliveryAddress = true;
+      }
+
+      this.contactPerson = this.librarys[this.libSelected].contactPerson;
+      this.contactPersonEmail =
+        this.librarys[this.libSelected].contactPersonEmail;
+      this.contactPerson = this.librarys[this.libSelected].contactPerson;
+      this.contactPersonTele =
+        this.librarys[this.libSelected].contactPersonTele;
+
+      //console.log(this.libSelected + " /" + this.deliveryName + "/");
+    },
+    checkForm: function () {
+      console.log("jasne az to bude naprogramovane");
+      //alert("bohužel");
+    },
+  },
+  beforeMount() {
+    this.getLibrarys();
+    //console.log("App: "+this.books)
   },
 };
 </script>

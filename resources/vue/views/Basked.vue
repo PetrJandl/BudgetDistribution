@@ -87,7 +87,7 @@
 
         <router-link
           to="/eshop/objednavka"
-          v-slot="{ href, route, navigate }"
+          v-slot="{ href, navigate }"
           custom
           v-show="this.$parent.sumPrice > 0"
         >

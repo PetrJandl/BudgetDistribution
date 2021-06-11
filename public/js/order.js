@@ -334,17 +334,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      librarys: [],
+      libSelected: "",
+      contactPerson: "",
+      contactPersonEmail: "",
+      contactPersonTele: "",
+      deliveryCity: "",
+      deliveryName: "",
+      deliveryPSC: "",
+      deliveryStreet: "",
+      dic: "",
+      ic: "",
+      libCity: "",
+      libEmail: "",
+      libName: "",
+      libPSC: "",
+      libStreet: "",
+      oName: "",
       deliveryAddress: false
     };
   },
   methods: {
+    getLibrarys: function getLibrarys() {
+      var _this = this;
+
+      axios.get("/api/librarys.json").then(function (response) {
+        response.data.forEach(function (library) {
+          _this.librarys.push(library);
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      }); //console.log(this.librarys);
+    },
+    libChange: function libChange() {
+      this.ic = this.librarys[this.libSelected].ic;
+      this.dic = this.librarys[this.libSelected].dic;
+      this.libCity = this.librarys[this.libSelected].libCity;
+      this.libEmail = this.librarys[this.libSelected].libEmail;
+      this.oName = this.librarys[this.libSelected].oName;
+      this.libName = this.librarys[this.libSelected].libName;
+      this.libStreet = this.librarys[this.libSelected].libStreet;
+      this.libPSC = this.librarys[this.libSelected].libPSC;
+      this.deliveryName = this.librarys[this.libSelected].deliveryName;
+      this.deliveryCity = this.librarys[this.libSelected].deliveryCity;
+      this.deliveryPSC = this.librarys[this.libSelected].deliveryPSC;
+      this.deliveryStreet = this.librarys[this.libSelected].deliveryStreet;
+
+      if (this.deliveryName === null) {
+        this.deliveryAddress = false;
+      } else {
+        this.deliveryAddress = true;
+      }
+
+      this.contactPerson = this.librarys[this.libSelected].contactPerson;
+      this.contactPersonEmail = this.librarys[this.libSelected].contactPersonEmail;
+      this.contactPerson = this.librarys[this.libSelected].contactPerson;
+      this.contactPersonTele = this.librarys[this.libSelected].contactPersonTele; //console.log(this.libSelected + " /" + this.deliveryName + "/");
+    },
     checkForm: function checkForm() {
-      console.log("yes");
-      alert("bohužel");
+      console.log("jasne az to bude naprogramovane"); //alert("bohužel");
     }
+  },
+  beforeMount: function beforeMount() {
+    this.getLibrarys(); //console.log("App: "+this.books)
   }
 });
 
@@ -499,9 +558,168 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "box-body" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                { staticClass: "col-md-3", attrs: { for: "library" } },
+                [_vm._v("Vyberte knihovnu :")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.libSelected,
+                        expression: "libSelected"
+                      }
+                    ],
+                    staticClass: "form-control valid",
+                    attrs: { id: "library", autofocus: "" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.libSelected = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.libChange()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "", disabled: "" } }, [
+                      _vm._v("-")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(this.librarys, function(library, index) {
+                      return _c(
+                        "option",
+                        { key: library.idlibrary, domProps: { value: index } },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(library.libName) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("input", {
+                  staticClass: "form-control valid",
+                  attrs: {
+                    type: "text",
+                    id: "ic",
+                    name: "ic",
+                    maxlength: "8",
+                    placeholder: "IČ",
+                    required: "",
+                    list: "firmy",
+                    disabled: ""
+                  },
+                  domProps: { value: this.ic }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "dic",
+                    name: "dic",
+                    maxlength: "14",
+                    placeholder: "DIČ",
+                    disabled: ""
+                  },
+                  domProps: { value: this.dic }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "oName",
+                    name: "oName",
+                    maxlength: "200",
+                    placeholder: "Obchodní název",
+                    required: "",
+                    disabled: ""
+                  },
+                  domProps: { value: this.oName }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "libStreet",
+                    name: "libStreet",
+                    maxlength: "200",
+                    placeholder: "Ulice a číslo",
+                    required: "",
+                    disabled: ""
+                  },
+                  domProps: { value: this.libStreet }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "libCity",
+                    name: "libCity",
+                    maxlength: "200",
+                    placeholder: "Město",
+                    required: "",
+                    disabled: ""
+                  },
+                  domProps: { value: this.libCity }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    id: "libPSC",
+                    name: "libPSC",
+                    placeholder: "PSČ",
+                    required: "",
+                    disabled: ""
+                  },
+                  domProps: { value: this.libPSC }
+                })
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row line", attrs: { id: "adresbox" } }, [
               _c(
@@ -583,7 +801,19 @@ var render = function() {
                   [_vm._v("Místo doručení")]
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "deliveryName",
+                      name: "deliveryName",
+                      maxlength: "200",
+                      placeholder: "Název místa doručení"
+                    },
+                    domProps: { value: this.deliveryName }
+                  })
+                ])
               ]
             ),
             _vm._v(" "),
@@ -607,7 +837,19 @@ var render = function() {
                   [_vm._v("Ulice doručení")]
                 ),
                 _vm._v(" "),
-                _vm._m(3)
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "deliveryStreet",
+                      name: "deliveryStreet",
+                      maxlength: "200",
+                      placeholder: "Ulice doručení"
+                    },
+                    domProps: { value: this.deliveryStreet }
+                  })
+                ])
               ]
             ),
             _vm._v(" "),
@@ -631,23 +873,156 @@ var render = function() {
                   [_vm._v("Město doručení, PSČ")]
                 ),
                 _vm._v(" "),
-                _vm._m(4),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "deliveryCity",
+                      name: "deliveryCity",
+                      maxlength: "200",
+                      placeholder: "Město doručení"
+                    },
+                    domProps: { value: this.deliveryCity }
+                  })
+                ]),
                 _vm._v(" "),
-                _vm._m(5)
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "deliveryPSC",
+                      name: "deliveryPSC",
+                      placeholder: "PSČ"
+                    },
+                    domProps: { value: this.deliveryPSC }
+                  })
+                ])
               ]
             ),
             _vm._v(" "),
-            _vm._m(6),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                { staticClass: "col-md-3", attrs: { for: "libName" } },
+                [_vm._v("Jméno knihovny")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "libName",
+                    name: "libName",
+                    maxlength: "200",
+                    placeholder: "Celý oficiální název knihovny",
+                    required: ""
+                  },
+                  domProps: { value: this.libName }
+                })
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(7),
+            _c("div", { staticClass: "row line" }, [
+              _c(
+                "label",
+                { staticClass: "col-md-3", attrs: { for: "libEmail" } },
+                [_vm._v("Email knihovny")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "email",
+                    id: "libEmail",
+                    name: "libEmail",
+                    maxlength: "200",
+                    placeholder: "Email knihovny",
+                    required: ""
+                  },
+                  domProps: { value: this.libEmail }
+                })
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(8),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                { staticClass: "col-md-3", attrs: { for: "contactPerson" } },
+                [_vm._v("Jméno kontaktu")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "contactPerson",
+                    name: "contactPerson",
+                    maxlength: "200",
+                    placeholder: "Jméno kontaktní osoby",
+                    required: ""
+                  },
+                  domProps: { value: this.contactPerson }
+                })
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(9),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-3",
+                  attrs: { for: "contactPersonEmail" }
+                },
+                [_vm._v("Email kontaktu")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "email",
+                    id: "contactPersonEmail",
+                    name: "contactPersonEmail",
+                    maxlength: "200",
+                    placeholder: "Email kontaktní osoby",
+                    required: ""
+                  },
+                  domProps: { value: this.contactPersonEmail }
+                })
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(10),
+            _c("div", { staticClass: "row line" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "col-md-3",
+                  attrs: { for: "contactPersonTele" }
+                },
+                [_vm._v("Telefon kontaktu")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-9" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    id: "contactPersonTele",
+                    name: "contactPersonTele",
+                    placeholder: "9 místné číslo bez mezer na kontaktní osobu",
+                    required: ""
+                  },
+                  domProps: { value: this.contactPersonTele }
+                })
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(11),
+            _vm._m(0),
             _vm._v(" "),
             _c(
               "div",
@@ -668,7 +1043,6 @@ var render = function() {
                       key: "default",
                       fn: function(ref) {
                         var href = ref.href
-                        var route = ref.route
                         var navigate = ref.navigate
                         return [
                           _c(
@@ -724,347 +1098,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("label", { staticClass: "col-md-3", attrs: { for: "library" } }, [
-        _vm._v("Vyberte knihovnu :")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c(
-          "select",
-          { staticClass: "form-control valid", attrs: { id: "library" } },
-          [
-            _c("option", { attrs: { value: "volvo" } }, [
-              _vm._v(
-                "\n              Knihovna Karla Dvořáčka, příspěvková organizace\n            "
-              )
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "cerniloc" } }, [
-              _vm._v("Místní knihovna v Černilově")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "opel" } }, [
-              _vm._v(
-                "\n              Městská knihovna Slavoj ve Dvoře Králové nad Labem\n            "
-              )
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "slavoj" } }, [_vm._v("4")])
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("input", {
-          staticClass: "form-control valid",
-          attrs: {
-            type: "text",
-            id: "ic",
-            name: "ic",
-            maxlength: "8",
-            placeholder: "IČ",
-            value: "",
-            required: "",
-            list: "firmy",
-            disabled: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "dic",
-            name: "dic",
-            maxlength: "14",
-            placeholder: "DIČ",
-            value: "",
-            disabled: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "oName",
-            name: "oName",
-            maxlength: "200",
-            placeholder: "Obchodní název",
-            value: "",
-            required: "",
-            disabled: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "libStreet",
-            name: "libStreet",
-            maxlength: "200",
-            placeholder: "Ulice a číslo",
-            value: "",
-            required: "",
-            disabled: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "libCity",
-            name: "libCity",
-            maxlength: "200",
-            placeholder: "Celý oficiální název města",
-            value: "",
-            required: "",
-            disabled: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "number",
-            id: "libPSC",
-            name: "libPSC",
-            placeholder: "PSČ",
-            value: "",
-            required: "",
-            disabled: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-9" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "deliveryName",
-          name: "deliveryName",
-          maxlength: "200",
-          placeholder: "Název místa doručení",
-          value: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-9" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "deliveryStreet",
-          name: "deliveryStreet",
-          maxlength: "200",
-          placeholder: "Ulice doručení",
-          value: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "deliveryCity",
-          name: "deliveryCity",
-          maxlength: "200",
-          placeholder: "Město doručení",
-          value: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "number",
-          id: "deliveryPSC",
-          name: "deliveryPSC",
-          placeholder: "PSČ",
-          value: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("label", { staticClass: "col-md-3", attrs: { for: "libName" } }, [
-        _vm._v("Jméno knihovny")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "libName",
-            name: "libName",
-            maxlength: "200",
-            placeholder: "Celý oficiální název knihovny",
-            value: "",
-            required: "",
-            list: "libNames"
-          }
-        }),
-        _vm._v(" "),
-        _c("datalist", { attrs: { id: "libNames" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row line" }, [
-      _c("label", { staticClass: "col-md-3", attrs: { for: "libEmail" } }, [
-        _vm._v("Email knihovny")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "email",
-            id: "libEmail",
-            name: "libEmail",
-            maxlength: "200",
-            placeholder: "Email knihovny",
-            value: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-3", attrs: { for: "contactPerson" } },
-        [_vm._v("Jméno kontaktu")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "contactPerson",
-            name: "contactPerson",
-            maxlength: "200",
-            placeholder: "Jméno kontaktní osoby",
-            value: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-3", attrs: { for: "contactPersonEmail" } },
-        [_vm._v("Email kontaktu")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "email",
-            id: "contactPersonEmail",
-            name: "contactPersonEmail",
-            maxlength: "200",
-            placeholder: "Email kontaktní osoby",
-            value: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row line" }, [
-      _c(
-        "label",
-        { staticClass: "col-md-3", attrs: { for: "contactPersonTele" } },
-        [_vm._v("Telefon kontaktu")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "number",
-            id: "contactPersonTele",
-            name: "contactPersonTele",
-            placeholder: "9 místné číslo bez mezer na kontaktní osobu",
-            value: "",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
