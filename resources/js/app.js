@@ -13,6 +13,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@fortawesome/fontawesome-free/js/all.min.js";
 
+import linkify from 'vue-linkify'
+
+Vue.directive('linkified', linkify)
 
 import titleMixin from './titleMixin';
 Vue.mixin(titleMixin);

@@ -1,6 +1,5 @@
 <template>
   <div class="item row pb-2">
-    <strong class="mt-3 mb-2">{{ item.item_name }}</strong>
     <div class="text-justify">
       <div class="previewCover">
         <a
@@ -27,7 +26,7 @@
             class="cover"
           />
           <img
-            v-if="item.rating_url != null && item.rating_url != ''"
+            v-if="false && item.rating_url != null && item.rating_url != ''"
             :src="item.rating_url"
             alt="hodnocení knihy"
             class="rating"
@@ -41,7 +40,7 @@
         >
           <img
             :src="'/img/tools/' + item.cover_medium_url"
-            :alt="'ilustrační foto - ' + item.name"
+            :alt="'ilustrační foto - ' + item.item_name"
             class="preview"
           />
         </a>
@@ -59,7 +58,17 @@
           </div>
         </div>
       </div>
-      <div v-if="item.description != null">{{ item.description }}</div>
+
+      <strong class="mt-3 mb-2">{{ item.item_name }}</strong>
+      <div v-if="item.item_type_idtype == 1 && item.item_autor != ''">
+        {{ item.item_autor }}
+      </div>
+
+      <div
+        v-if="item.description != null"
+        v-html="item.description"
+        v-linkified
+      ></div>
       <div v-if="item.item_type_idtype == 2">
         <a :href="item.url" target="_blank"
           >Více informací na stránce prodejce</a

@@ -40,7 +40,7 @@ class HarvestBooklets extends Command
     {
         $ObalkyKnih = 'http://cache.obalkyknih.cz/api/books?multi=[';
         $count = 0;
-        foreach (Item::whereNotNull("isbn")->WhereNull('cover_medium_url')->get() as $book) {
+        foreach (Item::whereNotNull("isbn")->WhereNull('item_autor')->get() as $book) {
             $ObalkyKnih = $ObalkyKnih . '{"isbn":"' . $book->isbn . '"},';
             $count++;
         }

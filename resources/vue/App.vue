@@ -379,12 +379,14 @@ nav a:hover {
   text-align: justify;
 }
 .previewCover {
-  display: block;
   float: left;
   width: 202px;
 }
 .previewCover img {
   max-width: 100%;
+}
+.previewCover a {
+  display: block;
 }
 
 @media (min-width: 600px) {
