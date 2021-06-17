@@ -26,7 +26,7 @@ Vue.use(NavbarPlugin);
 Vue.use(VueReCaptcha, {
     siteKey: document.querySelector("meta[name=recapcha-site-key]").content,
     loaderOptions: {
-        autoHideBadge: true
+        /*autoHideBadge: true*/
     }
 });
 
