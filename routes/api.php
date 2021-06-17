@@ -20,11 +20,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 Route::middleware('api')->get('/data.json', function () {
-    return \DB::table('items')->get();
-    //return view('welcome');
+    if (request()->ajax()) {
+        return \DB::table('items')->get();
+    } else {
+        return "NOPE";
+    }
 });
 
 Route::middleware('api')->get('/librarys.json', function () {
-    return \DB::table('librarys')->get();
+    if (request()->ajax()) {
+        return \DB::table('librarys')
+            ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
+            ->select('librarys.*')
+            ->whereNull('library_has_order.order_idorder')
+            ->get();
+    } else {
+        return "NOPE";
+    }
     //return view('welcome');
 });

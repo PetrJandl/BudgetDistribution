@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\eshopData;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/eshop/');
 
+
+Route::post('/eshopNewOrder', [eshopData::class, 'send']);
+
 Route::get('/eshop/{any?}', function () {
-    return view('eshop');
+  return view('eshop');
 })->where('any', '.*');

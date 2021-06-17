@@ -131,7 +131,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  title: "Nákupní košík (1/3) | Bookstart eShop",
   methods: {
     cleanBasked: function cleanBasked() {
       this.$emit("clean-basked");
@@ -244,7 +251,38 @@ var render = function() {
     "div",
     { staticClass: "basked col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8" },
     [
-      _c("h1", [_vm._v("Nákupní košík")]),
+      _c(
+        "h1",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: this.$parent.sumPrice > 0,
+              expression: "this.$parent.sumPrice > 0"
+            }
+          ]
+        },
+        [
+          _vm._v("\n    Nákupní košík - "),
+          _c("small", [_vm._v("Objednávka (1/3)")])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "h1",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: this.$parent.sumPrice == 0,
+              expression: "this.$parent.sumPrice == 0"
+            }
+          ]
+        },
+        [_vm._v("\n    Nákupní košík "), _c("small", [_vm._v("je prázdný")])]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -424,7 +462,7 @@ var render = function() {
                     }
                   ],
                   staticClass:
-                    "\n          btn btn-sm\n          text-dark\n          btn-light\n          nav-link\n          p-3\n          col-6 col-sm-5 col-md-4 col-lg-3\n        ",
+                    "\n          btn btn-sm\n          text-dark\n          btn-warning\n          nav-link\n          p-3\n          col-6 col-sm-5 col-md-4 col-lg-3\n        ",
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
@@ -458,6 +496,7 @@ var render = function() {
                         _c(
                           "a",
                           {
+                            directives: [{ name: "focus", rawName: "v-focus" }],
                             staticClass:
                               "\n            btn btn-sm\n            text-white\n            btn-success\n            nav-link\n            p-3\n            col-6\n            offset-sm-2\n            col-sm-5\n            offset-md-4\n            col-md-4\n            offset-lg-6\n            col-lg-3\n          ",
                             attrs: { href: href },

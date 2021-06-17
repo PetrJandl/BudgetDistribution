@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  title: "Knihy | Bookstart eShop",
   methods: {
     addBookToBasked: function ($book) {
       this.$emit("add-to-basked", $book);

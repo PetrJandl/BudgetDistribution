@@ -46,6 +46,23 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "order" */ "../vue/views/Order.vue"),
   },
+  {
+    path: "/eshop/rekapitulace",
+    name: "Recap",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "order" */ "../vue/views/Recap.vue"),
+  }, {
+    path: "/eshop/odeslano",
+    name: "OrderSend",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "order" */ "../vue/views/OrderSend.vue"),
+  },
 ];
 
 const router = new VueRouter({

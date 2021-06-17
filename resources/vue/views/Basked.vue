@@ -1,6 +1,11 @@
 <template>
   <div class="basked col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-    <h1>Nákupní košík</h1>
+    <h1 v-show="this.$parent.sumPrice > 0">
+      Nákupní košík - <small>Objednávka (1/3)</small>
+    </h1>
+    <h1 v-show="this.$parent.sumPrice == 0">
+      Nákupní košík <small>je prázdný</small>
+    </h1>
     <div class="items">
       <div
         class="baskedItem row pb-1"
@@ -76,7 +81,7 @@
           class="
             btn btn-sm
             text-dark
-            btn-light
+            btn-warning
             nav-link
             p-3
             col-6 col-sm-5 col-md-4 col-lg-3
@@ -108,6 +113,7 @@
               offset-lg-6
               col-lg-3
             "
+            v-focus
           >
             Pokračovat
             <i class="fas fa-chevron-right"></i>
@@ -120,6 +126,7 @@
 
 <script>
 export default {
+  title: "Nákupní košík (1/3) | Bookstart eShop",
   methods: {
     cleanBasked: function () {
       this.$emit("clean-basked");

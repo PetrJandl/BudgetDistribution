@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  title: "Pomůcky | Bookstart eShop",
   methods: {
     addToolToBasked: function ($tool) {
       this.$emit("add-to-basked", $tool);

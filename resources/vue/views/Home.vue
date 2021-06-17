@@ -4,3 +4,9 @@
     <img id="bslogo" alt="BookStart logo" src="/images/bookstart.png" />
   </div>
 </template>
+
+<script>
+export default {
+  title: "Bookstart eShop",
+};
+</script>

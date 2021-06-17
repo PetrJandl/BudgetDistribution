@@ -5,12 +5,12 @@
       <div class="previewCover">
         <a
           v-if="item.item_type_idtype == 1 && item.isbn != ''"
-          :href="'https://www.obalkyknih.cz/view?isbn=' + item.isbn"
+          :href="'https://cache.obalkyknih.cz/view?isbn=' + item.isbn"
           target="_blank"
         >
           <img
             v-if="item.isbn != '' && item.cover_medium_url == null"
-            :src="'https://www.obalkyknih.cz/api/cover?isbn=' + item.isbn"
+            :src="'https://cache.obalkyknih.cz/api/cover?isbn=' + item.isbn"
             alt="obákla knihy"
             class="cover"
           />
