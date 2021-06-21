@@ -20,8 +20,20 @@
             https://www.obalkyknih.cz/file/cover/2076601/medium
           /-->
           <img
-            v-if="item.cover_medium_url != null"
+            v-if="
+              item.cover_medium_url != null &&
+              item.cover_medium_url.includes('obalkyknih.cz')
+            "
             :src="item.cover_medium_url"
+            alt="obákla knihy"
+            class="cover"
+          />
+          <img
+            v-if="
+              item.cover_medium_url != null &&
+              !item.cover_medium_url.includes('obalkyknih.cz')
+            "
+            :src="'/img/books/' + item.cover_medium_url"
             alt="obákla knihy"
             class="cover"
           />
