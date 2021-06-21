@@ -115,6 +115,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+import { VueReCaptcha } from "vue-recaptcha-v3";
+Vue.use(VueReCaptcha, {
+  siteKey: document.querySelector("meta[name=recapcha-site-key]").content,
+  loaderOptions: {
+    autoHideBadge: true,
+  },
+});
+
 export default {
   title: "Rekapitulace (3/3) | Bookstart eShop",
   data() {

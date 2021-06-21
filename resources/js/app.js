@@ -8,7 +8,7 @@ import router from "./router";
 
 import ItemLine from "../vue/components/ItemLine.vue";
 import { BootstrapVue, IconsPlugin, NavbarPlugin } from "bootstrap-vue";
-import { VueReCaptcha } from 'vue-recaptcha-v3';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@fortawesome/fontawesome-free/js/all.min.js";
@@ -23,12 +23,7 @@ Vue.mixin(titleMixin);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(NavbarPlugin);
-Vue.use(VueReCaptcha, {
-    siteKey: document.querySelector("meta[name=recapcha-site-key]").content,
-    loaderOptions: {
-        /*autoHideBadge: true*/
-    }
-});
+
 
 Vue.config.productionTip = false;
 Vue.config.runtimeCompiler = true;
