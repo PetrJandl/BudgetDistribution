@@ -50,11 +50,11 @@ class HarvestBooklets extends Command
             $data = json_decode($file);
             foreach ($data as $key => $value) {
                 if (isset($value->bib_title)) {
-		    $books[$value->bibinfo->isbn]['item_name'] = $value->bib_title;
-		}
+                    $books[$value->bibinfo->isbn]['item_name'] = $value->bib_title;
+                }
                 if (isset($value->bib_autor)) {
                     $books[$value->bibinfo->isbn]['item_autor'] = $value->bib_autor;
-                } elseif(isset($value->csn_iso_690)) {
+                } elseif (isset($value->csn_iso_690)) {
                     $autor = explode("<i>", $value->csn_iso_690);
                     $books[$value->bibinfo->isbn]['item_autor'] = rtrim(ucwords(mb_strtolower(trim($autor[0]), "UTF-8")), ".");
                 }
@@ -73,17 +73,17 @@ class HarvestBooklets extends Command
                 if (isset($value->rating_url)) {
                     $books[$value->bibinfo->isbn]['rating_url'] = $value->rating_url;
                 }
-		if(isset($books[$value->bibinfo->isbn])){
-			Item::where('isbn', '=', $value->bibinfo->isbn)->update($books[$value->bibinfo->isbn]);
-			//echo $value->bibinfo->isbn." OK \n\n";
-		}else{
-
-			echo "Kniha ". $value->bibinfo->isbn ." neni na serveru obalkyknih.cz\n";
-		}
+                if (isset($books[$value->bibinfo->isbn])) {
+                    Item::where('isbn', '=', $value->bibinfo->isbn)->update($books[$value->bibinfo->isbn]);
+                    //echo $value->bibinfo->isbn." OK \n\n";
+                } else {
+                    Item::where('isbn', '=', $value->bibinfo->isbn)->update(array("item_name" => "-", "item_autor" => "-"));
+                    echo "Kniha " . $value->bibinfo->isbn . " neni na serveru obalkyknih.cz\n";
+                }
             }
-//            foreach ($books as $key => $value) {
-//                print_r($books);
-//            }
+            //            foreach ($books as $key => $value) {
+            //                print_r($books);
+            //            }
         }
         //print_r($books);
         //Item::update($books)->save();
