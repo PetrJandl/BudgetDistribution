@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 
 class eshopData extends Controller
 {
@@ -20,7 +22,7 @@ class eshopData extends Controller
                 ->verify($request->post('_recaptcha'), $request->ip());
 
             if (!$response->isSuccess()) {
-                abort();
+                abort("reCaptcha is wrong!");
             }
             /*
             if ($response->getScore() < 0.6) {
@@ -55,7 +57,7 @@ class eshopData extends Controller
                         $libUpdate['deliveryCity'] = $order[0]->deliveryCity;
                         $libUpdate['deliveryPSC'] = $order[0]->deliveryPSC;
                     }
-
+                    /*
                     DB::table('librarys')
                         ->where('idlibrary', $idlibrary)
                         ->update($libUpdate);
@@ -80,7 +82,15 @@ class eshopData extends Controller
                             'item_count' => $value->pieceInBasket
                         ]);
                     }
+                    */
                     $r = response()->json(['message' => "ok"]);
+                    $completeOrder['order'] = $order[0];
+                    $completeOrder['basked'] = $basked;
+                    //Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($order[0]));
+                    //Mail::to($order[0]->libEmail)->send(new OrderShipped($order[0]));
+
+                    //Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($order[0]));
+                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                 } else {
                     $r = response()->json(['message' => "Knihovna již má objednáno!"]);
                 }
