@@ -23,7 +23,7 @@
     <meta property="og:site_name" content="BShop.KmHK.cz">
     <meta property="og:author"    content="KnihovnaHK.cz">
     <meta property="og:title"     content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
-    <meta property="og:image"     content="https://bshop.kmhk.cz/images/bookstart.png">
+    <meta property="og:image"     content="https://bshop.kmhk.cz/images/bookstart498.png">
     <meta property="og:type"      content="article">
 
 
