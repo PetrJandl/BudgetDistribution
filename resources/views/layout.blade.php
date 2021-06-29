@@ -19,6 +19,14 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+    <meta name="description" content="Eshop pro knihovny které se účastní projektu bookstart (s knížkou do života) na výběr knih a pomůcek, které chtějí nakoupit v rámi dotace Královéhradeckého kraje.">
+    <meta property="og:site_name" content="BShop.KmHK.cz">
+    <meta property="og:author"    content="KnihovnaHK.cz">
+    <meta property="og:title"     content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
+    <meta property="og:image"     content="https://bshop.kmhk.cz/images/bookstart.png">
+    <meta property="og:type"      content="article">
+
+
     <style>
         .v-cloak {
           display: none;
