@@ -8,8 +8,7 @@
     <meta name="recapcha-site-key" content="{{ config('services.recaptcha.sitekey')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" >
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <title>{{ config('app.name', "Laravel") }}</title>
-
+    
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('ico/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('ico/favicon-32x32.png') }}">
@@ -18,15 +17,17 @@
     <link rel="mask-icon" href="{{ asset('ico/safari-pinned-tab.svg') }}" color="#000000">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    
+    <title>{{ config('app.name', "Laravel") }}</title>
 
-    <meta name="description" content="Eshop pro knihovny které se účastní projektu bookstart (s knížkou do života) na výběr knih a pomůcek, které chtějí nakoupit v rámi dotace Královéhradeckého kraje.">
     <meta property="og:site_name" content="BShop.KmHK.cz">
     <meta property="og:author"    content="KnihovnaHK.cz">
     <meta property="og:title"     content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
-    <meta property="og:image"     content="https://bshop.kmhk.cz/images/bookstart498.png">
+    <meta property="og:image"     content="https://bshop.kmhk.cz/images/bookstartFB.png">
     <meta property="og:type"      content="article">
-
-
+    
+    <meta name="description"      content="Eshop pro knihovny které se účastní projektu bookstart na výběr knih a pomůcek, které chtějí nakoupit v rámci dotace.">
+    
     <style>
         .v-cloak {
           display: none;
