@@ -25,9 +25,7 @@
     <meta property="og:title"     content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
     <meta property="og:description"      content="Eshop pro knihovny které se účastní projektu bookstart na výběr knih a pomůcek, které chtějí nakoupit v rámci dotace.">
     <meta property="og:image"     content="{{ asset('images/bshop.png') }}">
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="150" />
-    <meta property="og:image:height" content="150" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:type"      content="article">
     
     
