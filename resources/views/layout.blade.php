@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs_CZ">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +27,14 @@
     <meta property="og:image"     content="{{ asset('images/bshop.png') }}">
     <meta property="og:image:type" content="image/png" />
     <meta property="og:type"      content="article">
-    
+    <?php /*
+    TODO :
+
+	Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
+
+	Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
+	
+    */ ?>
     
     <style>
         .v-cloak {
