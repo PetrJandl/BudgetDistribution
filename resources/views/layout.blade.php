@@ -32,8 +32,10 @@
     TODO :
 
        Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
+       Upravit obrazek na FB !!!
 
        Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
+       Nakonec pouzit component : https://github.com/robbinjohansson/vue-scroll-indicator
 
     */ ?>
     

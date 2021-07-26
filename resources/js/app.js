@@ -9,6 +9,9 @@ import router from "./router";
 import ItemLine from "../vue/components/ItemLine.vue";
 import { BootstrapVue, IconsPlugin, NavbarPlugin } from "bootstrap-vue";
 
+import { VueScrollIndicator } from 'vue-scroll-indicator';
+Vue.component('vue-scroll-indicator', VueScrollIndicator);
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@fortawesome/fontawesome-free/js/all.min.js";
