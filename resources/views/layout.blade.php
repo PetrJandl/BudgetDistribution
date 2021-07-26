@@ -27,13 +27,19 @@
     <meta property="og:image"     content="{{ asset('images/bshop.png') }}">
     <meta property="og:image:type" content="image/png" />
     <meta property="og:type"      content="article">
+<<<<<<< HEAD
+=======
+    
     <?php /*
     TODO :
 
-	Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
+       Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
+       Upravit obrazek na FB !!!
 
-	Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
-	
+       Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
+       Nakonec pouzit component : https://github.com/robbinjohansson/vue-scroll-indicator
+
+>>>>>>> 8cca92d11d2dff8e277fe6d854f8cf9585f48e6d
     */ ?>
     
     <style>
