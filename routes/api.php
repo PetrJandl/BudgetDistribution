@@ -33,6 +33,7 @@ Route::middleware('api')->get('/librarys.json', function () {
             ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
             ->select('librarys.*')
             ->whereNull('library_has_order.order_idorder')
+            ->orderby('librarys.libCity')
             ->get();
     } else {
         return "NOPE";
