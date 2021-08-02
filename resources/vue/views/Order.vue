@@ -37,7 +37,7 @@
                 :key="library.idlibrary"
                 :selected="isOptionSelected(index)"
               >
-                {{ library.libName }}
+                {{ library.libCity }} ( {{ library.libName }} )
               </option>
             </select>
           </div>
