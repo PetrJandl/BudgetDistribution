@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\AdminIP as ModelsAdminIP;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,9 +42,11 @@ Route::middleware('api')->get('/librarys.json', function () {
     //return view('welcome');
 });
 
-Route::middleware('api')->get('/allowAdmin.json', function () {
+Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
     if (request()->ajax()) {
-        if ($_SERVER['REMOTE_ADDR'] == "::1" or $_SERVER['REMOTE_ADDR'] == "192.168.133.80") {
+        if (
+            ModelsAdminIP::allow($request->ip())
+        ) {
             return json_encode("ok");
         } else {
             return "NOPE";
