@@ -52,7 +52,7 @@
         .loader {
           border: 16px solid #f3f3f3;
           border-radius: 50%;
-          border-top: 16px solid #F6C883;
+          border-top: 16px solid #680204;
           width: 120px;
           height: 120px;
           -webkit-animation: spin 2s linear infinite;
