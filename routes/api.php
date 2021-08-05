@@ -40,3 +40,15 @@ Route::middleware('api')->get('/librarys.json', function () {
     }
     //return view('welcome');
 });
+
+Route::middleware('api')->get('/allowAdmin.json', function () {
+    if (request()->ajax()) {
+        if ($_SERVER['REMOTE_ADDR'] == "::1" or $_SERVER['REMOTE_ADDR'] == "192.168.133.80") {
+            return json_encode("ok");
+        } else {
+            return "NOPE";
+        }
+    } else {
+        return "NOPE";
+    }
+});

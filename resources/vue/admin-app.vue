@@ -10,7 +10,7 @@
       >
         <b-navbar-brand class="offset-md-1 offset-lg-2 offset-xl-3">
           <router-link
-            to="/eshop/nakupniKosik"
+            to="/topsecret/nakupniKosik"
             v-slot="{ href, navigate, isExactActive }"
             custom
           >
@@ -35,7 +35,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <router-link
-              to="/eshop/"
+              to="/topsecret/"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -44,12 +44,12 @@
                   :href="href"
                   v-bind:class="{ 'nav-link': true, active: isExactActive }"
                   @click="navigate"
-                  >S{{ "\xa0" }}knížkou do{{ "\xa0" }}života</a
+                  ><i class="fas fa-file-invoice"></i> Objednávky</a
                 >
               </li>
             </router-link>
             <router-link
-              to="/eshop/knihy"
+              to="/topsecret/knihy"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -63,7 +63,7 @@
               </li>
             </router-link>
             <router-link
-              to="/eshop/pomucky"
+              to="/topsecret/pomucky"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -82,35 +82,11 @@
               </li>
             </router-link>
             <router-link
-              to="/eshop/nakupniKosik"
+              to="/eshop/"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
               <li
-                v-bind:class="{
-                  'nav-link d-none d-sm-block': true,
-                  'router-link-exact-active': isExactActive,
-                }"
-              >
-                <a
-                  :href="href"
-                  v-bind:class="{ 'nav-link': true, active: isExactActive }"
-                  @click="navigate"
-                  ><i class="fa">&#xf07a;</i> Košík
-                  <span class="badge badge-warning bg-danger"
-                    >{{ sumPrice }}Kč</span
-                  >
-                </a>
-              </li>
-            </router-link>
-            <router-link
-              to="/topsecret"
-              v-slot="{ href, navigate, isExactActive }"
-              v-if="isAdminAlowed"
-              custom
-            >
-              <li
-              
                 v-bind:class="{
                   'nav-link': true,
                   'router-link-exact-active': isExactActive,
@@ -118,9 +94,8 @@
               >
                 <a
                   :href="href"
-                  
                   v-bind:class="{ 'nav-link': true, active: isExactActive }"
-                  ><i class="fa">&#xf023;</i> Administrace 
+                  ><i class="fa">&#xf291;</i> zpět na Eshop
                 </a>
               </li>
             </router-link>
@@ -148,13 +123,10 @@ if (!localBasked) {
   //console.log("lb clean");
 }
 
-
-
 export default {
   data() {
     return {
       vueNotLoad: false,
-      isAdminAlowed: false,
       books: [],
       tools: [],
       basked: localBasked,
@@ -206,19 +178,6 @@ export default {
     },
   },
   methods: {
-    getShowAdmin() {
-      axios
-        .get("/api/allowAdmin.json")
-        .then((response) => {
-          if(response.data=="ok"){
-            this.isAdminAlowed=true;
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      //console.log(this.books)
-    },
     getData() {
       axios
         .get("/api/data.json")
@@ -296,14 +255,12 @@ export default {
   },
   beforeMount() {
     this.getData();
-    this.getShowAdmin();
     //console.log("App: "+this.books)
   },
   mounted() {
     this.backdoor++;
-  }
+  },
 };
-
 </script>
 
 <style>
@@ -330,7 +287,7 @@ nav {
   text-align: center;
   padding: 0 !important;
   margin: 0;
-  background-color: rgba(244, 151, 12, 1) !important;
+  background-color: rgb(104, 0, 0) !important;
   border-bottom: 1px #000000 solid;
   box-shadow: teal;
 }
@@ -344,7 +301,7 @@ nav a {
   margin-top: 0pt;
   margin-bottom: 0pt;
   font-weight: bold;
-  color: #000 !important;
+  color: rgb(255, 255, 255) !important;
   text-decoration: none;
 }
 
