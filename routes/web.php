@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\eshopData;
+use App\Http\Controllers\topSecret;
 
 
 /*
@@ -23,3 +24,5 @@ Route::post('/eshopNewOrder', [eshopData::class, 'send']);
 Route::get('/eshop/{any?}', function () {
   return view('eshop');
 })->where('any', '.*');
+
+Route::get('/topsecret/{any?}', [topSecret::class, 'index']);

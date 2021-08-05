@@ -15,3 +15,4 @@ mix.js('resources/js/app.js', 'public/js').vue({ version: 2 })
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+mix.js('resources/js/admin.js', 'public/js').vue({ version: 2 });
