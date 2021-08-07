@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\AdminIP as ModelsAdminIP;
+use App\Models\Allowed as ModelsAllowed;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Route::middleware('api')->get('/librarys.json', function () {
 Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
     if (request()->ajax()) {
         if (
-            ModelsAdminIP::allow($request->ip())
+            ModelsAllowed::adminIP($request->ip())
         ) {
             return json_encode("ok");
         } else {
