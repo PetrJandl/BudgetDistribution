@@ -41,13 +41,17 @@ class HarvestBooklets extends Command
         $ObalkyKnih = 'http://cache.obalkyknih.cz/api/books?multi=[';
         $count = 0;
         foreach (Item::whereNotNull("isbn")->WhereNull('item_autor')->get() as $book) {
-            $ObalkyKnih = $ObalkyKnih . '{"isbn":"' . $book->isbn . '"},';
+            $ObalkyKnih = $ObalkyKnih . '{"isbn":"' . trim($book->isbn) . '"},';
             $count++;
         }
         $ObalkyKnih = substr($ObalkyKnih, 0, -1) . ']';
+        //print_r($ObalkyKnih);
         if ($count > 0) {
-            $file = @file_get_contents($ObalkyKnih);
+            //print_r("count > 0\n");
+            $file = file_get_contents($ObalkyKnih);
+            //print_r($file);
             $data = json_decode($file);
+            //die();
             foreach ($data as $key => $value) {
                 if (isset($value->bib_title)) {
                     $books[$value->bibinfo->isbn]['item_name'] = $value->bib_title;

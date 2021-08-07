@@ -1,12 +1,12 @@
-require('./bootstrap');
+require('../bootstrap');
 
 
 import Vue from "vue";
-import App from '../vue/admin-app.vue';
+import App from '../../vue/admin/app.vue';
 
 import router from "./router";
 
-import ItemLine from "../vue/components/ItemLine.vue";
+import OrderLine from "../../vue/admin/components/OrderLine.vue";
 import { BootstrapVue, IconsPlugin, NavbarPlugin } from "bootstrap-vue";
 
 import { VueScrollIndicator } from 'vue-scroll-indicator';
@@ -20,7 +20,7 @@ import linkify from 'vue-linkify'
 
 Vue.directive('linkified', linkify)
 
-import titleMixin from './titleMixin';
+import titleMixin from '../titleMixin';
 Vue.mixin(titleMixin);
 
 Vue.use(BootstrapVue);
@@ -31,7 +31,7 @@ Vue.use(NavbarPlugin);
 Vue.config.productionTip = false;
 Vue.config.runtimeCompiler = true;
 
-Vue.component("ItemLine", ItemLine);
+Vue.component("OrderLine", OrderLine);
 
 
 Vue.directive('focus', {
@@ -46,7 +46,7 @@ Vue.directive('focus', {
 const eshop = new Vue({
     router,
     render: h => h(App)
-}).$mount('#app')
+}).$mount('#admin')
 
 
 

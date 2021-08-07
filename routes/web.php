@@ -22,7 +22,7 @@ Route::redirect('/', '/eshop/');
 Route::post('/eshopNewOrder', [eshopData::class, 'send']);
 
 Route::get('/eshop/{any?}', function () {
-  return view('eshop');
+  return view('eshop/eshop');
 })->where('any', '.*');
 
-Route::get('/topsecret/{any?}', [topSecret::class, 'index']);
+Route::get('/admin/{any?}', [topSecret::class, 'index']);

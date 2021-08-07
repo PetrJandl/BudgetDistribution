@@ -1,8 +1,8 @@
-@extends('admin-layout')
+@extends('admin/layout')
   
   
 @section('content')
-<div id="app">
+<div id="admin">
     <div v-show="vueNotLoad" class="centerLoader">
       <strong>Načítání ...</strong>
       <div v-show="vueNotLoad" class="loader"></div>

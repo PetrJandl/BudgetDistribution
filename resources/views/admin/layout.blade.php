@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="recapcha-site-key" content="{{ config('services.recaptcha.sitekey')}}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}" >
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <script src="{{ asset('js/admin/app.js') }}" defer></script>
     
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('ico/apple-touch-icon.png') }}">
@@ -20,29 +20,6 @@
     
     <title>{{ config('app.name', "Laravel") }}</title>
 
-    <meta property="og:site_name"   content="BShop.KmHK.cz">
-    <meta property="og:author"      content="KnihovnaHK.cz">
-    <meta property="og:title"       content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
-    <meta property="og:description" content="Eshop pro knihovny které se účastní projektu bookstart na výběr knih a pomůcek, které chtějí nakoupit v rámci dotace.">
-    <meta property="og:image"       content="{{ asset('images/bshop.png') }}">
-    <meta property="og:image:type"  content="image/png" />
-    <meta property="og:type"        content="article">
-
-    <meta name="twitter:title"       content="Nákup knih a pomůcek z dotace Královéhradeckého kraje">
-    <meta name="twitter:description" content="Eshop pro knihovny které se účastní projektu bookstart na výběr knih a pomůcek, které chtějí nakoupit v rámci dotace.">
-    <meta name="twitter:image"       content="{{ asset('images/bshop.png') }}">
-    <meta name="twitter:card"        content="summary_large_image">
-    
-    <?php /*
-    TODO :
-
-       Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
-       Upravit obrazek na FB !!!
-
-       Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
-       Nakonec pouzit component : https://github.com/robbinjohansson/vue-scroll-indicator
-
-    */ ?>
     
     <style>
         .v-cloak {
@@ -52,7 +29,7 @@
         .loader {
           border: 16px solid #f3f3f3;
           border-radius: 50%;
-          border-top: 16px solid #F49723;
+          border-top: 16px solid #680204;
           width: 120px;
           height: 120px;
           -webkit-animation: spin 2s linear infinite;
@@ -71,6 +48,12 @@
           margin: 50pt auto;
           display: block;
           font-size: larger;
+        }
+        body {
+          background: gray;
+        }
+        #app{
+          background: #f3f3f3;
         }
     
         /* Safari */

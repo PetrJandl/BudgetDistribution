@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="admin" class="container">
     <div>
       <b-navbar
         fixed="top"
@@ -9,25 +9,7 @@
         class="shadow"
       >
         <b-navbar-brand class="offset-md-1 offset-lg-2 offset-xl-3">
-          <router-link
-            to="/topsecret/nakupniKosik"
-            v-slot="{ href, navigate, isExactActive }"
-            custom
-          >
-            <li class="nav-link d-block d-sm-none">
-              <a
-                :href="href"
-                v-bind:class="{ 'nav-link': true, active: isExactActive }"
-                @click="navigate"
-                :title="countPiece + ' ks za ' + sumPrice + 'Kč'"
-              >
-                <i class="fa">&#xf07a;</i>
-                <span class="badge badge-warning bg-danger" id="lblCartCount">
-                  {{ sumPrice }}Kč
-                </span>
-              </a>
-            </li>
-          </router-link>
+
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -35,7 +17,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <router-link
-              to="/topsecret/"
+              to="/admin/"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -49,7 +31,7 @@
               </li>
             </router-link>
             <router-link
-              to="/topsecret/knihy"
+              to="/admin/knihy"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -63,7 +45,7 @@
               </li>
             </router-link>
             <router-link
-              to="/topsecret/pomucky"
+              to="/admin/pomucky"
               v-slot="{ href, navigate, isExactActive }"
               custom
             >
@@ -287,7 +269,7 @@ nav {
   text-align: center;
   padding: 0 !important;
   margin: 0;
-  background-color: rgb(104, 0, 0) !important;
+  background-color: #000000 !important;
   border-bottom: 1px #000000 solid;
   box-shadow: teal;
 }
@@ -306,12 +288,12 @@ nav a {
 }
 
 nav a.active {
-  background-color: rgb(255, 255, 255, 1) !important;
-  color: rgb(0, 0, 0, 1) !important;
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  color: rgb(0, 0, 0) !important;
 }
 nav a:hover {
-  background-color: rgba(0, 0, 0, 0.92) !important;
-  color: rgb(255, 255, 255, 1) !important;
+  background-color: #F49723 !important;
+  color: rgb(0, 0, 0) !important;
 }
 .items {
   font-size: 130%;
@@ -327,7 +309,7 @@ nav a:hover {
   max-width: 1044px;
   max-height: 435px;
   margin: 0 auto;
-  text-align: center;
+
 }
 .home img {
   width: 100%;
