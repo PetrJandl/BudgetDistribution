@@ -1,9 +1,8 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/admin.js": "/js/admin.js",
-    "/js/books.js": "/js/books.js",
-    "/js/tools.js": "/js/tools.js",
-    "/js/basked.js": "/js/basked.js",
-    "/js/order.js": "/js/order.js",
-    "/css/app.css": "/css/app.css"
+    "/js/eshop/app.js": "/js/eshop/app.js",
+    "/js/admin/app.js": "/js/admin/app.js",
+    "/js/eshop/books.js": "/js/eshop/books.js",
+    "/js/eshop/tools.js": "/js/eshop/tools.js",
+    "/js/eshop/basked.js": "/js/eshop/basked.js",
+    "/js/eshop/order.js": "/js/eshop/order.js"
 }

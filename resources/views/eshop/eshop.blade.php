@@ -1,8 +1,8 @@
-@extends('layout')
+@extends('eshop/layout')
   
   
 @section('content')
-<div id="app">
+<div id="eshop">
     <div v-show="vueNotLoad" class="centerLoader">
       <strong>Načítání ...</strong>
       <div v-show="vueNotLoad" class="loader"></div>

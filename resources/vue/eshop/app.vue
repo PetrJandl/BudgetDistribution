@@ -104,7 +104,7 @@
               </li>
             </router-link>
             <router-link
-              to="/topsecret"
+              to="/admin"
               v-slot="{ href, navigate, isExactActive }"
               v-if="isAdminAlowed"
               custom

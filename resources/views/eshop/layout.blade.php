@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="recapcha-site-key" content="{{ config('services.recaptcha.sitekey')}}">
     
-    <script src="{{ asset('js/admin.js') }}" defer></script>
+    <script src="{{ asset('js/eshop/app.js') }}" defer></script>
     
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('ico/apple-touch-icon.png') }}">
@@ -52,7 +52,7 @@
         .loader {
           border: 16px solid #f3f3f3;
           border-radius: 50%;
-          border-top: 16px solid #680204;
+          border-top: 16px solid #F49723;
           width: 120px;
           height: 120px;
           -webkit-animation: spin 2s linear infinite;
