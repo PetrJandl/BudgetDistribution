@@ -87,7 +87,7 @@ class eshopData extends Controller
                     $completeOrder['order'] = $order[0];
                     $completeOrder['basked'] = $basked;
 
-                    if (debug()) {
+                    if (env('APP_DEBUG')) {
                         Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                     } else {
                         Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($completeOrder));
