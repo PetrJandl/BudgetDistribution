@@ -273,6 +273,7 @@ export default {
     updateBasked: function ($updateItem) {
       this.backdoor++;
       var maxPriceSum = 4500;
+      /*TODO tahat z laravelu! a hlavne overovat v PHP !!! */
       var sum = 0;
       this.basked.forEach((item) => {
         if (item.iditem != $updateItem.iditem) {

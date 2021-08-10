@@ -16,13 +16,16 @@ use App\Http\Controllers\topSecret;
 |
 */
 
+// all from root to /eshop
 Route::redirect('/', '/eshop/');
 
-
+// send form make order
 Route::post('/eshopNewOrder', [eshopData::class, 'send']);
 
+// all sub pages /eshop/ is vue
 Route::get('/eshop/{any?}', function () {
   return view('eshop/eshop');
 })->where('any', '.*');
 
+// all sub pages /admin/ is vue
 Route::get('/admin/{any?}', [topSecret::class, 'index']);
