@@ -57,7 +57,7 @@ class eshopData extends Controller
                         $libUpdate['deliveryCity'] = $order[0]->deliveryCity;
                         $libUpdate['deliveryPSC'] = $order[0]->deliveryPSC;
                     }
-                    /*
+
                     DB::table('librarys')
                         ->where('idlibrary', $idlibrary)
                         ->update($libUpdate);
@@ -82,7 +82,7 @@ class eshopData extends Controller
                             'item_count' => $value->pieceInBasket
                         ]);
                     }
-                    */
+
                     $r = response()->json(['message' => "ok"]);
                     $completeOrder['order'] = $order[0];
                     $completeOrder['basked'] = $basked;

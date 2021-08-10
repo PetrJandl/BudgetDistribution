@@ -8,14 +8,21 @@
     >
     </vue-scroll-indicator>
 
-    <OrderLine/>
-
-    
+    <b-table striped hover :items="this.$parent.orders">
+       <template #thead-top="data">
+        <b-tr>
+          <b-th></b-th>
+          <b-th colspan="3">Počty kusů v objednávce</b-th>
+          <b-th>Cena</b-th>
+        </b-tr>
+      </template>
+    </b-table>
+   
   </div>
 </template>
 
 <script>
 export default {
-  title: "Bookstart eShop",
+  title: "ADMIN - Bookstart eShop",
 };
 </script>
