@@ -87,12 +87,13 @@ class eshopData extends Controller
                     $completeOrder['order'] = $order[0];
                     $completeOrder['basked'] = $basked;
 
-                    //Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($order[0]));
-                    //Mail::to($order[0]->libEmail)->send(new OrderShipped($order[0]));
-
-                    // TODO only for test!!! in production send to variable email !!!
-                    //Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($order[0]));
-                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+                    if (debug()) {
+                        Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+                    } else {
+                        Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($completeOrder));
+                        //Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($order[0]));
+                        //Mail::to($order[0]->libEmail)->send(new OrderShipped($order[0]));
+                    }
                 } else {
                     $r = response()->json(['message' => "Knihovna již má objednáno!"]);
                 }
