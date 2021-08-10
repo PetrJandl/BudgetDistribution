@@ -6,7 +6,7 @@
         toggleable="sm"
         type="dark"
         variant="faded"
-        class="shadow"
+        class="shadow d-print-none"
       >
         <b-navbar-brand class="offset-md-1 offset-lg-2 offset-xl-3">
 
@@ -87,10 +87,7 @@
     </div>
 
     <router-view
-      @add-to-basked="addToBasked($event)"
-      @update-basked="updateBasked($event)"
-      @clean-basked="cleanBasket()"
-      class="offset-lg-1 offset-xl-2"
+      class=""
     />
   </div>
 </template>
@@ -98,61 +95,17 @@
 <script>
 import axios from "axios";
 
-var localBasked;
-localBasked = JSON.parse(localStorage.getItem("basked"));
-if (!localBasked) {
-  localBasked = [];
-  //console.log("lb clean");
-}
-
 export default {
   data() {
     return {
       vueNotLoad: false,
+      orders: [],
       books: [],
       tools: [],
-      basked: localBasked,
       backdoor: 0,
     };
   },
   computed: {
-    countPiece: {
-      get: function () {
-        this.backdoor;
-        var sum = 0;
-        this.basked.forEach((item) => {
-          sum = sum + item.pieceInBasket;
-        });
-        return sum;
-      },
-      set: function (updateItem) {
-        this.basked.forEach((item) => {
-          if (item.iditem == updateItem.iditem) {
-            this.backdoor++;
-          }
-        });
-      },
-    },
-    sumPrice: {
-      get: function () {
-        this.backdoor;
-        var sum = 0;
-        this.basked.forEach((item) => {
-          sum = sum + item.price * item.pieceInBasket;
-        });
-        //console.log("sumPrice:"+sum)
-        return sum;
-      },
-      set: function (updateItem) {
-        this.basked.forEach((item) => {
-          if (item.iditem == updateItem.iditem) {
-            //item.pieceInBasket = item.pieceInBasket + updateItem.piece
-            //console.log("setSumPrice:"+ item.pieceInBasket)
-            this.backdoor++;
-          }
-        });
-      },
-    },
   },
   watch: {
     value() {
@@ -160,17 +113,17 @@ export default {
     },
   },
   methods: {
-    getData() {
+    getOrders() {
       axios
-        .get("/api/data.json")
+        .get("/api/orders.json")
         .then((response) => {
-          response.data.forEach((item) => {
-            item.piece = 1;
-            if (item.item_type_idtype === 1) {
-              this.books.push(item);
+          response.data.forEach((order) => {
+            this.orders.push(order);
+            if (order.item_type_idtype === 1) {
+              this.books.push(order);
             }
-            if (item.item_type_idtype === 2) {
-              this.tools.push(item);
+            if (order.item_type_idtype === 2) {
+              this.tools.push(order);
             }
           });
         })
@@ -179,64 +132,9 @@ export default {
         });
       //console.log(this.books)
     },
-    addToBasked: function ($newItem) {
-      var maxPriceSum = 9500;
-      if (this.sumPrice + $newItem.price * $newItem.piece < maxPriceSum) {
-        var update = 0;
-        this.basked.forEach((item) => {
-          if (item.iditem == $newItem.iditem) {
-            update = 1;
-            //console.log(" id exist ")
-          }
-        });
-        if (update == 0) {
-          $newItem.pieceInBasket = $newItem.piece;
-          this.basked.push($newItem);
-        } else {
-          this.basked.forEach((item) => {
-            if (item.iditem == $newItem.iditem) {
-              item.pieceInBasket = item.pieceInBasket + $newItem.piece;
-              this.sumPrice = item;
-            }
-          });
-        }
-        localStorage.setItem("basked", JSON.stringify(this.basked));
-      } else {
-        alert("Celková částka objednávky nesmí překročit " + maxPriceSum);
-      }
-    },
-    cleanBasket: function () {
-      //console.log($removeItem)
-      this.basked = [];
-      localStorage.setItem("basked", JSON.stringify(this.basked));
-      this.backdoor--;
-    },
-    updateBasked: function ($updateItem) {
-      this.backdoor++;
-      var maxPriceSum = 9500;
-      var sum = 0;
-      this.basked.forEach((item) => {
-        if (item.iditem != $updateItem.iditem) {
-          sum = sum + item.price * item.pieceInBasket;
-        }
-      });
-
-      if (sum + $updateItem.price * $updateItem.pieceInBasket < maxPriceSum) {
-        //console.log("OK - save local storage");
-        if ($updateItem.pieceInBasket == 0) {
-          this.basked.splice(this.basked.indexOf($updateItem), 1);
-        }
-        localStorage.setItem("basked", JSON.stringify(this.basked));
-      } else {
-        this.basked[this.basked.indexOf($updateItem)].pieceInBasket =
-          this.basked[this.basked.indexOf($updateItem)].pieceInBasket - 1;
-        alert("Celková částka objednávky nemůže překročit " + maxPriceSum);
-        this.backdoor++;
-      }
-    },
   },
   beforeMount() {
-    this.getData();
+    this.getOrders();
     //console.log("App: "+this.books)
   },
   mounted() {

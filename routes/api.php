@@ -20,9 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-Route::middleware('api')->get('/data.json', function () {
+Route::middleware('api')->get('/items.json', function () {
     if (request()->ajax()) {
-        return \DB::table('items')->get();
+        return \DB::table('items')->where('visible', '=', 1)->get();
     } else {
         return "NOPE";
     }
@@ -51,6 +51,68 @@ Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
         } else {
             return "NOPE";
         }
+    } else {
+        return "NOPE";
+    }
+});
+
+Route::middleware('api')->get('/orders.json', function (Request $request) {
+    if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
+        return \DB::select('
+        SELECT
+        /*orders.idorder AS Objednavka,*/
+        librarys.libName AS Knihovna,
+        SUM(IF(items.item_type_idtype=1,1,0)) AS knih,
+        SUM(IF(items.item_type_idtype=2,1,0)) AS pomucek,
+        /*
+        SUM(IF(items.item_type_idtype=1,items.price,0)) AS knih_kc,
+        SUM(IF(items.item_type_idtype=2,items.price,0)) AS pomucek_kc,
+        */
+        count(*) AS celkem,
+        sum(items.price) AS celkem_kc
+        FROM `orders` 
+        JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
+        JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
+        JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
+        JOIN items ON order_has_item.item_iditem=items.iditem
+        GROUP BY idorder;
+        ');
+    } else {
+        return "NOPE";
+    }
+});
+
+Route::middleware('api')->get('/sumaryitems.json', function (Request $request) {
+    if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
+        return \DB::select('
+        SELECT
+        items.*,
+        count(*) AS pieces,
+        SUM(items.price) AS priceSum
+        FROM `items` 
+        JOIN order_has_item ON order_has_item.item_iditem=items.iditem
+        GROUP BY  items.iditem
+        ');
+    } else {
+        return "NOPE";
+    }
+});
+
+Route::middleware('api')->get('/itemsinorders.json', function (Request $request) {
+    if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
+        return \DB::select('
+        SELECT
+        orders.idorder,
+        items.iditem,
+        items.item_type_idtype,
+        items.isbn,
+        items.item_name,
+        items.item_autor,
+        items.price
+        FROM `orders` 
+        JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
+        JOIN items ON order_has_item.item_iditem=items.iditem
+        ');
     } else {
         return "NOPE";
     }

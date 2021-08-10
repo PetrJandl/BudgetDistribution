@@ -1,5 +1,5 @@
 <template>
-  <div class="tools col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
+  <div class="tools col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
     <h1>Pomůcky</h1>
     <vue-scroll-indicator
       height="3px"
@@ -8,18 +8,59 @@
     >
     </vue-scroll-indicator>
     <div class="items">
-    
+        <b-table striped hover :items="this.tools" :fields="fields">
+          <template #cell(item_name)="data">
+          <a target="_blank" :href="`${data.item.url}`">{{ data.value }}</a>
+          </template>
+        </b-table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  title: "Pomůcky | Bookstart eShop",
+  title: "ADMIN - Pomůcky | Bookstart eShop",
+  data() {
+      return {
+        tools: [],
+        fields: [
+          {
+            key: 'item_name',
+            label: 'Název',
+            sortable: true,
+          },
+          {
+            key: 'pieces',
+            label: 'ks',
+            sortable: true,
+          },
+
+        ],
+      }
+  },
   methods: {
-    addToolToBasked: function ($tool) {
-      this.$emit("add-to-basked", $tool);
+    getTools() {
+      //console.log(this.tools);
+      axios
+        .get("/api/sumaryitems.json")
+        .then((response) => {
+          //console.log(this.response);
+          response.data.forEach((item) => {
+            //this.orders.push(item);
+            if (item.item_type_idtype === 2) {
+              //console.log(item.iditem);
+              this.tools.push(item);
+            }
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
+  },
+  beforeMount() {
+    this.getTools();
+    //console.log("App: "+this.books)
   },
 };
 </script>

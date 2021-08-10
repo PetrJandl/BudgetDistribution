@@ -219,9 +219,9 @@ export default {
         });
       //console.log(this.books)
     },
-    getData() {
+    getItems() {
       axios
-        .get("/api/data.json")
+        .get("/api/items.json")
         .then((response) => {
           response.data.forEach((item) => {
             item.piece = 1;
@@ -239,7 +239,7 @@ export default {
       //console.log(this.books)
     },
     addToBasked: function ($newItem) {
-      var maxPriceSum = 9500;
+      var maxPriceSum = 4550;
       if (this.sumPrice + $newItem.price * $newItem.piece < maxPriceSum) {
         var update = 0;
         this.basked.forEach((item) => {
@@ -272,7 +272,7 @@ export default {
     },
     updateBasked: function ($updateItem) {
       this.backdoor++;
-      var maxPriceSum = 9500;
+      var maxPriceSum = 4500;
       var sum = 0;
       this.basked.forEach((item) => {
         if (item.iditem != $updateItem.iditem) {
@@ -295,7 +295,7 @@ export default {
     },
   },
   beforeMount() {
-    this.getData();
+    this.getItems();
     this.getShowAdmin();
     //console.log("App: "+this.books)
   },
