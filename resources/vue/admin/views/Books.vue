@@ -24,13 +24,12 @@ export default {
     return {
       books: [],
       fields: [
-        /*
           {
             key: 'isbn',
             label: 'ISBN',
-            sortable: true
+            sortable: true,
+            tdClass: 'noWrap'
           },
-        */
           {
             key: 'item_name',
             label: 'Název',
@@ -89,3 +88,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.noWrap{
+  white-space: nowrap;
+}
+</style>
