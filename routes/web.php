@@ -27,7 +27,8 @@ Route::get('/eshop/{any?}', function () {
   return view('eshop/eshop');
 })->where('any', '.*');
 
-// all sub pages /admin/ is vue
-Route::get('/admin/{any?}', [topSecret::class, 'index']);
+Route::get('/admin/vsechyObjednavky', [topSecret::class, 'showAllOrders']);
 // all sub pages /admin/ is vue
 Route::get('/admin/zobrazitObjednavku/{num?}', [topSecret::class, 'index']);
+// all sub pages /admin/ is vue
+Route::get('/admin/{any?}', [topSecret::class, 'index']);

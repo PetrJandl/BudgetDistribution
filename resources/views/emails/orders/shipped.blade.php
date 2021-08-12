@@ -2,7 +2,7 @@
 # Vaše objednávka byla přijata ke zpracování
 
 Dobrý den,<br>
-právě jsme přijali objednávku dotovaných pomůcek a knih :
+přijali jsme objednávku dotovaných pomůcek a knih :
 
 @component('mail::table')
 | Položka       |        ks | cena 1 ks  | celkem bez DPH |
