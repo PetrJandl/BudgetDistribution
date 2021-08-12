@@ -309,4 +309,10 @@ nav a:hover {
     float: left;
   }
 }
+@media print {
+  .container, .container-sm {
+    max-width: unset;
+  }
+}
+
 </style>
