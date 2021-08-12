@@ -12,6 +12,12 @@
           <template #cell(item_name)="data">
           <a target="_blank" :href="`${data.item.url}`">{{ data.value }}</a>
           </template>
+          <template v-slot:custom-foot="data">
+            <b-tr>
+              <b-th>Celkem</b-th>
+              <b-th>{{ totalTools }}</b-th>
+            </b-tr>
+          </template>
         </b-table>
     </div>
   </div>
@@ -56,6 +62,11 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+  },
+  computed: {
+    totalTools() {
+      return this.tools.reduce((acc, item) => acc + Number(item.pieces), 0);
     },
   },
   beforeMount() {

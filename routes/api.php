@@ -82,10 +82,13 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
     }
 });
 
-Route::get('/orderDelete/{id}', function (Request $request) {
+Route::middleware('api')->get('/orderDelete/{id}', function (Request $request, $id) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
-        print_r($request);
-        //$deleted = DB::delete('delete from orders where idorder=');
+        DB::transaction(function () use ($id) {
+            DB::delete('delete from order_has_item where 	order_idorder=' . $id);
+            DB::delete('delete from library_has_order where order_idorder=' . $id);
+            DB::delete('delete from orders where idorder=' . $id);
+        });
     } else {
         return "NOPE";
     }

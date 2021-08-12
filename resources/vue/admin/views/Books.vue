@@ -12,6 +12,12 @@
           <template #cell(item_name)="data">
           <a target="_blank" :href='`https://www.google.com/search?q=koupit+"${data.value}"+${data.item.isbn}`'>{{ data.value }}</a>
           </template>
+          <template v-slot:custom-foot="data">
+            <b-tr>
+              <b-th colspan="3">Celkem</b-th>
+              <b-th>{{ totalBooks }}</b-th>
+            </b-tr>
+          </template>
         </b-table>
     </div>
   </div>
@@ -80,6 +86,11 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+  },
+  computed: {
+    totalBooks() {
+      return this.books.reduce((acc, item) => acc + Number(item.pieces), 0);
     },
   },
   beforeMount() {
