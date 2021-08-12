@@ -7,15 +7,6 @@ use Illuminate\Http\Request;
 
 class topSecret extends Controller
 {
-    public function __construct($order)
-    {
-        $this->order = $order['order'];
-        $this->basked = $order['basked'];
-        $this->total['pieceInBasket'] = 0;
-        $this->total['price'] = 0;
-        $this->total['sum'] = 0;
-    }
-
     public function index(Request $request)
     {
         if (ModelsAllowed::adminIP($request->ip())) {
@@ -38,7 +29,6 @@ class topSecret extends Controller
         JOIN items ON order_has_item.item_iditem=items.iditem
 
         ');
-            /*
             $lastValID = 0;
             foreach ($orders as $key => $value) {
                 if ($value->idorder != $lastValID) {
@@ -67,9 +57,8 @@ class topSecret extends Controller
                 }
                 $lastValID = $value->idorder;
             }
-            */
-            //dd($orderTree);
-            return view('admin/showAllOrders', ['order' => $this->order, basket => $this->basked]);
+            dd($orderTree);
+            return view('admin/showAllOrders', ['orders' => $orders]);
         } else {
             return "NOPE";
         }
