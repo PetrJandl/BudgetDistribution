@@ -1,6 +1,6 @@
 <template>
   <div class="home col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-    <h1>Přehled objednávek</h1>
+    <h1>Přehled objednávek <small><a href="/admin/vsechyObjednavky" target="_blank">Tisk objednávek <i class="fas fa-print" title="Tisk objednávek"></i></a></small></h1>
     <vue-scroll-indicator
       height="3px"
       color="#dc3545"
@@ -17,8 +17,10 @@
         </b-tr>
       </template>
       <template #cell(idorder)="data">
+        <!--
           <a href="javascript:;" v-on:click="ShowOrder(`${data.value}`,`${data.index}`)"><i class="fas fa-eye fa-lg" title="Zobrazit objednávku"></i></a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          -->
           <a href="javascript:;" v-on:click="DeleteOrder(`${data.value}`,`${data.index}`)"><i class="fas fa-trash-alt fa-xs" title="ODSTRANIT objednávku"></i></a>
       </template>
       <template v-slot:custom-foot="data">

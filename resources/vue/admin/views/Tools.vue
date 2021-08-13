@@ -10,7 +10,10 @@
     <div class="items">
         <b-table striped hover :items="this.tools" :fields="fields">
           <template #cell(item_name)="data">
-          <a target="_blank" :href="`${data.item.url}`">{{ data.value }}</a>
+            <a target="_blank" :href="`${data.item.url}`">{{ data.value }}</a>
+          </template>
+          <template #cell(url)="data">
+            {{ data.value.split("/")[2].replace("www.", "").replace("eshop.", "") }}
           </template>
           <template v-slot:custom-foot="data">
             <b-tr>
@@ -28,6 +31,8 @@ export default {
   title: "ADMIN - Pomůcky | Bookstart eShop",
   data() {
       return {
+        sortBy: 'url',
+        sortDesc: false,
         tools: [],
         fields: [
           {
@@ -36,11 +41,15 @@ export default {
             sortable: true,
           },
           {
+            key: 'url',
+            label: 'Web prodejce',
+            sortable: true,
+          },
+          {
             key: 'pieces',
             label: 'ks',
             sortable: true,
           },
-
         ],
       }
   },

@@ -33,7 +33,7 @@ class topSecret extends Controller
             foreach ($orders as $key => $value) {
                 if ($value->idorder != $lastValID) {
                     $orderTree[$value->idorder]['idlibrary'] = $value->idlibrary;
-
+                    $orderTree[$value->idorder]['idorder'] = $value->idorder;
                     $orderTree[$value->idorder]["oName"] = $value->oName;
                     $orderTree[$value->idorder]["libName"] = $value->libName;
                     $orderTree[$value->idorder]["libStreet"] = $value->libStreet;
@@ -48,17 +48,17 @@ class topSecret extends Controller
                     $orderTree[$value->idorder]["deliveryCity"] = $value->deliveryCity;
                     $orderTree[$value->idorder]["deliveryPSC"] = $value->deliveryPSC;
                 } else {
-                    $orderTree[$value->idorder]['items']['item_iditem'] = $value->item_iditem;
-                    $orderTree[$value->idorder]['items']['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items']['price'] = $value->price;
-                    $orderTree[$value->idorder]['items']['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items']['item_name'] = $value->item_name;
-                    $orderTree[$value->idorder]['items']['item_autor'] = $value->item_autor;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['price'] = $value->price;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
                 }
                 $lastValID = $value->idorder;
             }
-            dd($orderTree);
-            return view('admin/showAllOrders', ['orders' => $orders]);
+            //dd($orderTree);
+            return view('admin/showAllOrders', ['orders' => $orderTree]);
         } else {
             return "NOPE";
         }
