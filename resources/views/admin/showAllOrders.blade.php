@@ -3,8 +3,7 @@
   
 @section('content')
   @foreach ($orders as $order)
-    <p>{{ $order->idorder }}</p>
-    @include('../emails/orders/shipped', ['order' => $order, 'basked' =>  $order, 'total' =>  $order]) 
+    @include('admin/order', ['order' => $order]) 
   @endforeach
 
 @endsection
