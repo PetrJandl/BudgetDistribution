@@ -8,7 +8,7 @@
     >
     </vue-scroll-indicator>
     <div class="items">
-        <b-table striped hover :items="this.tools" :fields="fields">
+        <b-table striped hover :items="this.tools" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc">
           <template #cell(item_name)="data">
             <a target="_blank" :href="`${data.item.url}`">{{ data.value }}</a>
           </template>
