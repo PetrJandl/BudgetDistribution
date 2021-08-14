@@ -12,7 +12,13 @@ class Allowed extends Model
         if (
             $ip == "::1" //localhost ipv6 - jandl
             or
-            $ip == "192.168.133.80" //jandl
+            $ip == "192.168.133.80" //jandl pc work
+            or
+            $ip == "192.168.20.250" //jandl mobile home
+            or
+            $ip == "192.168.20.250" //jandl pc home
+            or
+            $ip == "192.168.99.218" //jandl mobile work
             or
             $ip == "192.168.132.9" // cizinska
             or
