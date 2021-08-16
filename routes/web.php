@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\eshopData;
 use App\Http\Controllers\topSecret;
-
+use App\Models\showLogo;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +27,11 @@ Route::get('/eshop/{any?}', function () {
   return view('eshop/eshop');
 })->where('any', '.*');
 
-Route::get('/admin/vsechyObjednavky', [topSecret::class, 'showAllOrders']);
+Route::get('/admin/vsechyObjednavky', [topSecret::class, 'printAllOrders']);
+Route::get('/admin/vsechyAdresy/', [topSecret::class, 'printAllAddress']);
+Route::get('/admin/vsechyAdresy/{showLogo}', ['as' => 'vsechyAdresy', topSecret::class, 'printAllAddress']);
 // all sub pages /admin/ is vue
-Route::get('/admin/zobrazitObjednavku/{num?}', [topSecret::class, 'index']);
+Route::get('/admin/zobrazitObjednavku/', [topSecret::class, 'index']);
+
 // all sub pages /admin/ is vue
 Route::get('/admin/{any?}', [topSecret::class, 'index']);
