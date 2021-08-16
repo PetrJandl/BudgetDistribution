@@ -1,6 +1,13 @@
 <template>
   <div class="home col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-    <h1>Přehled objednávek <small><a href="/admin/vsechyObjednavky" target="_blank">Tisk objednávek <i class="fas fa-print" title="Tisk objednávek"></i></a></small></h1>
+    <h1>Přehled objednávek</h1>
+    <div class="d-print-none">
+    <a href="/admin/vsechyObjednavky" target="_blank" type="button" class="btn btn-light"><i class="fas fa-print" title="Tisk objednávek"></i> Tisk objednávek</a>
+    <strong>Tisk adresních štítků :</strong> 
+    <a href="/admin/vsechyAdresy" target="_blank" type="button" class="btn btn-light">bez loga</a> |
+    <a href="/admin/vsechyAdresy/slogem" target="_blank" type="button" class="btn btn-light">s logem</a> |
+    <a href="/admin/vsechyAdresy/srazitkem" target="_blank" type="button" class="btn btn-light">s razítkovým logem</a>
+    </div>
     <vue-scroll-indicator
       height="3px"
       color="#dc3545"
@@ -21,7 +28,7 @@
           <a href="javascript:;" v-on:click="ShowOrder(`${data.value}`,`${data.index}`)"><i class="fas fa-eye fa-lg" title="Zobrazit objednávku"></i></a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           -->
-          <a href="javascript:;" v-on:click="DeleteOrder(`${data.value}`,`${data.index}`)"><i class="fas fa-trash-alt fa-xs" title="ODSTRANIT objednávku"></i></a>
+          <a href="javascript:;" v-on:click="DeleteOrder(`${data.value}`,`${data.index}`)" class="btn btn-danger d-print-none"><i class="fas fa-trash-alt fa-xs" title="ODSTRANIT objednávku"></i></a>
       </template>
       <template v-slot:custom-foot="data">
         <b-tr>
@@ -112,5 +119,13 @@ export default {
 <style>
 .noWrap{
   white-space: nowrap;
+}
+
+a.btn{
+  border: 1px solid gray;
+}
+a.btn:hover {
+  -webkit-box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.2); 
+  box-shadow: 0px 0px 15px 3px rgba(0,0,0,0.2);
 }
 </style>
