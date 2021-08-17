@@ -1,5 +1,5 @@
 
-<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray solid; page-break-inside: avoid;">
+<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray solid; page-break-inside: avoid; page-break-after: always;">
 
 <div style="border: 1px dotted gray; margin: 5pt; padding: 5pt;">
 Objednatel : {{ $order['libName'] }}  ( {{ $order['libEmail'] }} )<br>
