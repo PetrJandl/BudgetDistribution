@@ -1,15 +1,18 @@
 
 <div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray solid; page-break-inside: avoid;">
 
-<div style="border: 1px dotted gray; width: 50%; margin: 5pt; padding: 5pt;">
+<div style="border: 1px dotted gray; margin: 5pt; padding: 5pt;">
+Objednatel : {{ $order['libName'] }}  ( {{ $order['libEmail'] }} )<br>
+Kontakt : {{ $order['contactPerson'] }}, {{ $order['contactPersonTele'] }}, {{ $order['contactPersonEmail'] }}<br>
 @if (is_null($order['deliveryName']))
-{{ $order['libName'] }}<br>
-{{ $order['libStreet'] }}<br>
-{{ substr($order['libPSC'],0,3) }}&nbsp;{{ substr($order['libPSC'],3,2)  }}&nbsp;{{ $order['libCity'] }}<br>
+Doručení na adresu (objednatele) : <strong>{{ $order['libName'] }}</strong>, {{ $order['libStreet'] }}, {{ substr($order['libPSC'],0,3) }}&nbsp;{{ substr($order['libPSC'],3,2)  }}&nbsp;{{ $order['libCity'] }}<br>
 @else
-{{ $order['deliveryName'] }}<br>
-{{ $order['deliveryStreet'] }}<br>
-{{ substr($order['deliveryPSC'],0,3) }}&nbsp;{{ substr($order['deliveryPSC'],3,2)  }}&nbsp;{{ $order['deliveryCity'] }}<br>
+Doručení na adresu (doručovací):
+<strong>@if ( trim($order['deliveryName'])==trim($order['contactPerson']) )
+    {{ $order['libName'] }}
+    @else
+    {{ $order['deliveryName'] }}
+    @endif</strong>, {{ $order['deliveryStreet'] }}, {{ substr($order['deliveryPSC'],0,3) }}&nbsp;{{ substr($order['deliveryPSC'],3,2)  }}&nbsp;{{ $order['deliveryCity'] }}<br>
 @endif
 </div>
 Položky:
@@ -28,14 +31,12 @@ Položky:
 </table>
 
 <div style="margin:10pt;">
-    Objednatel : {{ $order['libName'] }} : {{ $order['libEmail'] }}<br>
-    Kontakt : {{ $order['contactPerson'] }}, {{ $order['contactPersonTele'] }}, {{ $order['contactPersonEmail'] }}
 </div>
     
 </div>
 
 <script type="text/javascript">
 <!--
-//window.print();
+window.print();
 //-->
 </script>
