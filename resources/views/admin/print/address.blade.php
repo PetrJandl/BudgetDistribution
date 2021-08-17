@@ -18,7 +18,11 @@ Wonkova 1262/1a<br>
 {{ $order['libStreet'] }}<br>
 {{ substr($order['libPSC'],0,3) }}&nbsp;{{ substr($order['libPSC'],3,2)  }}&nbsp;&nbsp;{{ $order['libCity'] }}<br>
 @else
+@if ( trim($order['deliveryName'])==trim($order['contactPerson']) )
+{{ $order['libName'] }}<br>
+@else
 {{ $order['deliveryName'] }}<br>
+@endif
 {{ $order['contactPerson'] }}<br>
 {{ $order['deliveryStreet'] }}<br>
 {{ substr($order['deliveryPSC'],0,3) }}&nbsp;{{ substr($order['deliveryPSC'],3,2)  }}&nbsp;&nbsp;{{ $order['deliveryCity'] }}<br>
@@ -32,6 +36,6 @@ Wonkova 1262/1a<br>
 
 <script type="text/javascript">
 <!--
-window.print();
+//window.print();
 //-->
 </script>
