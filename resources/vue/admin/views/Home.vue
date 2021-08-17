@@ -6,7 +6,8 @@
     <strong>Tisk adresních štítků :</strong> 
     <a href="/admin/vsechyAdresy" target="_blank" type="button" class="btn btn-light">bez loga</a> |
     <a href="/admin/vsechyAdresy/slogem" target="_blank" type="button" class="btn btn-light">s logem</a> |
-    <a href="/admin/vsechyAdresy/srazitkem" target="_blank" type="button" class="btn btn-light">s razítkovým logem</a>
+    <a href="/admin/vsechyAdresy/srazitkem" target="_blank" type="button" class="btn btn-light">s razítkovým logem</a> |
+    <a href="/admin/vsechyAdresy/nope" target="_blank" type="button" class="btn btn-light">prázdno na razítko</a>
     </div>
     <vue-scroll-indicator
       height="3px"
