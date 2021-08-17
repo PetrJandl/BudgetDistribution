@@ -36,6 +36,6 @@ Wonkova 1262/1a<br>
 
 <script type="text/javascript">
 <!--
-//window.print();
+window.print();
 //-->
 </script>
