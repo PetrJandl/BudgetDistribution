@@ -1,7 +1,7 @@
 
-<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray dotted; page-break-inside: avoid;">
+<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray solid; page-break-inside: avoid;">
 
-<div style="border: 1px solid gray; width: 50%; margin: 5pt; padding: 5pt;">
+<div style="border: 1px dotted gray; width: 50%; margin: 5pt; padding: 5pt;">
 @if (is_null($order['deliveryName']))
 {{ $order['libName'] }}<br>
 {{ $order['libStreet'] }}<br>
@@ -13,11 +13,11 @@
 @endif
 </div>
 Položky:
-<table style="width: 100%; margin: 5pt; padding: 5pt;">
+<table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; ">
 @foreach ($order['items'] as $item)
-<tr style="border-bottom: 1px solid gray">
-    <td style="width: 10pt; padding-right: 20pt; border: 1px solid gray;"></td>
-    <td style="text-align: right; width: 30pt; padding-right: 10pt;">{{ $item['item_count'] }}</td>
+<tr style="border-bottom: 1px dotted gray; height: 18pt;">
+    <td style="width: 18pt; border: 1px dotted gray;"></td>
+    <td style="text-align: right; width: 30pt; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
     <td>{{ $item['item_name'] }}
 @if ( !is_null($item['item_autor']) )
         - {{ $item['item_autor'] }}
@@ -36,6 +36,6 @@ Položky:
 
 <script type="text/javascript">
 <!--
-window.print();
+//window.print();
 //-->
 </script>
