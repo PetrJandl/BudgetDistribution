@@ -39,3 +39,11 @@ Wonkova 1262/1a<br>
 window.print();
 //-->
 </script>
+
+<style>
+    @media print {
+        @page {
+            size: A4 landscape;max-height:100%; max-width:100%
+        }
+    }
+</style>
