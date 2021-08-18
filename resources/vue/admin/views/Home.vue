@@ -33,10 +33,10 @@
       </template>
       <template v-slot:custom-foot="data">
         <b-tr>
-          <b-th>Celkem</b-th>
-          <b-th>{{ totalBooks }}</b-th>
-          <b-th>{{ totalTools }}</b-th>
-          <b-th>{{ totalPrice }}</b-th>
+          <b-th>Celkem {{ totalCount }} objednávky </b-th>
+          <b-th class="text-right">{{ totalBooks }}</b-th>
+          <b-th class="text-right">{{ totalTools }}</b-th>
+          <b-th class="text-right">{{ totalPrice }}</b-th>
         </b-tr>
       </template>
     </b-table>
@@ -64,21 +64,27 @@ export default {
             key: 'knih',
             label: 'knih',
             sortable: true,
+            tdClass: 'text-right',
+            thClass: 'text-right'
           },
           {
             key: 'pomucek',
             label: 'pomůcek',
             sortable: true,
+            tdClass: 'text-right',
+            thClass: 'text-right'
           },
           {
             key: 'celkem_kc',
             label: 'Celkem',
             sortable: true,
+            tdClass: 'text-right',
+            thClass: 'text-right'
           },
           {
             key: 'idorder',
             label: '',
-            sortable: false,
+            sortable: false
           },
         ],
     };
@@ -100,9 +106,11 @@ export default {
   }
   },
   computed: {
+    totalCount() {
+      return this.$parent.orders.reduce((acc, item) => acc + + Number(1), 0);
+    },
     totalPrice() {
       return this.$parent.orders.reduce((acc, item) => acc + Number(item.celkem_kc), 0);
-      
     },
     totalBooks() {
       return this.$parent.orders.reduce((acc, item) => acc + Number(item.knih), 0);
