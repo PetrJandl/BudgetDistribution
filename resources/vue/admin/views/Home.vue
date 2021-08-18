@@ -33,7 +33,13 @@
       </template>
       <template v-slot:custom-foot="data">
         <b-tr>
-          <b-th>Celkem {{ totalCount }} objednávky </b-th>
+          <b-th>Celkem 
+            <span v-if="totalCount==0"> žádná objednávka v systému</span>
+            <span v-if="totalCount!=0">{{ totalCount }}</span>
+            <span v-if="totalCount==1">objednávka</span>
+            <span v-if="totalCount>1 && totalCount<5">objednávky</span>
+            <span v-if="totalCount>4">objednávek</span>
+          </b-th>
           <b-th class="text-right">{{ totalBooks }}</b-th>
           <b-th class="text-right">{{ totalTools }}</b-th>
           <b-th class="text-right">{{ totalPrice }}</b-th>
