@@ -40,7 +40,7 @@ Položky:
     </td>
     
     @if ( !is_null($item['item_autor']) )<td style="">{{ $item['item_autor'] }}</td>@endif
-    <td style="text-align: right; width: 30pt; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
+    <td style="text-align: right; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
     <td style="width: 18pt; border: 1px dotted gray;"></td>
 </tr>
 @php ($last = $item['item_type_idtype'])
