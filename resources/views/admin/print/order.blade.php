@@ -30,15 +30,18 @@ Položky:
 @endforeach
 </table>
 
+@if ($order['ordersDescription']!="")
 <div style="margin:10pt;">
+<h3>Poznámka k objednávce:</h3>
     {{ $order['ordersDescription'] }}
 </div>
+@endif
     
 </div>
 
 <script type="text/javascript">
 <!--
-//window.print();
+window.print();
 //-->
 </script>
 
