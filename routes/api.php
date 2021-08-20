@@ -75,7 +75,8 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
         JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
         JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
         JOIN items ON order_has_item.item_iditem=items.iditem
-        GROUP BY idorder;
+        GROUP BY idorder
+        ORDER BY orders.idorder, items.item_type_idtype
         ');
     } else {
         return "NOPE";

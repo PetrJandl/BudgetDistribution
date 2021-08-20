@@ -1,7 +1,7 @@
 
-<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; border-bottom: 1px gray solid; page-break-inside: avoid; page-break-after: always;">
+<div style="width: 200mm; padding-bottom: 50pt; margin: 0 auto; page-break-inside: avoid; page-break-after: always;">
 
-<div style="border: 1px dotted gray; margin: 5pt; padding: 5pt;">
+<div style="width: 100%;  margin-bottom: 10pt; padding: 0pt;">
 Objednatel : {{ $order['libName'] }}  ( {{ $order['libEmail'] }} )<br>
 Kontakt : {{ $order['contactPerson'] }}, {{ $order['contactPersonTele'] }}, {{ $order['contactPersonEmail'] }}<br>
 @if (is_null($order['deliveryName']))
@@ -18,17 +18,32 @@ Doručení na adresu (doručovací):
 </strong>
 </div>
 Položky:
-<table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; ">
+<table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; border-bottom: 1px dotted gray;">
+@php ($last = 1)
 @foreach ($order['items'] as $item)
-<tr style="border-bottom: 1px dotted gray; height: 18pt;">
-    <td style="width: 18pt; border: 1px dotted gray;"></td>
+<tr style="border-top: 1px @if ($last!=$item['item_type_idtype']) solid @else dotted @endif gray; height: 18pt;">
+    {{--
+    <td style="width: 15pt; font-size: 8pt;">
+        @if ( $item['item_type_idtype']==1 )
+        <small>K</small>
+        @else
+        <small>P</small>
+        @endif
+    </td>
+    --}}
+    <td style="width: 40%;" @if(is_null($item['item_autor']))colspan="2"@endif >
+        @if(is_null($item['item_autor']))
+        {{ $item['item_name'] }}
+        @else
+        {{  Illuminate\Support\Str::limit($item['item_name'], 40, $end='...') }}
+        @endif
+    </td>
+    
+    @if ( !is_null($item['item_autor']) )<td style="">{{ $item['item_autor'] }}</td>@endif
     <td style="text-align: right; width: 30pt; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
-    <td>{{ $item['item_name'] }}
-@if ( !is_null($item['item_autor']) )
-        - {{ $item['item_autor'] }}
-@endif
-        </td>
+    <td style="width: 18pt; border: 1px dotted gray;"></td>
 </tr>
+@php ($last = $item['item_type_idtype'])
 @endforeach
 </table>
 
@@ -43,7 +58,7 @@ Položky:
 
 <script type="text/javascript">
 <!--
-window.print();
+//window.print();
 //-->
 </script>
 
