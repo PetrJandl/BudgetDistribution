@@ -27,6 +27,7 @@ class topSecret extends Controller
         JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
         JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
         JOIN items ON order_has_item.item_iditem=items.iditem
+        ORDER BY orders.idorder, items.item_type_idtype
 
         ');
             $lastValID = 0;
@@ -55,6 +56,7 @@ class topSecret extends Controller
                     $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
                     $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
                     $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
+                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_type_idtype'] = $value->item_type_idtype;
                 }
                 $lastValID = $value->idorder;
             }
