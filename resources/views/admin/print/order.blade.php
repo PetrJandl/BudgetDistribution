@@ -31,13 +31,14 @@ Položky:
 </table>
 
 <div style="margin:10pt;">
+    {{ $order['ordersDescription'] }}
 </div>
     
 </div>
 
 <script type="text/javascript">
 <!--
-window.print();
+//window.print();
 //-->
 </script>
 

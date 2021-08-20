@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class eshopData extends Controller
 {
@@ -65,7 +66,8 @@ class eshopData extends Controller
 
                     //Add order to database
                     $orderId = DB::table('orders')->insertGetId([
-                        'description' => $order[0]->description
+                        'description' => $order[0]->description,
+                        'created_at' => Carbon::now()
                     ]);
 
                     //Add library has order
@@ -91,8 +93,9 @@ class eshopData extends Controller
                         Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                     } else {
                         //Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($completeOrder));
+                        Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                         Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($order[0]));
-                        //Mail::to($order[0]->libEmail)->send(new OrderShipped($order[0]));
+                        Mail::to($order[0]->libEmail)->send(new OrderShipped($order[0]));
                     }
                 } else {
                     $r = response()->json(['message' => "Knihovna již má objednáno!"]);
