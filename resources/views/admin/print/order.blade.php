@@ -5,15 +5,17 @@
 Objednatel : {{ $order['libName'] }}  ( {{ $order['libEmail'] }} )<br>
 Kontakt : {{ $order['contactPerson'] }}, {{ $order['contactPersonTele'] }}, {{ $order['contactPersonEmail'] }}<br>
 @if (is_null($order['deliveryName']))
-Doručení na adresu (objednatele) : <strong>{{ $order['libName'] }}</strong>, {{ $order['libStreet'] }}, {{ substr($order['libPSC'],0,3) }}&nbsp;{{ substr($order['libPSC'],3,2)  }}&nbsp;{{ $order['libCity'] }}<br>
+Doručení na adresu (objednatele) : <strong>{{ $order['libName'] }}, {{ $order['libStreet'] }}, {{ substr($order['libPSC'],0,3) }}&nbsp;{{ substr($order['libPSC'],3,2)  }}&nbsp;{{ $order['libCity'] }}<br></strong>
 @else
 Doručení na adresu (doručovací):
-<strong>@if ( trim($order['deliveryName'])==trim($order['contactPerson']) )
+<strong>
+@if ( trim($order['deliveryName'])==trim($order['contactPerson']) )
     {{ $order['libName'] }}
     @else
     {{ $order['deliveryName'] }}
-    @endif</strong>, {{ $order['deliveryStreet'] }}, {{ substr($order['deliveryPSC'],0,3) }}&nbsp;{{ substr($order['deliveryPSC'],3,2)  }}&nbsp;{{ $order['deliveryCity'] }}<br>
+    @endif, {{ $order['deliveryStreet'] }}, {{ substr($order['deliveryPSC'],0,3) }}&nbsp;{{ substr($order['deliveryPSC'],3,2)  }}&nbsp;{{ $order['deliveryCity'] }}<br>
 @endif
+</strong>
 </div>
 Položky:
 <table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; ">
