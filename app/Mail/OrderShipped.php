@@ -38,7 +38,10 @@ class OrderShipped extends Mailable
             $this->total['price'] += $value->price;
             $this->total['sum'] += $value->pieceInBasket * $value->price;
         }
-
-        return $this->subject('Objednávka přijata ke zpracování')->markdown('emails.orders.shipped', ['order' => $this->order, 'basked' => $this->basked, 'total' => $this->total]);
+        if (env('APP_DEBUG')) {
+            return $this->subject('DEBUG MODE - Objednávka přijata ke zpracování')->markdown('emails.orders.shipped', ['order' => $this->order, 'basked' => $this->basked, 'total' => $this->total]);
+        } else {
+            return $this->subject('Objednávka přijata ke zpracování')->markdown('emails.orders.shipped', ['order' => $this->order, 'basked' => $this->basked, 'total' => $this->total]);
+        }
     }
 }

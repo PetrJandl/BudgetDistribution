@@ -20,7 +20,7 @@ class topSecret extends Controller
         if (ModelsAllowed::adminIP($request->ip())) {
             $orders = \DB::select('
         SELECT
-        *
+        *, orders.description AS ordersDescription
 
         FROM `orders` 
         JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
@@ -47,6 +47,7 @@ class topSecret extends Controller
                     $orderTree[$value->idorder]["deliveryStreet"] = $value->deliveryStreet;
                     $orderTree[$value->idorder]["deliveryCity"] = $value->deliveryCity;
                     $orderTree[$value->idorder]["deliveryPSC"] = $value->deliveryPSC;
+                    $orderTree[$value->idorder]["ordersDescription"] = $value->ordersDescription;
                 } else {
                     $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
                     $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
