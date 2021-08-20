@@ -31,15 +31,17 @@ Položky:
         @endif
     </td>
     --}}
-    <td style="width: 40%;" @if(is_null($item['item_autor']))colspan="2"@endif >
+    <td style="width: 70%;" @if(is_null($item['item_autor']))colspan="2"@endif >
         @if(is_null($item['item_autor']))
         {{ $item['item_name'] }}
         @else
-        {{  Illuminate\Support\Str::limit($item['item_name'], 40, $end='...') }}
+        {{  Illuminate\Support\Str::limit($item['item_name'], 70, $end='...') }}
         @endif
     </td>
     
-    @if ( !is_null($item['item_autor']) )<td style="">{{ $item['item_autor'] }}</td>@endif
+    @if ( !is_null($item['item_autor']) )<td style="">
+        {{  Illuminate\Support\Str::limit($item['item_autor'], 19, $end='...') }}
+    </td>@endif
     <td style="text-align: right; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
     <td style="width: 18pt; border: 1px dotted gray;"></td>
 </tr>
@@ -58,7 +60,7 @@ Položky:
 
 <script type="text/javascript">
 <!--
-//window.print();
+window.print();
 //-->
 </script>
 
