@@ -42,6 +42,7 @@ Route::middleware('api')->get('/librarys.json', function () {
     //return view('welcome');
 });
 
+
 Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
     if (request()->ajax()) {
         if (
@@ -56,11 +57,14 @@ Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
     }
 });
 
+/* Administration links */
+// orders.json 
 Route::middleware('api')->get('/orders.json', function (Request $request) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
         return \DB::select('
         SELECT
         orders.idorder AS idorder,
+        orders.created_at,
         librarys.libName AS knihovna,
         SUM(IF(items.item_type_idtype=1,1,0)) AS knih,
         SUM(IF(items.item_type_idtype=2,1,0)) AS pomucek,
@@ -83,6 +87,7 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
     }
 });
 
+// DELETE order by ID
 Route::middleware('api')->get('/orderDelete/{id}', function (Request $request, $id) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
         DB::transaction(function () use ($id) {
@@ -95,6 +100,7 @@ Route::middleware('api')->get('/orderDelete/{id}', function (Request $request, $
     }
 });
 
+// sumaryitems.json 
 Route::middleware('api')->get('/sumaryitems.json', function (Request $request) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
         return \DB::select('
@@ -111,6 +117,7 @@ Route::middleware('api')->get('/sumaryitems.json', function (Request $request) {
     }
 });
 
+// itemsinorders.json
 Route::middleware('api')->get('/itemsinorders.json', function (Request $request) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
         return \DB::select('

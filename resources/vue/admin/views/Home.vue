@@ -2,12 +2,22 @@
   <div class="home col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
     <h1>Přehled objednávek</h1>
     <div class="d-print-none">
-    <a href="/admin/vsechyObjednavky" target="_blank" type="button" class="btn btn-light"><i class="fas fa-print" title="Tisk objednávek"></i> Tisk objednávek</a>
-    <strong>Tisk adresních štítků :</strong> 
-    <a href="/admin/vsechyAdresy" target="_blank" type="button" class="btn btn-light">bez loga</a> |
-    <a href="/admin/vsechyAdresy/slogem" target="_blank" type="button" class="btn btn-light">s logem</a> |
-    <a href="/admin/vsechyAdresy/srazitkem" target="_blank" type="button" class="btn btn-light">s razítkovým logem</a> |
-    <a href="/admin/vsechyAdresy/nope" target="_blank" type="button" class="btn btn-light">prázdno na razítko</a>
+    <div>
+      <h4>Tisk objednávek:</h4>
+      <div class="text-center">
+        <a href="javascript: window.print();" type="button" class="btn btn-light">přehled objednávek</a> | 
+        <a href="/admin/vsechyObjednavky" target="_blank" type="button" class="btn btn-light">detaily všech objednávek</a>
+      </div>
+    </div>
+    <div>
+      <h4>Tisk adresních štítků :</h4>
+      <div class="text-center">
+        <a href="/admin/vsechyAdresy" target="_blank" type="button" class="btn btn-light">bez loga</a> |
+        <a href="/admin/vsechyAdresy/slogem" target="_blank" type="button" class="btn btn-light">s logem</a> |
+        <a href="/admin/vsechyAdresy/srazitkem" target="_blank" type="button" class="btn btn-light">s razítkovým logem</a> |
+        <a href="/admin/vsechyAdresy/nope" target="_blank" type="button" class="btn btn-light">prázdno na razítko</a>
+      </div>
+    </div>
     </div>
     <vue-scroll-indicator
       height="3px"
@@ -19,7 +29,7 @@
     <b-table striped hover :items="this.$parent.orders" :fields="fields" custom-foot>
        <template #thead-top="data">
         <b-tr>
-          <b-th></b-th>
+          <b-th colspan="2">Objednávka</b-th>
           <b-th colspan="2">Počty kusů v objednávce </b-th>
           <b-th>Cena</b-th>
         </b-tr>
@@ -33,7 +43,7 @@
       </template>
       <template v-slot:custom-foot="data">
         <b-tr>
-          <b-th>Celkem 
+          <b-th colspan="2">Celkem 
             <span v-if="totalCount==0"> žádná objednávka v systému</span>
             <span v-if="totalCount!=0">{{ totalCount }}</span>
             <span v-if="totalCount==1">objednávka</span>
@@ -62,7 +72,13 @@ export default {
       fields: [
           {
             key: 'knihovna',
-            label: 'Objednal',
+            label: 'Objednatel',
+            sortable: true,
+            tdClass: 'noWrap'
+          },
+          {
+            key: 'created_at',
+            label: 'Čas',
             sortable: true,
             tdClass: 'noWrap'
           },
