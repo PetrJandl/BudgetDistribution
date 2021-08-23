@@ -21,7 +21,7 @@ Položky:
 <table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; border-bottom: 1px dotted gray;">
 @php ($last = 1)
 @foreach ($order['items'] as $item)
-<tr style="border-top: 1px @if ($last!=$item['item_type_idtype']) solid @else dotted @endif gray; height: 18pt;">
+<tr style="border-top: @if ($last!=$item['item_type_idtype']) 2px solid @else 1px dotted @endif gray; height: 18pt;">
     {{--
     <td style="width: 15pt; font-size: 8pt;">
         @if ( $item['item_type_idtype']==1 )

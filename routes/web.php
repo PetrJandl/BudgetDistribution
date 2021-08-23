@@ -27,6 +27,7 @@ Route::get('/eshop/{any?}', function () {
   return view('eshop/eshop');
 })->where('any', '.*');
 
+/* Administration links */
 Route::get('/admin/vsechyObjednavky', [topSecret::class, 'printAllOrders']);
 Route::get('/admin/vsechyAdresy/', [topSecret::class, 'printAllAddress']);
 Route::get('/admin/vsechyAdresy/{showLogo}', ['as' => 'vsechyAdresy', topSecret::class, 'printAllAddress']);
