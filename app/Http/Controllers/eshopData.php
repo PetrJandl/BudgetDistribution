@@ -106,10 +106,6 @@ class eshopData extends Controller
             } else {
                 $r = response()->json(['message' => "Nebyla vybrána knihovna!"]);
             }
-
-
-
-
             return json_encode($r);
         }
     }
