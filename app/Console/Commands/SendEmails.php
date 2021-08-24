@@ -105,17 +105,17 @@ class SendEmails extends Command
                     ->where('idorder', $value->idorder)
                     ->update(array('isSend' => 1));
             }
+            if (env('APP_DEBUG')) {
+                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+            } else {
+                Mail::to($completeOrder['order']->contactPersonEmail)->send(new OrderShipped($completeOrder));
+                Mail::to($completeOrder['order']->libEmail)->send(new OrderShipped($completeOrder));
+                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+            }
         }
         //dd($completeOrder['basked']);
 
         //dd();
-        if (env('APP_DEBUG')) {
-            Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
-        } else {
-            Mail::to($completeOrder['order']->contactPersonEmail)->send(new OrderShipped($completeOrder));
-            Mail::to($completeOrder['order']->libEmail)->send(new OrderShipped($completeOrder));
-            Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
-        }
 
 
 
