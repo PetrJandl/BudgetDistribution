@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\eshopData;
 use App\Http\Controllers\topSecret;
-use App\Models\showLogo;
 
 /*
 |--------------------------------------------------------------------------
