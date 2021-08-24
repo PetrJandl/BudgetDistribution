@@ -96,8 +96,8 @@ class eshopData extends Controller
                         Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                         //Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($completeOrder));
                     } else {
-                        Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped(($completeOrder));
-                        Mail::to($order[0]->libEmail)->send(new OrderShipped(($completeOrder));
+                        Mail::to($order[0]->contactPersonEmail)->send(new OrderShipped($completeOrder));
+                        Mail::to($order[0]->libEmail)->send(new OrderShipped($completeOrder));
                         Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
                     }
                 } else {
