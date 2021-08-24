@@ -108,7 +108,7 @@ class SendEmails extends Command
         }
         //dd($completeOrder['basked']);
 
-        dd();
+        //dd();
         if (env('APP_DEBUG')) {
             Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
         } else {
