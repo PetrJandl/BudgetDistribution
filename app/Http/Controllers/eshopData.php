@@ -64,27 +64,29 @@ class eshopData extends Controller
                         ->update($libUpdate);
                     //Update library in database OVER
 
-                    //Add order to database
-                    $orderId = DB::table('orders')->insertGetId([
-                        'description' => $order[0]->description,
-                        'isSend' => 1,
-                        'created_at' => Carbon::now()
-                    ]);
-
-                    //Add library has order
-                    $lho = DB::table('library_has_order')->insertGetId([
-                        'library_idlibrary' => $idlibrary,
-                        'order_idorder' => $orderId
-                    ]);
-
-                    //Add order has items
-                    foreach ($basked as $value) {
-                        DB::table('order_has_item')->insert([
-                            'item_iditem' => $value->iditem,
-                            'order_idorder' => $orderId,
-                            'item_count' => $value->pieceInBasket
+                    DB::transaction(function () use ($order, $idlibrary, $basked) {
+                        //Add order to database
+                        $orderId = DB::table('orders')->insertGetId([
+                            'description' => $order[0]->description,
+                            'isSend' => 1,
+                            'created_at' => Carbon::now()
                         ]);
-                    }
+
+                        //Add library has order
+                        $lho = DB::table('library_has_order')->insertGetId([
+                            'library_idlibrary' => $idlibrary,
+                            'order_idorder' => $orderId
+                        ]);
+
+                        //Add order has items
+                        foreach ($basked as $value) {
+                            DB::table('order_has_item')->insert([
+                                'item_iditem' => $value->iditem,
+                                'order_idorder' => $orderId,
+                                'item_count' => $value->pieceInBasket
+                            ]);
+                        }
+                    });
 
                     $r = response()->json(['message' => "ok"]);
                     $completeOrder['order'] = $order[0];
