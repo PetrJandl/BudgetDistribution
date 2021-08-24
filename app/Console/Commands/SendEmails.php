@@ -108,12 +108,12 @@ class SendEmails extends Command
         }
         //dd($completeOrder['basked']);
 
-        //dd($completeOrder['order']);
+        dd();
         if (env('APP_DEBUG')) {
             Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
         } else {
-            Mail::to($completeOrder['contactPersonEmail'])->send(new OrderShipped($completeOrder));
-            Mail::to($completeOrder['libEmail'])->send(new OrderShipped($completeOrder));
+            Mail::to($completeOrder['order']->contactPersonEmail)->send(new OrderShipped($completeOrder));
+            Mail::to($completeOrder['order']->libEmail)->send(new OrderShipped($completeOrder));
             Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
         }
 
