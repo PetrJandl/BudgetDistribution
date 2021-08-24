@@ -56,6 +56,8 @@ class SendEmails extends Command
         ');
         $lastValID = 0;
         foreach ($orders as $key => $value) {
+            //$o[$value->idorder] = $value->idorder;
+
             $basked['item_iditem'] = $value->item_iditem;
             $basked['pieceInBasket'] = $value->item_count;
             $basked['price'] = $value->price;
@@ -64,9 +66,9 @@ class SendEmails extends Command
             $basked['item_autor'] = $value->item_autor;
             $basked['item_type_idtype'] = $value->item_type_idtype;
 
-            $completeOrder['basked'][$value->item_iditem] = (object) $basked;
+            $completeOrder[$value->idorder]['basked'][$value->item_iditem] = (object) $basked;
             if ($value->idorder != $lastValID) {
-                $completeOrder = array();
+                $completeOrder[$value->idorder] = array();
                 $order['ic'] = $value->ic;
                 $order['oName'] = $value->oName;
                 $order['libName'] = $value->libName;
@@ -83,44 +85,25 @@ class SendEmails extends Command
                 $order['deliveryCity'] = $value->deliveryCity;
                 $order['deliveryPSC'] = $value->deliveryPSC;
                 $order['description'] = $value->ordersDescription;
-                $completeOrder['order'] = (object) $order;
-
-                /*
-                */
-
-                /*
-                $orderTree[$value->idorder]['idlibrary'] = $value->idlibrary;
-                $orderTree[$value->idorder]['idorder'] = $value->idorder;
-                $orderTree[$value->idorder]["oName"] = $value->oName;
-                $orderTree[$value->idorder]["libCity"] = $value->libCity;
-                $orderTree[$value->idorder]["libPSC"] = $value->libPSC;
-                $orderTree[$value->idorder]["libEmail"] = $value->libEmail;
-                $orderTree[$value->idorder]["ordersDescription"] = $value->ordersDescription;
-                */
+                $completeOrder[$value->idorder]['order'] = (object) $order;
             }
             $lastValID = $value->idorder;
+        }
 
-            if ($lastValID != 0 and !env('APP_DEBUG')) {
+        foreach ($completeOrder as $key => $value) {
+            if ($key != 0 and !env('APP_DEBUG')) {
                 DB::table('orders')
-                    ->where('idorder', $value->idorder)
+                    ->where('idorder', $key)
                     ->update(array('isSend' => 1));
             }
             if (env('APP_DEBUG')) {
-                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
             } else {
-                Mail::to($completeOrder['order']->contactPersonEmail)->send(new OrderShipped($completeOrder));
-                Mail::to($completeOrder['order']->libEmail)->send(new OrderShipped($completeOrder));
-                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($completeOrder));
+                Mail::to($value['order']->contactPersonEmail)->send(new OrderShipped($value));
+                Mail::to($value['order']->libEmail)->send(new OrderShipped($value));
+                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
             }
         }
-        //dd($completeOrder['basked']);
-
-        //dd();
-
-
-
-
-
 
         return 0;
     }
