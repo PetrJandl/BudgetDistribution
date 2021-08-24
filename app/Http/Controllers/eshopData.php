@@ -67,6 +67,7 @@ class eshopData extends Controller
                     //Add order to database
                     $orderId = DB::table('orders')->insertGetId([
                         'description' => $order[0]->description,
+                        'isSend' => 1,
                         'created_at' => Carbon::now()
                     ]);
 

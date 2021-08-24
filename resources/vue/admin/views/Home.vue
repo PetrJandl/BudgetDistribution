@@ -30,7 +30,7 @@
        <template #thead-top="data">
         <b-tr>
           <b-th colspan="2">Objednávka</b-th>
-          <b-th colspan="2">Počty kusů v objednávce </b-th>
+          <b-th colspan="2">Počty kusů</b-th>
           <b-th>Cena</b-th>
         </b-tr>
       </template>
