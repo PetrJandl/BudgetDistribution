@@ -18,11 +18,11 @@ The system intentionally does not allow registration, but only the selection or 
 
 ## ScreenShots
 <div>
-<strong>Home Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Home.png">
-<strong>Books Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Books.png">
-<strong>Tools Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Tools.png">
-<strong>Basket Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Basket.png">
-<strong>Administration Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-admin.png"
+<p><div>Home Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Home.png"></p>
+<p><div>Books Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Books.png"></p>
+<p><div>Tools Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Tools.png"></p>
+<p><div>Basket Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Basket.png"></p>
+<p><div>Admin Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-admin.png"</p>
 </div>
 
 ## License
