@@ -18,11 +18,11 @@ The system intentionally does not allow registration, but only the selection or 
 
 ## ScreenShots
 <div>
-<img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Home.png" width="49%" >
-<img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Books.png" width="49%">
-<img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Tools.png" width="49%">
-<img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Basket.png" width="49%">
-<img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-admin.png" width="49%">
+<strong>Home Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Home.png">
+<strong>Books Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Books.png">
+<strong>Tools Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Tools.png">
+<strong>Basket Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Basket.png">
+<strong>Administration Page</strong><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-admin.png"
 </div>
 
 ## License
