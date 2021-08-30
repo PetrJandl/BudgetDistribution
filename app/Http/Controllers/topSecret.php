@@ -49,15 +49,15 @@ class topSecret extends Controller
                     $orderTree[$value->idorder]["deliveryCity"] = $value->deliveryCity;
                     $orderTree[$value->idorder]["deliveryPSC"] = $value->deliveryPSC;
                     $orderTree[$value->idorder]["ordersDescription"] = $value->ordersDescription;
-                } else {
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['price'] = $value->price;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_type_idtype'] = $value->item_type_idtype;
                 }
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['price'] = $value->price;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_type_idtype'] = $value->item_type_idtype;
+
                 $lastValID = $value->idorder;
             }
             //dd($orderTree);
