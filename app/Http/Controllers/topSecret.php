@@ -18,6 +18,7 @@ class topSecret extends Controller
     public function printAllOrders(Request $request)
     {
         if (ModelsAllowed::adminIP($request->ip())) {
+
             $orders = \DB::select('
         SELECT
         *, orders.description AS ordersDescription
