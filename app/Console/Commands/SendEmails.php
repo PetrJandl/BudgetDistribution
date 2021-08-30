@@ -54,57 +54,65 @@ class SendEmails extends Command
         ORDER BY orders.idorder, items.item_type_idtype
 
         ');
-        $lastValID = 0;
-        foreach ($orders as $key => $value) {
-            //$o[$value->idorder] = $value->idorder;
 
-            $basked['item_iditem'] = $value->item_iditem;
-            $basked['pieceInBasket'] = $value->item_count;
-            $basked['price'] = $value->price;
-            $basked['item_count'] = $value->item_count;
-            $basked['item_name'] = $value->item_name;
-            $basked['item_autor'] = $value->item_autor;
-            $basked['item_type_idtype'] = $value->item_type_idtype;
+        if (!empty($orders)) {
+            $lastValID = 0;
+            foreach ($orders as $key => $value) {
+                //$o[$value->idorder] = $value->idorder;
 
-            $completeOrder[$value->idorder]['basked'][$value->item_iditem] = (object) $basked;
-            if ($value->idorder != $lastValID) {
-                $completeOrder[$value->idorder] = array();
-                $order['ic'] = $value->ic;
-                $order['oName'] = $value->oName;
-                $order['libName'] = $value->libName;
-                $order['libStreet'] = $value->libStreet;
-                $order['libCity'] = $value->libCity;
-                $order['libPSC'] = $value->libPSC;
-                $order['contactPerson'] = $value->contactPerson;
-                $order['contactPersonEmail'] = $value->contactPersonEmail;
-                $order['contactPersonTele'] = $value->contactPersonTele;
-                $order['libEmail'] = $value->libEmail;
-                $order['deliveryAddress'] = ($value->deliveryName == null ? 0 : 1);
-                $order['deliveryName'] = $value->deliveryName;
-                $order['deliveryStreet'] = $value->deliveryStreet;
-                $order['deliveryCity'] = $value->deliveryCity;
-                $order['deliveryPSC'] = $value->deliveryPSC;
-                $order['description'] = $value->ordersDescription;
-                $completeOrder[$value->idorder]['order'] = (object) $order;
+                if ($value->idorder != $lastValID) {
+                    $completeOrder[$value->idorder] = array();
+                    $order['ic'] = $value->ic;
+                    $order['oName'] = $value->oName;
+                    $order['libName'] = $value->libName;
+                    $order['libStreet'] = $value->libStreet;
+                    $order['libCity'] = $value->libCity;
+                    $order['libPSC'] = $value->libPSC;
+                    $order['contactPerson'] = $value->contactPerson;
+                    $order['contactPersonEmail'] = $value->contactPersonEmail;
+                    $order['contactPersonTele'] = $value->contactPersonTele;
+                    $order['libEmail'] = $value->libEmail;
+                    $order['deliveryAddress'] = ($value->deliveryName == null ? 0 : 1);
+                    $order['deliveryName'] = $value->deliveryName;
+                    $order['deliveryStreet'] = $value->deliveryStreet;
+                    $order['deliveryCity'] = $value->deliveryCity;
+                    $order['deliveryPSC'] = $value->deliveryPSC;
+                    $order['description'] = $value->ordersDescription;
+                    $completeOrder[$value->idorder]['order'] = (object) $order;
+                }
+                $basked['item_iditem'] = $value->item_iditem;
+                $basked['pieceInBasket'] = $value->item_count;
+                $basked['price'] = $value->price;
+                $basked['item_count'] = $value->item_count;
+                $basked['item_name'] = $value->item_name;
+                $basked['item_autor'] = $value->item_autor;
+                $basked['item_type_idtype'] = $value->item_type_idtype;
+
+                $completeOrder[$value->idorder]['basked'][$value->item_iditem] = (object) $basked;
+
+                $lastValID = $value->idorder;
             }
-            $lastValID = $value->idorder;
+
+            foreach ($completeOrder as $key => $value) {
+                if ($key != 0 and !env('APP_DEBUG')) {
+                    DB::table('orders')
+                        ->where('idorder', $key)
+                        ->update(array('isSend' => 1));
+                }
+                if (env('APP_DEBUG')) {
+                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
+                } else {
+                    Mail::to($value['order']->contactPersonEmail)->send(new OrderShipped($value));
+                    if ($value['order']->contactPersonEmail != $value['order']->libEmail) {
+                        Mail::to($value['order']->libEmail)->send(new OrderShipped($value));
+                    }
+                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
+                    Mail::to("cizinska@knihovnahk.cz")->send(new OrderShipped($value));
+                }
+            }
+            return 0;
+        } else {
+            return "Chyba!";
         }
-
-        foreach ($completeOrder as $key => $value) {
-            if ($key != 0 and !env('APP_DEBUG')) {
-                DB::table('orders')
-                    ->where('idorder', $key)
-                    ->update(array('isSend' => 1));
-            }
-            if (env('APP_DEBUG')) {
-                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
-            } else {
-                Mail::to($value['order']->contactPersonEmail)->send(new OrderShipped($value));
-                Mail::to($value['order']->libEmail)->send(new OrderShipped($value));
-                Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
-            }
-        }
-
-        return 0;
     }
 }

@@ -20,33 +20,47 @@ Doručení na adresu (doručovací):
 Položky:
 <table style="width: 100%; margin: 5pt; padding: 5pt; border-collapse: collapse; border-bottom: 1px dotted gray;">
 @php ($last = 1)
+@php ($subtotalPrice = 0)
+@php ($subtotalPieces = 0)
 @foreach ($order['items'] as $item)
-<tr style="border-top: @if ($last!=$item['item_type_idtype']) 2px solid @else 1px dotted @endif gray; height: 18pt;">
-    {{--
-    <td style="width: 15pt; font-size: 8pt;">
-        @if ( $item['item_type_idtype']==1 )
-        <small>K</small>
-        @else
-        <small>P</small>
-        @endif
-    </td>
-    --}}
-    <td style="width: 70%;" @if(is_null($item['item_autor']))colspan="2"@endif >
+@if ($last!=$item['item_type_idtype'] && $ordersSum[$order['idorder']]->knih!=0)
+<tr style="border-bottom: 1px dotted gray; border-top: 1px solid gray; height: 18pt;">
+    <td style="text-align: right;" colspan="3">knih : {{ $ordersSum[$order['idorder']]->knih }} druhů, {{ $subtotalPieces }} kusů</td>
+    <th style="text-align: right; padding-right: 10pt;">{{ $subtotalPrice }}</th>
+    @php ($subtotalPieces = 0)
+    @php ($subtotalPrice = 0)
+</tr>
+@endif
+<tr style="border-top: 1px dotted gray; height: 18pt;">
+    <td @if(is_null($item['item_autor']))style="width: 75%;" colspan="2"@endif >
         @if(is_null($item['item_autor']))
         {{ $item['item_name'] }}
         @else
-        {{  Illuminate\Support\Str::limit($item['item_name'], 70, $end='...') }}
+        {{  Illuminate\Support\Str::limit($item['item_name'], 60, $end='...') }}
         @endif
     </td>
     
     @if ( !is_null($item['item_autor']) )<td style="">
-        {{  Illuminate\Support\Str::limit($item['item_autor'], 19, $end='...') }}
+        {{  Illuminate\Support\Str::limit($item['item_autor'], 18, $end='...') }}
     </td>@endif
-    <td style="text-align: right; padding-right: 10pt;">{{ $item['item_count'] }} <small>ks</small></td>
+    <td style="text-align: right;"><small style="color:gray">{{ $item['price'] }}&nbsp;x&nbsp;</small><strong>{{ $item['item_count'] }}</strong><small>&nbsp;=</small></td>
+    <td style="text-align: right; padding-right: 10pt;">{{ $item['price']*$item['item_count'] }}</td>
     <td style="width: 18pt; border: 1px dotted gray;"></td>
 </tr>
+@php ($subtotalPieces += $item['item_count'])
+@php ($subtotalPrice += $item['price'])
 @php ($last = $item['item_type_idtype'])
 @endforeach
+@if ($ordersSum[$order['idorder']]->pomucek!=0)
+<tr style="border-top: 1px solid gray; height: 18pt;">
+    <td style="text-align: right;" colspan="3">pomůcek : {{ $ordersSum[$order['idorder']]->pomucek }} druhů, {{ $subtotalPieces }} kusů</td>
+    <th style="text-align: right; padding-right: 10pt;">{{ $subtotalPrice }}</th>
+</tr>
+@endif
+<tr style="border-top: 4px double gray; height: 18pt;">
+    <th style="text-align: left;" colspan="3"> Celkem</th>
+    <th style="text-align: right; padding-right: 10pt;"> {{ $ordersSum[$order['idorder']]->celkem_kc }}</th>
+</tr>
 </table>
 
 @if ($order['ordersDescription']!="")

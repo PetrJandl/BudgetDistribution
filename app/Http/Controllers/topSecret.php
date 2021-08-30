@@ -61,8 +61,33 @@ class topSecret extends Controller
 
                 $lastValID = $value->idorder;
             }
+            $ordersSum = \DB::select('
+            SELECT
+            orders.idorder AS idorder,
+            orders.created_at,
+            librarys.libName AS knihovna,
+            SUM(IF(items.item_type_idtype=1,1,0)) AS knih,
+            SUM(IF(items.item_type_idtype=2,1,0)) AS pomucek,
+            /*
+            SUM(IF(items.item_type_idtype=1,items.price,0)) AS knih_kc,
+            SUM(IF(items.item_type_idtype=2,items.price,0)) AS pomucek_kc,
+            count(*) AS celkem,
+            */
+            sum(items.price) AS celkem_kc
+            FROM `orders` 
+            JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
+            JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
+            JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
+            JOIN items ON order_has_item.item_iditem=items.iditem
+            GROUP BY idorder
+            ORDER BY orders.idorder, items.item_type_idtype
+            ');
+            foreach ($ordersSum as $key => $value) {
+                $sum[$value->idorder] = $value;
+            }
+
             //dd($orderTree);
-            return view('admin/print/allOrders', ['orders' => $orderTree]);
+            return view('admin/print/allOrders', ['orders' => $orderTree, 'ordersSum' => $sum]);
         } else {
             return "NOPE";
         }
@@ -99,14 +124,14 @@ class topSecret extends Controller
                     $orderTree[$value->idorder]["deliveryStreet"] = $value->deliveryStreet;
                     $orderTree[$value->idorder]["deliveryCity"] = $value->deliveryCity;
                     $orderTree[$value->idorder]["deliveryPSC"] = $value->deliveryPSC;
-                } else {
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['price'] = $value->price;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
-                    $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
                 }
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_iditem'] = $value->item_iditem;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['price'] = $value->price;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_count'] = $value->item_count;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_name'] = $value->item_name;
+                $orderTree[$value->idorder]['items'][$value->item_iditem]['item_autor'] = $value->item_autor;
+
                 $lastValID = $value->idorder;
             }
             //dd($showLogo);

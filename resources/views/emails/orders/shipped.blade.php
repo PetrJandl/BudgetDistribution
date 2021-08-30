@@ -1,4 +1,4 @@
-@component('mail::message')
+@component('mail::message', ['color' => 'success'])
 # Vaše objednávka byla přijata ke zpracování
 
 Dobrý den,<br>
@@ -13,13 +13,15 @@ přijali jsme objednávku dotovaných pomůcek a knih :
 | Celkem        | {{ $total['pieceInBasket'] }} | {{ $total['price'] }} | {{ $total['sum'] }} |
 @endcomponent
 
-<b>Objednal/a:</b><br>{{ $order->libName }}, {{ $order->libStreet }}, {{ $order->libPSC }} {{ $order->libCity }}<br> (IČ: {{ $order->ic }} - {{ $order->oName }}),<br>
+<b>Objednal/a:</b><br>{{ $order->libName }}<br> {{ $order->libStreet }}<br> {{ $order->libPSC }} {{ $order->libCity }}<br> (IČ: {{ $order->ic }} - {{ $order->oName }}),<br>
 <b>s doručučením 
 @if (!$order->deliveryAddress)
-do sdídla knihovny</b> ({{ $order->libName }}, {{ $order->libStreet }} {{ $order->libCity }})
+do sdídla knihovny</b><br>
+{{ $order->libName }}<br> {{ $order->libStreet }}<br> {{ $order->libPSC }} {{ $order->libCity }})
 @else
-na adresu:</b> {{ $order->deliveryName }}, {{ $order->deliveryStreet }}, {{ $order->deliveryPSC }} {{ $order->deliveryCity }} 
+na adresu:</b><br> {{ $order->deliveryName }}<br> {{ $order->deliveryStreet }}<br> {{ $order->deliveryPSC }} {{ $order->deliveryCity }} 
 @endif
+<br>
 <br>
 <b>Kontaktní osoba :</b><br> {{ $order->contactPerson }}<br> email: {{ $order->contactPersonEmail }}<br> tel.: {{ $order->contactPersonTele }}
 <br>
@@ -33,3 +35,4 @@ na adresu:</b> {{ $order->deliveryName }}, {{ $order->deliveryStreet }}, {{ $ord
 S pozdravem<br>
 Knihovna města Hradce Králové
 @endcomponent
+
