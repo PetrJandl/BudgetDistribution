@@ -18,7 +18,7 @@ import "@fortawesome/fontawesome-free/js/all.min.js";
 
 import linkify from 'vue-linkify'
 
-Vue.directive('linkified', linkify)
+Vue.directive('linkified', linkify);
 
 import titleMixin from '../titleMixin';
 Vue.mixin(titleMixin);
@@ -39,6 +39,14 @@ Vue.directive('focus', {
     inserted: function (el) {
         // Focus the element
         el.focus()
+    }
+});
+
+import moment from 'moment';
+
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('DD.MM.YYYY')
     }
 });
 

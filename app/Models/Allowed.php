@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -11,6 +13,8 @@ class Allowed extends Model
     {
         if (
             $ip == "::1" //localhost ipv6 - jandl
+            or
+            $ip == "127.0.0.1" //localhost - jandl
             or
             $ip == "192.168.133.80" //jandl pc work
             or
@@ -29,6 +33,27 @@ class Allowed extends Model
             return true;
         } else {
             return false;
+        }
+    }
+    public static function shoping($showStopDate = false)
+    {
+        //$start = Carbon::createMidnightDate(2021, 8, 15, 'Europe/Prague');
+
+        $dateStopShopping = \DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStopShopping'");
+        //print_r($dateStopShopping[0]->value);
+        $dS = explode("-", trim($dateStopShopping[0]->value));
+        //print_r($dS);
+        //die();
+
+        $stop = Carbon::create($dS[0], $dS[1], $dS[2], 23, 59, 59, 'Europe/Prague');
+        if ($showStopDate) {
+            return trim($dateStopShopping[0]->value);
+        } else {
+            if ($stop->diffInMinutes(Carbon::now('Europe/Prague'), false) < 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }
