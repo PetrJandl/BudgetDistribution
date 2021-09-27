@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 Route::middleware('api')->get('/items.json', function () {
-    if (request()->ajax()) {
+    if (request()->ajax() && ModelsAllowed::shoping()) {
         return \DB::table('items')->where('visible', '=', 1)->get();
     } else {
         return "NOPE";
@@ -29,7 +29,7 @@ Route::middleware('api')->get('/items.json', function () {
 });
 
 Route::middleware('api')->get('/librarys.json', function () {
-    if (request()->ajax()) {
+    if (request()->ajax() && ModelsAllowed::shoping()) {
         return \DB::table('librarys')
             ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
             ->select('librarys.*')
@@ -56,6 +56,37 @@ Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
         return "NOPE";
     }
 });
+
+Route::middleware('api')->get('/allowShoping.json', function (Request $request) {
+    if (request()->ajax()) {
+        if (
+            ModelsAllowed::shoping()
+        ) {
+            return json_encode("ok");
+        } else {
+            return "NOPE";
+        }
+    } else {
+        return "NOPE";
+    }
+});
+
+Route::middleware('api')->get('/allowShopingStop.json', function (Request $request) {
+    if (request()->ajax()) {
+        return json_encode(ModelsAllowed::shoping(true));
+    }
+});
+
+Route::post('/setStopShopDate', function (Request $request) {
+    if (ModelsAllowed::adminIP($request->ip())) {
+        \DB::table('settings')
+            ->where('pointer', 'dateStopShopping')
+            ->update(array('value' => $request->post()['shopingStopDate']));
+        return json_encode(array("message" => "ok"));
+        //return json_encode("ok");
+    }
+});
+
 
 /* Administration links */
 // orders.json 

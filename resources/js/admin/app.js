@@ -34,6 +34,17 @@ Vue.config.runtimeCompiler = true;
 Vue.component("OrderLine", OrderLine);
 
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+Vue.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true
+});
+
+
+
 Vue.directive('focus', {
     // When the bound element is inserted into the DOM...
     inserted: function (el) {
@@ -41,6 +52,8 @@ Vue.directive('focus', {
         el.focus()
     }
 });
+
+
 
 
 const eshop = new Vue({

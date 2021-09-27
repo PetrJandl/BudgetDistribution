@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\eshopData;
 use App\Http\Controllers\topSecret;
+use App\Models\Allowed as ModelsAllowed;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +19,25 @@ use App\Http\Controllers\topSecret;
 // all from root to /eshop
 Route::redirect('/', '/eshop/');
 
-// send form make order
-Route::post('/eshopNewOrder', [eshopData::class, 'send']);
 
 // all sub pages /eshop/ is vue
-Route::get('/eshop/{any?}', function () {
-  return view('eshop/eshop');
-})->where('any', '.*');
+if (ModelsAllowed::shoping()) {
+  // send form make order
+  Route::post('/eshopNewOrder', [eshopData::class, 'send']);
+  // open shop subpage
+  Route::get('/eshop/{any?}', function () {
+    return view('eshop/eshop');
+  })->where('any', '.*');
+} else {
+  Route::redirect('/eshop/knihy/', '/eshop/');
+  Route::redirect('/eshop/pomucky/', '/eshop/');
+  Route::redirect('/eshop/nakupniKosik/', '/eshop/');
+  Route::redirect('/eshop/objednavka/', '/eshop/');
+  Route::redirect('/eshop/rekapitulace/', '/eshop/');
+  Route::get('/eshop/', function () {
+    return view('eshop/eshop');
+  });
+}
 
 /* Administration links */
 Route::get('/admin/vsechyObjednavky', [topSecret::class, 'printAllOrders']);

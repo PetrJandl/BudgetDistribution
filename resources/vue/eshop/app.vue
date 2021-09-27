@@ -51,6 +51,7 @@
             <router-link
               to="/eshop/knihy"
               v-slot="{ href, navigate, isExactActive }"
+              v-if="isShopingAlowed"
               custom
             >
               <li class="nav-link">
@@ -65,6 +66,7 @@
             <router-link
               to="/eshop/pomucky"
               v-slot="{ href, navigate, isExactActive }"
+              v-if="isShopingAlowed"
               custom
             >
               <li
@@ -84,6 +86,7 @@
             <router-link
               to="/eshop/nakupniKosik"
               v-slot="{ href, navigate, isExactActive }"
+              v-if="isShopingAlowed"
               custom
             >
               <li
@@ -155,6 +158,7 @@ export default {
     return {
       vueNotLoad: false,
       isAdminAlowed: false,
+      isShopingAlowed: true,
       books: [],
       tools: [],
       basked: localBasked,
@@ -206,7 +210,7 @@ export default {
     },
   },
   methods: {
-    getShowAdmin() {
+    getInitSet() {
       axios
         .get("/api/allowAdmin.json")
         .then((response) => {
@@ -217,6 +221,17 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      axios
+        .get("/api/allowShoping.json")
+        .then((response) => {
+          if(response.data!="ok"){
+            this.isShopingAlowed=false;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       //console.log(this.books)
     },
     getItems() {
@@ -297,7 +312,7 @@ export default {
   },
   beforeMount() {
     this.getItems();
-    this.getShowAdmin();
+    this.getInitSet();
     //console.log("App: "+this.books)
   },
   mounted() {

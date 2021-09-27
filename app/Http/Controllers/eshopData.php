@@ -13,10 +13,7 @@ class eshopData extends Controller
     public function send(Request $request)
     {
 
-        if ($request->accepts(['text/html', 'application/json'])) {
-
-            //print_r(config('services.recaptcha.secret'));
-            //die();
+        if ($request->accepts(['text/html', 'application/json']) && ModelsAllowed::shoping()) {
 
             $response = (new \ReCaptcha\ReCaptcha(config('services.recaptcha.secret')))
                 ->setExpectedAction('sendOrder')
@@ -25,12 +22,7 @@ class eshopData extends Controller
             if (!$response->isSuccess()) {
                 abort("reCaptcha is wrong!");
             }
-            /*
-            if ($response->getScore() < 0.6) {
-                return response()->view('challenge');
-            }
-            */
-            //echo "<pre>";
+
             $order = json_decode($request->post('order'));
             // TODO id knihovny by melo jit pres session a melo by se kontrolvoat jestli uz neni objednavka na tuhle knihovnu
 

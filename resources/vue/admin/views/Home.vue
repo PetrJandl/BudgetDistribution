@@ -3,6 +3,12 @@
     <h1>Přehled objednávek</h1>
     <div class="d-print-none">
     <div>
+      <h4>Nastavení data uzavření objednávek:</h4>
+      <div class="text-center">
+        <input type="date" name="" id="" v-model="shopingStopDate"><a v-on:click="ChangeStopDate()" href="#setDate" type="button" class="btn btn-light btn-sm">Nastavit datum</a>
+      </div>
+    </div>
+    <div>
       <h4>Tisk objednávek:</h4>
       <div class="text-center">
         <a href="javascript: window.print();" type="button" class="btn btn-light">přehled objednávek</a> | 
@@ -69,6 +75,7 @@ export default {
   data() {
     return {
       books: [],
+      shopingStopDate: "",
       fields: [
           {
             key: 'knihovna',
@@ -112,6 +119,17 @@ export default {
     };
   },
   methods: {
+  dateLoad() {
+        axios
+          .get("/api/allowShopingStop.json")
+          .then((response) => {
+              this.shopingStopDate=response.data;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(this.shopingStopDate)
+      },
 	DeleteOrder(id, index) {
     	if(confirm('Opravdu odstranit?'))
         if(confirm('Tento krok je NEVRATNÝ!!! Objednávka se zcela odstraní!!!'))
@@ -123,9 +141,69 @@ export default {
             console.log(error);
           })
     },
-  ShowOrder(id, index) {
+    ChangeStopDate(){
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          _token: document.querySelector("meta[name=csrf-token]").content,
+          shopingStopDate: this.shopingStopDate,
+        }),
+      };
+
+      fetch("/api/setStopShopDate", requestOptions).then( (response) => {
+        const data =  response.json();
+        //log.console(data);
+        // check for error response
+        if (data.message != "ok") {
+          //this.message = data.original.message;
+          // get error message from body or default to response status
+          //const error = (data && data.message) || response.status;
+          //return Promise.reject(error);
+          this.$toast.success("Nastavení data uloženo!", {
+            position: "top-right",
+            timeout: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: true,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false
+          });
+        } else {
+          this.$toast.error("Něco se zvrtlo kontaktovat admina!", {
+            position: "top-right",
+            timeout: 20000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: true,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false
+          });
+        }
+      });
+
+
+
+      
+
+    },
+    ShowOrder(id, index) {
     this.$router.push('/admin/zobrazitObjednavku/' + id);
-  }
+    }
+  },
+    beforeMount() {
+    this.dateLoad();
   },
   computed: {
     totalCount() {
