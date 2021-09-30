@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\Models\Allowed as ModelsAllowed;
 
 class eshopData extends Controller
 {
