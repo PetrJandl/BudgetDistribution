@@ -137,7 +137,7 @@ Route::middleware('api')->get('/sumaryitems.json', function (Request $request) {
         return \DB::select('
         SELECT
         items.*,
-        count(*) AS pieces,
+        sum(item_count) AS pieces,
         SUM(items.price) AS priceSum
         FROM `items` 
         JOIN order_has_item ON order_has_item.item_iditem=items.iditem
