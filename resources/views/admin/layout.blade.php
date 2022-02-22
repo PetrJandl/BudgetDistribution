@@ -20,7 +20,6 @@
     
     <title>{{ config('app.name', "Laravel") }}</title>
 
-    
     <style>
         .v-cloak {
           display: none;
