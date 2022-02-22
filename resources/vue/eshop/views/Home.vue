@@ -15,7 +15,7 @@ export default {
   title: "Bookstart eShop",
   data() {
     return {
-      isShopingAlowed: true,
+      isShopingAlowed: false,
       shopingStopDate: "",
     };
   },
