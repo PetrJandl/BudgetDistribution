@@ -22,7 +22,6 @@ class topSecret extends Controller
             $orders = \DB::select('
         SELECT
         *, orders.description AS ordersDescription
-
         FROM `orders` 
         JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
         JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
@@ -98,13 +97,11 @@ class topSecret extends Controller
             $orders = \DB::select('
         SELECT
         *
-
         FROM `orders` 
         JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
         JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
         JOIN order_has_item ON orders.idorder=order_has_item.order_idorder
         JOIN items ON order_has_item.item_iditem=items.iditem
-
         ');
             $lastValID = 0;
             foreach ($orders as $key => $value) {

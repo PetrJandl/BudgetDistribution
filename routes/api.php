@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Allowed as ModelsAllowed;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +31,65 @@ Route::middleware('api')->get('/items.json', function () {
 
 Route::middleware('api')->get('/librarys.json', function () {
     if (request()->ajax() && ModelsAllowed::shoping()) {
-        return \DB::table('librarys')
-            ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
+        DB::enableQueryLog();
+        $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
+        $query = DB::getQueryLog();
+        print_r($query);
+        $uploadedLibrarys = \DB::table('librarys')
+            /*->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')*/
             ->select('librarys.*')
-            ->whereNull('library_has_order.order_idorder')
+            /*->whereNull('library_has_order.order_idorder')*/
             ->orderby('librarys.libCity')
             ->get();
+
+        //        print_r($uploadedLibrarys);
+        if (count($newLibrarys) > 0) {
+            //print_r($newLibrarys);
+            //die();
+            foreach ($uploadedLibrarys as $q => $x) {
+                foreach ($newLibrarys as $i => $l) {
+
+                    if ($l->idlibrary == $x->idlibrary) {
+                        /*
+                        echo $l->idlibrary . " - " . $x->idlibrary . "
+";*/
+                        unset($newLibrarys[$i]);
+                        continue;
+                    }
+                }
+            }
+            $insert = array();
+            foreach ($newLibrarys as $i => $l) {
+                $insert[$i]['idlibrary'] = $l->idlibrary;
+                $insert[$i]['ic'] = $l->ic;
+                $insert[$i]['dic'] = $l->dic;
+                $insert[$i]['oName'] = $l->oName;
+                $insert[$i]['libName'] = $l->libName;
+                $insert[$i]['libStreet'] = $l->libStreet;
+                $insert[$i]['libCity'] = $l->libCity;
+                $insert[$i]['libPSC'] = $l->libPSC;
+                $insert[$i]['deliveryName'] = $l->deliveryName;
+                $insert[$i]['deliveryStreet'] = $l->deliveryStreet;
+                $insert[$i]['deliveryCity'] = $l->deliveryCity;
+                $insert[$i]['deliveryPSC'] = $l->deliveryPSC;
+                $insert[$i]['libEmail'] = $l->libEmail;
+                $insert[$i]['contactPerson'] = $l->contactPerson;
+                $insert[$i]['contactPersonEmail'] = $l->contactPersonEmail;
+                $insert[$i]['contactPersonTele'] = $l->contactPersonTele;
+            }
+            //print_r($insert);
+            if (isset($insert[0])) {
+                //\DB::table('librarys')->insert($insert);
+            }
+            return \DB::table('librarys')
+                ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
+                ->select('librarys.*')
+                ->whereNull('library_has_order.order_idorder')
+                ->orderby('librarys.libCity')
+                ->get();
+        } else {
+            return "[]";
+        }
     } else {
         return "NOPE";
     }

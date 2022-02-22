@@ -2,7 +2,7 @@
   <div class="basked col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
     <h1>Kontaktní informace - <small>Objednávka (2/3)</small></h1>
 
-    <div v-show="this.message != ''" class="alert alert-danger" role="alert">
+    <div v-show="this.message != ''" class="alert alert-danger" role="alert" v-html="message">
       {{ this.message }}
     </div>
 
@@ -18,6 +18,7 @@
       action="/rekapuitulace"
       method="post"
       data-toggle="validator"
+       v-show="this.message == ''"
     >
       <div class="box-body">
         <div class="row">
@@ -371,7 +372,7 @@ export default {
         .then((response) => {
           if (response.data.length == 0) {
             this.message =
-              "Všechny knihovny Královéhradeckého kraje již mají objednáno, případně nás kontaktujte na emailu bookstart@knihovnahk.cz";
+              'Žádné knihovně z Královéhradeckého kraje nechybí objednávka příslušenství.<br>Nejprve je nutno <a href="https://www.sknizkoudozivota.cz/pro-knihovny/registracni-formular/">objednat nové sety</a>, až následně se vraťte sem, pro objednání příslušenství.<br> V případně problémů nás kontaktujte na emailu bookstart@knihovnahk.cz';
           }
           response.data.forEach((library) => {
             this.librarys.push(library);
