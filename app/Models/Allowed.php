@@ -56,4 +56,10 @@ class Allowed extends Model
             }
         }
     }
+    public static function shopingDates($pointer = "dateStartShopping")
+    {
+        $query = \DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStartShopping'");
+        //print_r($query);
+        return trim($query[0]->value);
+    }
 }

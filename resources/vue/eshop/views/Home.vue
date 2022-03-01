@@ -1,14 +1,16 @@
 <template>
     <div class="home col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
         <h1>Výběr knih / pomůcek z dotace Královéhradeckého kraje</h1>
-        <img
-            v-if="isShopingAlowed"
-            id="bslogo"
-            alt="BookStart logo"
-            src="/images/bookstart.png"
-        />
-        <div class="display-4 mt-4" v-if="isShopingAlowed">
-            Příjem objednávek do {{ shopingStopDate | formatDate }}!
+        <div v-if="isShopingAlowed">
+            <img
+                class="mb-4 mt-4"
+                id="bslogo"
+                alt="BookStart logo"
+                src="/images/bookstart.png"
+            />
+            <div class="display-3" v-if="isShopingAlowed">
+                Příjem objednávek do&nbsp;{{ shopingStopDate | formatDate }}!
+            </div>
         </div>
         <div class="display-3 text-danger" v-if="!isShopingAlowed">
             Termín pro zaslání objednávek vypršel ({{
@@ -26,6 +28,7 @@ export default {
     data() {
         return {
             isShopingAlowed: true,
+            shopingStartDate: "",
             shopingStopDate: "",
         };
     },
@@ -36,6 +39,8 @@ export default {
                 .then((response) => {
                     if (response.data != "ok") {
                         this.isShopingAlowed = false;
+                    } else {
+                        this.isShopingAlowed = true;
                     }
                 })
                 .catch(function (error) {
@@ -45,6 +50,14 @@ export default {
                 .get("/api/allowShopingStop.json")
                 .then((response) => {
                     this.shopingStopDate = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            axios
+                .get("/api/allowShopingStart.json")
+                .then((response) => {
+                    this.shopingStartDate = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

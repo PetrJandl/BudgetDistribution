@@ -86,7 +86,11 @@ class topSecret extends Controller
             }
 
             //dd($orderTree);
-            return view('admin/print/allOrders', ['orders' => $orderTree, 'ordersSum' => $sum]);
+            if (isset($orderTree)) {
+                return view('admin/print/allOrders', ['orders' => $orderTree, 'ordersSum' => $sum]);
+            } else {
+                echo "Nejsou objednávky není co zobrazovat.";
+            }
         } else {
             return "NOPE";
         }
@@ -132,7 +136,11 @@ class topSecret extends Controller
                 $lastValID = $value->idorder;
             }
             //dd($showLogo);
-            return view('admin/print/allAddress', ['orders' => $orderTree, 'showLogo' => $showLogo]);
+            if (isset($orderTree)) {
+                return view('admin/print/allAddress', ['orders' => $orderTree, 'showLogo' => $showLogo]);
+            } else {
+                echo "Nejsou objednávky není co zobrazovat.";
+            }
         } else {
             return "NOPE";
         }

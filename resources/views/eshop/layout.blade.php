@@ -33,17 +33,6 @@
     <meta name="twitter:image"       content="{{ asset('images/bshop.png') }}">
     <meta name="twitter:card"        content="summary_large_image">
     
-    <?php /*
-    TODO :
-
-       Social media link checker : https://socialsharepreview.com/?url=https://bshop.kmhk.cz/
-       Upravit obrazek na FB !!!
-
-       Scroll indicator with Vue : https://codepen.io/abusedmedia/pen/yjMeGy/
-       Nakonec pouzit component : https://github.com/robbinjohansson/vue-scroll-indicator
-
-    */ ?>
-    
     <style>
         .v-cloak {
           display: none;
