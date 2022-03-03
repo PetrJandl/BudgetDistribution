@@ -3,9 +3,36 @@
         <h1>Přehled objednávek</h1>
         <div class="d-print-none">
             <div>
-                <h4>Nastavení data uzavření objednávek:</h4>
-                <div class="text-center">
+                <h4>Nastavení:</h4>
+                <div class="row">
+                    <label
+                        for="loadToDate"
+                        class="col-md-3 col-12 offset-md-3 offset-0"
+                        >Reg. v Bookstart do :</label
+                    >
                     <input
+                        class="col-md-3 col-sm-6 col-12"
+                        type="date"
+                        name=""
+                        id="loadToDate"
+                        v-model="loadFromBookstart"
+                        @keyup.enter="ChangeLoadToDate()"
+                    /><a
+                        v-on:click="ChangeLoadToDate()"
+                        href="#setLoadToDate"
+                        type="button"
+                        class="btn btn-light btn-sm col-md-3 col-sm-6 col-12"
+                        >Nastav</a
+                    >
+                </div>
+                <div class="row">
+                    <label
+                        for="startDate"
+                        class="col-md-3 col-12 offset-md-3 offset-0"
+                        >Datum spuštění :</label
+                    >
+                    <input
+                        class="col-md-3 col-sm-6 col-12"
                         type="date"
                         name=""
                         id="startDate"
@@ -15,11 +42,18 @@
                         v-on:click="ChangeStartDate()"
                         href="#setStartDate"
                         type="button"
-                        class="btn btn-light btn-sm"
-                        >Nastavit datum otevření</a
+                        class="btn btn-light btn-sm col-md-3 col-sm-6 col-12"
+                        >Nastav</a
                     >
-
+                </div>
+                <div class="row">
+                    <label
+                        for="stopDate"
+                        class="col-md-3 col-12 offset-md-3 offset-0"
+                        >Datum ukončení :</label
+                    >
                     <input
+                        class="col-md-3 col-sm-6 col-12"
                         type="date"
                         name=""
                         id="stopDate"
@@ -29,10 +63,11 @@
                         v-on:click="ChangeStopDate()"
                         href="#setStopDate"
                         type="button"
-                        class="btn btn-light btn-sm"
-                        >Nastavit datum uzavření</a
+                        class="btn btn-light btn-sm col-md-3 col-sm-6 col-12"
+                        >Nastav</a
                     >
                 </div>
+                <div class="text-center"></div>
             </div>
             <div>
                 <h4>Tisk objednávek:</h4>
@@ -153,6 +188,7 @@ export default {
             books: [],
             shopingStartDate: "",
             shopingStopDate: "",
+            loadFromBookstart: "",
             fields: [
                 {
                     key: "knihovna",
@@ -215,6 +251,15 @@ export default {
                     console.log(error);
                 });
             //console.log(this.shopingStopDate);
+            axios
+                .get("/api/loadFromBookstart.json")
+                .then((response) => {
+                    this.loadFromBookstart = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            //console.log(this.shopingStopDate);
         },
         DeleteOrder(id, index) {
             if (confirm("Opravdu odstranit?"))
@@ -231,6 +276,58 @@ export default {
                         .catch((error) => {
                             console.log(error);
                         });
+        },
+        ChangeLoadToDate() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    _token: document.querySelector("meta[name=csrf-token]")
+                        .content,
+                    loadFromBookstart: this.loadFromBookstart,
+                }),
+            };
+
+            fetch("/api/setLoadToDate", requestOptions).then((response) => {
+                const data = response.json();
+                //log.console(data);
+                // check for error response
+                if (data.message != "ok") {
+                    //this.message = data.original.message;
+                    // get error message from body or default to response status
+                    //const error = (data && data.message) || response.status;
+                    //return Promise.reject(error);
+                    this.$toast.success("Nastavení data Načítání uloženo!", {
+                        position: "top-right",
+                        timeout: 2000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: true,
+                        hideProgressBar: true,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false,
+                    });
+                } else {
+                    this.$toast.error("Něco se zvrtlo kontaktovat admina!", {
+                        position: "top-right",
+                        timeout: 20000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: true,
+                        hideProgressBar: true,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false,
+                    });
+                }
+            });
         },
         ChangeStartDate() {
             const requestOptions = {

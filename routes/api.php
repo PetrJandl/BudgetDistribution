@@ -138,10 +138,10 @@ Route::middleware('api')->get('/allowShopingStart.json', function (Request $requ
 Route::post('/setStartShopDate', function (Request $request) {
     if (ModelsAllowed::adminIP($request->ip())) {
         \DB::table('settings')
+            ->select('value')
             ->where('pointer', 'dateStartShopping')
             ->update(array('value' => $request->post()['shopingStartDate']));
         return json_encode(array("message" => "ok"));
-        //return json_encode("ok");
     }
 });
 
@@ -162,6 +162,22 @@ Route::post('/setStopShopDate', function (Request $request) {
     }
 });
 
+Route::middleware('api')->get('/loadFromBookstart.json', function (Request $request) {
+    $loadFromBookstart = \DB::table('settings')
+        ->where('pointer', 'loadFromBookstart')
+        ->get();
+    return trim($loadFromBookstart[0]->value);
+});
+
+Route::post('/setLoadToDate', function (Request $request) {
+    if (ModelsAllowed::adminIP($request->ip())) {
+        \DB::table('settings')
+            ->where('pointer', 'loadFromBookstart')
+            ->update(array('value' => $request->post()['loadFromBookstart']));
+        return json_encode(array("message" => "ok"));
+        //return json_encode("ok");
+    }
+});
 
 /* Administration links */
 // orders.json 
