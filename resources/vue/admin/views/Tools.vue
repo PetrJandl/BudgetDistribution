@@ -65,7 +65,7 @@ export default {
                 },
                 {
                     key: "price",
-                    label: "cena",
+                    label: "j. cena",
                     sortable: true,
                     class: "text-right",
                 },

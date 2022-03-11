@@ -327,7 +327,6 @@ nav a:hover {
     }
     .table,
     .table * {
-        border: 0px !important;
         box-shadow: none !important;
         padding: 0rem !important;
     }
