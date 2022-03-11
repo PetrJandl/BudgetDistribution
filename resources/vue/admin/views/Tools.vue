@@ -29,8 +29,8 @@
                     <b-tr>
                         <b-th>Celkem</b-th>
                         <b-th></b-th>
-                        <b-th>{{ totalTools }}</b-th>
-                        <b-th>{{ totalPrice }}</b-th>
+                        <b-th class="text-right">{{ totalTools }}</b-th>
+                        <b-th class="text-right">{{ totalPrice }}</b-th>
                     </b-tr>
                 </template>
             </b-table>
@@ -61,11 +61,13 @@ export default {
                     key: "pieces",
                     label: "ks",
                     sortable: true,
+                    class: "text-right",
                 },
                 {
                     key: "price",
                     label: "cena",
                     sortable: true,
+                    class: "text-right",
                 },
             ],
         };
