@@ -325,10 +325,11 @@ nav a:hover {
     .items {
         font-size: 90%;
     }
-    .table > :not(caption) > * > * {
-        border-bottom-width: 0px;
-        box-shadow: none;
-        padding: 0rem;
+    .table,
+    .table * {
+        border: 0px !important;
+        box-shadow: none !important;
+        padding: 0rem !important;
     }
 }
 </style>
