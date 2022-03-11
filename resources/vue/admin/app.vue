@@ -325,5 +325,10 @@ nav a:hover {
     .items {
         font-size: 90%;
     }
+    .table * {
+        border-bottom-width: 0px;
+        box-shadow: none;
+        padding: 0rem;
+    }
 }
 </style>
