@@ -33,6 +33,7 @@ Route::middleware('api')->get('/librarys.json', function () {
     if (request()->ajax() && ModelsAllowed::shoping()) {
         //vytahne registrovane na bookstartu
         $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
+        print_r($newLibrarys);
         //natahnout vlastni seznam (cely vcetne jiz objednanych)
         $uploadedLibrarys = \DB::table('librarys')
             /*->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')*/
@@ -46,7 +47,6 @@ Route::middleware('api')->get('/librarys.json', function () {
             // projit cely seznam mistnich
             foreach ($uploadedLibrarys as $li => $l) {
                 foreach ($newLibrarys as $bsi => $bs) {
-
                     if ($l->idlibrary == $bs->idlibrary) {
                         /*
                         echo $l->idlibrary . " - " . $x->idlibrary . "
@@ -79,10 +79,10 @@ Route::middleware('api')->get('/librarys.json', function () {
                 $insert[$i]['contactPersonTele'] = $l->contactPersonTele;
             }
             //print_r($insert);
-            //die();
+            die();
             if (isset($insert[0])) {
                 if ($insert[0]['libName'] != "TEST") {
-                    \DB::table('librarys')->insert($insert);
+                    //\DB::table('librarys')->insert($insert);
                 }
             }
             return \DB::table('librarys')
@@ -204,6 +204,21 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
         GROUP BY idorder
         ORDER BY orders.idorder, items.item_type_idtype
         ');
+    } else {
+        return "NOPE";
+    }
+});
+
+
+// DELETE allTables
+Route::middleware('api')->get('/deleteAllTables/', function (Request $request) {
+    if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
+        DB::transaction(function () {
+            DB::table('order_has_item')->delete();
+            DB::table('library_has_order')->delete();
+            DB::table('orders')->delete();
+            DB::table('librarys')->delete();
+        });
     } else {
         return "NOPE";
     }
