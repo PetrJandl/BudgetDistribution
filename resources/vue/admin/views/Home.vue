@@ -152,8 +152,8 @@
             <template v-slot:custom-foot="data">
                 <b-tr v-if="totalCount != 0">
                     <b-th colspan="2">
-                        Knih bylo v
-                        {{ totalOrdersWithBooks }} objednávkách
+                        {{ totalOrdersWithBooks }} objednávek obsahuje alespoň
+                        jednu knihu
                     </b-th>
                     <b-th class="text-right">{{ totalBooks }}</b-th>
                     <b-th class="text-right"></b-th>
@@ -161,8 +161,8 @@
                 </b-tr>
                 <b-tr v-if="totalCount != 0">
                     <b-th colspan="2">
-                        Pomůcek bylo v
-                        {{ totalOrdersWithTools }} objednávkách</b-th
+                        {{ totalOrdersWithTools }} objednávek obsahuje alespoň
+                        jednu pomůcku</b-th
                     >
                     <b-th class="text-right"></b-th>
                     <b-th class="text-right">{{ totalTools }}</b-th>
@@ -500,5 +500,8 @@ a.btn {
 a.btn:hover {
     -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+}
+tfoot {
+    display: table-row-group;
 }
 </style>

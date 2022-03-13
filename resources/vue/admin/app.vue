@@ -170,7 +170,7 @@ export default {
 .books,
 .tools,
 .basked {
-    margin-top: 60pt !important;
+    /*margin-top: 60pt !important;*/
 }
 nav {
     text-align: center;
@@ -329,6 +329,13 @@ nav a:hover {
     .table * {
         box-shadow: none !important;
         padding: 0rem !important;
+    }
+    .home,
+    .books,
+    .tools,
+    .basked {
+        margin-top: none;
+        max-height: none;
     }
 }
 </style>
