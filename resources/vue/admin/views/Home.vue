@@ -150,6 +150,24 @@
                 ></a>
             </template>
             <template v-slot:custom-foot="data">
+                <b-tr v-if="totalCount != 0">
+                    <b-th colspan="2">
+                        Knih bylo v
+                        {{ totalOrdersWithBooks }} objednávkách
+                    </b-th>
+                    <b-th class="text-right">{{ totalBooks }}</b-th>
+                    <b-th class="text-right"></b-th>
+                    <b-th class="text-right">{{ totalBooksPrice }}</b-th>
+                </b-tr>
+                <b-tr v-if="totalCount != 0">
+                    <b-th colspan="2">
+                        Pomůcek bylo v
+                        {{ totalOrdersWithTools }} objednávkách</b-th
+                    >
+                    <b-th class="text-right"></b-th>
+                    <b-th class="text-right">{{ totalTools }}</b-th>
+                    <b-th class="text-right">{{ totalToolsPrice }}</b-th>
+                </b-tr>
                 <b-tr>
                     <b-th colspan="2"
                         >Celkem
@@ -163,8 +181,8 @@
                         >
                         <span v-if="totalCount > 4">objednávek</span>
                     </b-th>
-                    <b-th class="text-right">{{ totalBooks }}</b-th>
-                    <b-th class="text-right">{{ totalTools }}</b-th>
+                    <b-th class="text-right"></b-th>
+                    <b-th class="text-right"></b-th>
                     <b-th class="text-right">{{ totalPrice }}</b-th>
                 </b-tr>
             </template>
@@ -173,6 +191,8 @@
 </template>
 
 <script>
+import Moment from "moment";
+
 export default {
     title: "ADMIN - Bookstart eShop",
     data() {
@@ -182,27 +202,30 @@ export default {
             shopingStopDate: "",
             fields: [
                 {
+                    key: "created_at",
+                    label: "Obj.",
+                    sortable: true,
+                    tdClass: "noWrap",
+                    formatter: (value, key, item) => {
+                        return Moment(value).format("DD.MM.YY");
+                    },
+                },
+                {
                     key: "knihovna",
                     label: "Objednatel",
                     sortable: true,
                     tdClass: "noWrap",
                 },
                 {
-                    key: "created_at",
-                    label: "Čas",
-                    sortable: true,
-                    tdClass: "noWrap",
-                },
-                {
                     key: "knih",
-                    label: "knih",
+                    label: "knih\u00a0\u00a0",
                     sortable: true,
                     tdClass: "text-right",
                     thClass: "text-right",
                 },
                 {
                     key: "pomucek",
-                    label: "pomůcek",
+                    label: "pom.",
                     sortable: true,
                     tdClass: "text-right",
                     thClass: "text-right",
@@ -213,6 +236,14 @@ export default {
                     sortable: true,
                     tdClass: "text-right",
                     thClass: "text-right",
+                    formatter: (value, key, item) => {
+                        return Intl.NumberFormat("cs-CZ", {
+                            style: "currency",
+                            currency: "czk",
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
+                        }).format(value);
+                    },
                 },
                 {
                     key: "idorder",
@@ -386,22 +417,72 @@ export default {
                 0
             );
         },
-        totalPrice() {
+        totalOrdersWithBooks() {
             return this.$parent.orders.reduce(
-                (acc, item) => acc + Number(item.celkem_kc),
+                (acc, item) => acc + +(item.knih != 0 ? 1 : 0),
                 0
+            );
+        },
+        totalOrdersWithTools() {
+            return this.$parent.orders.reduce(
+                (acc, item) => acc + +(item.pomucek != 0 ? 1 : 0),
+                0
+            );
+        },
+        totalPrice() {
+            return new Intl.NumberFormat("cs-CZ", {
+                style: "currency",
+                currency: "czk",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(
+                this.$parent.orders.reduce(
+                    (acc, item) => acc + Number(item.celkem_kc),
+                    0
+                )
             );
         },
         totalBooks() {
-            return this.$parent.orders.reduce(
-                (acc, item) => acc + Number(item.knih),
-                0
+            return (
+                this.$parent.orders.reduce(
+                    (acc, item) => acc + Number(item.knih),
+                    0
+                ) + "ks\u00a0"
             );
         },
+        totalBooksPrice() {
+            return new Intl.NumberFormat("cs-CZ", {
+                style: "currency",
+                currency: "czk",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(
+                this.$parent.orders.reduce(
+                    (acc, item) => acc + Number(item.knih_kc),
+                    0
+                )
+            );
+        },
+        totalToolsPrice() {
+            return new Intl.NumberFormat("cs-CZ", {
+                style: "currency",
+                currency: "czk",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(
+                this.$parent.orders.reduce(
+                    (acc, item) => acc + Number(item.pomucek_kc),
+                    0
+                )
+            );
+        },
+
         totalTools() {
-            return this.$parent.orders.reduce(
-                (acc, item) => acc + Number(item.pomucek),
-                0
+            return (
+                this.$parent.orders.reduce(
+                    (acc, item) => acc + Number(item.pomucek),
+                    0
+                ) + "ks\u00a0"
             );
         },
     },

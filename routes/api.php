@@ -188,14 +188,14 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
         orders.idorder AS idorder,
         orders.created_at,
         librarys.libName AS knihovna,
-        SUM(IF(items.item_type_idtype=1,1,0)) AS knih,
-        SUM(IF(items.item_type_idtype=2,1,0)) AS pomucek,
-        /*
-        SUM(IF(items.item_type_idtype=1,items.price,0)) AS knih_kc,
-        SUM(IF(items.item_type_idtype=2,items.price,0)) AS pomucek_kc,
+        SUM(IF(items.item_type_idtype=1,order_has_item.item_count,0)) AS knih,
+        SUM(IF(items.item_type_idtype=2,order_has_item.item_count,0)) AS pomucek,
+        
+        SUM(IF(items.item_type_idtype=1,order_has_item.item_count*items.price,0)) AS knih_kc,
+        SUM(IF(items.item_type_idtype=2,order_has_item.item_count*items.price,0)) AS pomucek_kc,
         count(*) AS celkem,
-        */
-        sum(items.price) AS celkem_kc
+        
+        sum(items.price * order_has_item.item_count ) AS celkem_kc
         FROM `orders` 
         JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
         JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary
@@ -244,7 +244,7 @@ Route::middleware('api')->get('/sumaryitems.json', function (Request $request) {
         SELECT
         items.*,
         sum(item_count) AS pieces,
-        SUM(items.price) AS priceSum
+        (sum(item_count) * items.price) AS priceSum
         FROM `items` 
         JOIN order_has_item ON order_has_item.item_iditem=items.iditem
         GROUP BY  items.iditem

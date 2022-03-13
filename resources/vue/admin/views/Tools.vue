@@ -29,8 +29,9 @@
                     <b-tr>
                         <b-th>Celkem</b-th>
                         <b-th></b-th>
-                        <b-th class="text-right">{{ totalTools }}</b-th>
-                        <b-th class="text-right">{{ totalPrice }}</b-th>
+                        <b-th class="text-right">{{ totalTools }}ks</b-th>
+                        <b-th></b-th>
+                        <b-th class="text-right">{{ totalPriceTools }}</b-th>
                     </b-tr>
                 </template>
             </b-table>
@@ -48,13 +49,13 @@ export default {
             tools: [],
             fields: [
                 {
-                    key: "item_name",
-                    label: "Název",
+                    key: "url",
+                    label: "Web prodejce",
                     sortable: true,
                 },
                 {
-                    key: "url",
-                    label: "Web prodejce",
+                    key: "item_name",
+                    label: "Název",
                     sortable: true,
                 },
                 {
@@ -65,9 +66,31 @@ export default {
                 },
                 {
                     key: "price",
-                    label: "j. cena",
+                    label: "cena\u00a0j.",
                     sortable: true,
                     class: "text-right",
+                    formatter: (value, key, item) => {
+                        return Intl.NumberFormat("cs-CZ", {
+                            style: "currency",
+                            currency: "czk",
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
+                        }).format(value);
+                    },
+                },
+                {
+                    key: "priceSum",
+                    label: "cena",
+                    sortable: true,
+                    class: "text-right",
+                    formatter: (value, key, item) => {
+                        return Intl.NumberFormat("cs-CZ", {
+                            style: "currency",
+                            currency: "czk",
+                            maximumFractionDigits: 0,
+                            minimumFractionDigits: 0,
+                        }).format(value);
+                    },
                 },
             ],
         };
@@ -99,10 +122,18 @@ export default {
                 0
             );
         },
-        totalPrice() {
-            return this.tools.reduce(
-                (acc, item) => acc + Number(item.price) * Number(item.pieces),
-                0
+        totalPriceTools() {
+            return new Intl.NumberFormat("cs-CZ", {
+                style: "currency",
+                currency: "czk",
+                maximumFractionDigits: 0,
+                minimumFractionDigits: 0,
+            }).format(
+                this.tools.reduce(
+                    (acc, item) =>
+                        acc + Number(item.price) * Number(item.pieces),
+                    0
+                )
             );
         },
     },
