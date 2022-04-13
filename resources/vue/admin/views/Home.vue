@@ -285,14 +285,19 @@ export default {
                 });
         },
         moveToArchive() {
-            if (confirm("Existuje záloha? Opravdu archivovat?")) {
-                if (confirm("Jde o NEVRATNÝ krok!!! Opravdu archivovat?")) {
+            if (confirm("Jde o NEVRATNÝ krok!!! Opravdu archivovat?")) {
+                if (
+                    confirm(
+                        "Data se přesunou do archivu (nebudou přístupná) Opravdu archivovat?"
+                    )
+                ) {
                     axios.get("/api/archiveAllTables/").then((resp) => {
                         window.location.reload();
                     });
                 }
             }
         },
+        /*
         cleanClear() {
             if (confirm("Existuje záloha? Opravdu odstranit?")) {
                 if (confirm("Jde o NEVRATNÝ krok!!! Opravdu odstranit?")) {
@@ -302,6 +307,7 @@ export default {
                 }
             }
         },
+        */
         DeleteOrder(id, index) {
             if (confirm("Opravdu odstranit?"))
                 if (

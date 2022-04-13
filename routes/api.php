@@ -220,6 +220,7 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
 
 
 // DELETE allTables
+/*
 Route::middleware('api')->get('/deleteAllTables/', function (Request $request) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
         DB::transaction(function () {
@@ -232,6 +233,7 @@ Route::middleware('api')->get('/deleteAllTables/', function (Request $request) {
         return "NOPE";
     }
 });
+*/
 
 Route::middleware('api')->get('/archiveAllTables/', function (Request $request) {
     if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
@@ -257,33 +259,10 @@ Route::middleware('api')->get('/archiveAllTables/', function (Request $request) 
                 DB::statement('INSERT ' . $archivedYear . '_library_has_order SELECT * FROM library_has_order');
                 DB::statement('INSERT ' . $archivedYear . '_order_has_item SELECT * FROM order_has_item');
 
-                //DB::statement('CREATE TABLE `' . $archivedYear . '_order_has_item` ( `item_iditem` int(11) NOT NULL, `order_idorder` int(11) NOT NULL, `item_count` int(11) NOT NULL, `updated_at` datetime DEFAULT current_timestamp() ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;');
-
-
-                //DB::statement('ALTER TABLE `' . $archivedYear . '_library_has_order` ADD KEY `fk_library_has_order_order1_idx` (`order_idorder`), ADD KEY `fk_library_has_order_library1_idx` (`library_idlibrary`);');
-                //DB::statement('ALTER TABLE `' . $archivedYear . '_order_has_item` ADD CONSTRAINT `fk_item_has_order_item1` FOREIGN KEY (`item_iditem`) REFERENCES `' . $archivedYear . '_items` (`iditem`) ON DELETE NO ACTION ON UPDATE NO ACTION,               ADD CONSTRAINT `fk_item_has_order_order1` FOREIGN KEY (`order_idorder`) REFERENCES `' . $archivedYear . '_orders` (`idorder`) ON DELETE NO ACTION ON UPDATE NO ACTION;');
-
-                /*
-                Schema::table($archivedYear . '_order_has_item', function (Blueprint $table) {
-                    //$table->unsignedBigInteger('item_iditem');
-                    $table->foreign('item_iditem')->references('iditem')->on((date("Y") - 1) . '_items');
-                    //$table->foreign('order_idorder')->references('orders')->on((date("Y") - 1) . '_idorder');
-                });
-                */
-
-                /*
-                
-                Schema::table($archivedYear . '_library_has_order', function (Blueprint $table) {
-                    $table->foreign('library_idlibrary')->references('idlibrary')->on($archivedYear . '_librarys');
-                    $table->foreign('order_idorder')->references('idorder')->on($archivedYear . '_library_has_order');
-                });
-                
-
-                    DB::table('order_has_item')->delete();
-                    DB::table('library_has_order')->delete();
-                    DB::table('orders')->delete();
-                    DB::table('librarys')->delete();
-                */
+                DB::table('order_has_item')->delete();
+                DB::table('library_has_order')->delete();
+                DB::table('orders')->delete();
+                DB::table('librarys')->delete();
             });
         }
     } else {
