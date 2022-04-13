@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class Allowed extends Model
@@ -39,9 +39,15 @@ class Allowed extends Model
     {
         //$start = Carbon::createMidnightDate(2021, 8, 15, 'Europe/Prague');
 
-        $dateStopShopping = \DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStopShopping'");
+        $dateStopShopping = DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStopShopping'");
         //print_r($dateStopShopping[0]->value);
-        $dS = explode("-", trim($dateStopShopping[0]->value));
+        if (isset($dateStopShopping[0])) {
+            $dS = explode("-", trim($dateStopShopping[0]->value));
+        } else {
+            $dS = array(0 => "0001", 1 => "01", 2 => "01");
+            DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStartShopping', '2020-01-02']);
+            DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStopShopping', '2020-01-01']);
+        }
         //print_r($dS);
         //die();
 

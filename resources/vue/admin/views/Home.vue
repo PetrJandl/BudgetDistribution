@@ -46,17 +46,17 @@
                         >Nastav</a
                     >
                 </div>
-                <div class="row">
+                <div class="row" v-if="lastYearArchived">
                     <label
                         for="cleanClear"
                         class="col-md-3 col-12 offset-md-3 offset-0"
                         >Vyčištění systému:</label
                     ><a
-                        v-on:click="cleanClear()"
+                        v-on:click="moveToArchive()"
                         href="#cleanClear"
                         type="button"
                         class="btn btn-danger btn-sm col-md-3 col-sm-6 col-12"
-                        >Odstranit objednávky!</a
+                        >Archivovat ročník</a
                     >
                 </div>
                 <div class="text-center"></div>
@@ -200,6 +200,7 @@ export default {
             books: [],
             shopingStartDate: "",
             shopingStopDate: "",
+            lastYearArchived: false,
             fields: [
                 {
                     key: "created_at",
@@ -273,6 +274,24 @@ export default {
                     console.log(error);
                 });
             //console.log(this.shopingStopDate);
+            axios
+                .get("/api/isLastYearArchived.json")
+                .then((response) => {
+                    console.log("response:" + response.data);
+                    this.lastYearArchived = !response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+        moveToArchive() {
+            if (confirm("Existuje záloha? Opravdu archivovat?")) {
+                if (confirm("Jde o NEVRATNÝ krok!!! Opravdu archivovat?")) {
+                    axios.get("/api/archiveAllTables/").then((resp) => {
+                        window.location.reload();
+                    });
+                }
+            }
         },
         cleanClear() {
             if (confirm("Existuje záloha? Opravdu odstranit?")) {

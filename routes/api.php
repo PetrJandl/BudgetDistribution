@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Allowed as ModelsAllowed;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,6 +171,13 @@ Route::middleware('api')->get('/loadFromBookstart.json', function (Request $requ
     return trim($loadFromBookstart[0]->value);
 });
 
+Route::middleware('api')->get('/isLastYearArchived.json', function (Request $request) {
+    $query = \DB::table('archived')
+        ->where('year', date("Y") - 1)
+        ->get();
+    return count($query);
+});
+
 Route::post('/setLoadToDate', function (Request $request) {
     if (ModelsAllowed::adminIP($request->ip())) {
         \DB::table('settings')
@@ -223,6 +232,65 @@ Route::middleware('api')->get('/deleteAllTables/', function (Request $request) {
         return "NOPE";
     }
 });
+
+Route::middleware('api')->get('/archiveAllTables/', function (Request $request) {
+    if (request()->ajax() &&  ModelsAllowed::adminIP($request->ip())) {
+
+        $archivedYear = (date("Y") - 1);
+        $isArchived = DB::select('select count(*) AS yearIsArchived from archived where year = ?', [$archivedYear]);
+
+        if (!$isArchived[0]->yearIsArchived) {
+
+            DB::transaction(function () {
+                $archivedYear = (date("Y") - 1);
+                DB::insert('insert into archived (year) values (?)', [$archivedYear]);
+
+                DB::statement('CREATE TABLE ' . $archivedYear . '_librarys LIKE librarys');
+                DB::statement('CREATE TABLE ' . $archivedYear . '_items LIKE items');
+                DB::statement('CREATE TABLE ' . $archivedYear . '_orders LIKE orders');
+                DB::statement('CREATE TABLE ' . $archivedYear . '_library_has_order LIKE library_has_order');
+                DB::statement('CREATE TABLE `' . $archivedYear . '_order_has_item`  LIKE order_has_item');
+
+                DB::statement('INSERT ' . $archivedYear . '_librarys SELECT * FROM librarys');
+                DB::statement('INSERT ' . $archivedYear . '_items SELECT * FROM items');
+                DB::statement('INSERT ' . $archivedYear . '_orders SELECT * FROM orders');
+                DB::statement('INSERT ' . $archivedYear . '_library_has_order SELECT * FROM library_has_order');
+                DB::statement('INSERT ' . $archivedYear . '_order_has_item SELECT * FROM order_has_item');
+
+                //DB::statement('CREATE TABLE `' . $archivedYear . '_order_has_item` ( `item_iditem` int(11) NOT NULL, `order_idorder` int(11) NOT NULL, `item_count` int(11) NOT NULL, `updated_at` datetime DEFAULT current_timestamp() ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;');
+
+
+                //DB::statement('ALTER TABLE `' . $archivedYear . '_library_has_order` ADD KEY `fk_library_has_order_order1_idx` (`order_idorder`), ADD KEY `fk_library_has_order_library1_idx` (`library_idlibrary`);');
+                //DB::statement('ALTER TABLE `' . $archivedYear . '_order_has_item` ADD CONSTRAINT `fk_item_has_order_item1` FOREIGN KEY (`item_iditem`) REFERENCES `' . $archivedYear . '_items` (`iditem`) ON DELETE NO ACTION ON UPDATE NO ACTION,               ADD CONSTRAINT `fk_item_has_order_order1` FOREIGN KEY (`order_idorder`) REFERENCES `' . $archivedYear . '_orders` (`idorder`) ON DELETE NO ACTION ON UPDATE NO ACTION;');
+
+                /*
+                Schema::table($archivedYear . '_order_has_item', function (Blueprint $table) {
+                    //$table->unsignedBigInteger('item_iditem');
+                    $table->foreign('item_iditem')->references('iditem')->on((date("Y") - 1) . '_items');
+                    //$table->foreign('order_idorder')->references('orders')->on((date("Y") - 1) . '_idorder');
+                });
+                */
+
+                /*
+                
+                Schema::table($archivedYear . '_library_has_order', function (Blueprint $table) {
+                    $table->foreign('library_idlibrary')->references('idlibrary')->on($archivedYear . '_librarys');
+                    $table->foreign('order_idorder')->references('idorder')->on($archivedYear . '_library_has_order');
+                });
+                
+
+                    DB::table('order_has_item')->delete();
+                    DB::table('library_has_order')->delete();
+                    DB::table('orders')->delete();
+                    DB::table('librarys')->delete();
+                */
+            });
+        }
+    } else {
+        return "NOPE";
+    }
+});
+
 
 // DELETE order by ID
 Route::middleware('api')->get('/orderDelete/{id}', function (Request $request, $id) {
