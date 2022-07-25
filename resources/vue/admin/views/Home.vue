@@ -59,7 +59,11 @@
                         >Archivovat ročník</a
                     >
                 </div>
-                <div class="text-center"></div>
+
+<div class="row">
+<div class="offset-md-3 offset-">		    Vkládání knih a pomůcek probíhá přes <a href="/phpmyadmin/">phpmyadmin</a>.
+</div></div>
+
             </div>
             <div>
                 <h4>Tisk objednávek:</h4>
