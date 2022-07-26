@@ -35,7 +35,7 @@ Route::middleware('api')->get('/librarys.json', function () {
     if (request()->ajax() && ModelsAllowed::shoping()) {
         //vytahne registrovane na bookstartu
         $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
-        print_r($newLibrarys);
+        //print_r($newLibrarys);
         //natahnout vlastni seznam (cely vcetne jiz objednanych)
         $uploadedLibrarys = \DB::table('librarys')
             /*->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')*/
@@ -45,22 +45,24 @@ Route::middleware('api')->get('/librarys.json', function () {
             ->get();
 
         // pokud jsou nejake registrovane na bookstartu
-        if (count($newLibrarys) > 0) {
+        //if (count($newLibrarys) > 0) {
             // projit cely seznam mistnich
+            /*
             foreach ($uploadedLibrarys as $li => $l) {
                 foreach ($newLibrarys as $bsi => $bs) {
                     if ($l->idlibrary == $bs->idlibrary) {
-                        /*
                         echo $l->idlibrary . " - " . $x->idlibrary . "
-";*/
+";
                         unset($newLibrarys[$bsi]);
                         //continue;
                         break;
                     }
                 }
             }
+            */
             //print_r($newLibrarys);
             //die();
+            /*
             $insert = array();
             foreach ($newLibrarys as $i => $l) {
                 $insert[$i]['idlibrary'] = $l->idlibrary;
@@ -81,21 +83,22 @@ Route::middleware('api')->get('/librarys.json', function () {
                 $insert[$i]['contactPersonTele'] = $l->contactPersonTele;
             }
             //print_r($insert);
-            die();
+            //die();
             if (isset($insert[0])) {
                 if ($insert[0]['libName'] != "TEST") {
                     //\DB::table('librarys')->insert($insert);
                 }
             }
+            */
             return \DB::table('librarys')
                 ->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')
                 ->select('librarys.*')
                 ->whereNull('library_has_order.order_idorder')
                 ->orderby('librarys.libCity')
                 ->get();
-        } else {
-            return "[]";
-        }
+        //} else {
+        //    return "[]";
+        //}
     } else {
         return "NOPE";
     }

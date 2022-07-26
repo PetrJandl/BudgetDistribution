@@ -366,8 +366,8 @@ export default {
     },
   },
   methods: {
-    getLibrarys() {
-      axios
+    async getLibrarys() {
+      await axios
         .get("/api/librarys.json")
         .then((response) => {
           if (response.data.length == 0) {
