@@ -39,23 +39,27 @@ class Allowed extends Model
     {
         //$start = Carbon::createMidnightDate(2021, 8, 15, 'Europe/Prague');
 
+        $dateStartShopping = DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStartShopping'");
         $dateStopShopping = DB::select("SELECT DATE_FORMAT(value, '%Y-%m-%d') AS value FROM `settings` WHERE `pointer` = 'dateStopShopping'");
         //print_r($dateStopShopping[0]->value);
         if (isset($dateStopShopping[0])) {
-            $dS = explode("-", trim($dateStopShopping[0]->value));
+            $dStart = explode("-", trim($dateStartShopping[0]->value));
+            $dStop = explode("-", trim($dateStopShopping[0]->value));
         } else {
-            $dS = array(0 => "0001", 1 => "01", 2 => "01");
+            $dStart = array(0 => "0001", 1 => "01", 2 => "01");
+            $dStop = array(0 => "0001", 1 => "01", 2 => "01");
             DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStartShopping', '2020-01-02']);
             DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStopShopping', '2020-01-01']);
         }
         //print_r($dS);
         //die();
 
-        $stop = Carbon::create($dS[0], $dS[1], $dS[2], 23, 59, 59, 'Europe/Prague');
+        $start = Carbon::create($dStart[0], $dStart[1], $dStart[2], 0, 0, 0, 'Europe/Prague');
+        $stop = Carbon::create($dStop[0], $dStop[1], $dStop[2], 23, 59, 59, 'Europe/Prague');
         if ($showStopDate) {
             return trim($dateStopShopping[0]->value);
         } else {
-            if ($stop->diffInMinutes(Carbon::now('Europe/Prague'), false) < 0) {
+            if ($start->diffInMinutes(Carbon::now('Europe/Prague'), false) > 0 AND $stop->diffInMinutes(Carbon::now('Europe/Prague'), false) < 0) {
                 return true;
             } else {
                 return false;

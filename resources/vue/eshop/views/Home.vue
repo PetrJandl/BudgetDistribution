@@ -9,13 +9,11 @@
                 src="/images/bookstart.png"
             />
             <div class="display-3" v-if="isShopingAlowed">
-                Příjem objednávek do&nbsp;{{ shopingStopDate | formatDate }}!
+                Příjem objednávek od&nbsp;{{ shopingStartDate | formatDate }} do&nbsp;{{ shopingStopDate | formatDate }}!
             </div>
         </div>
         <div class="display-3 text-danger" v-if="!isShopingAlowed">
-            Termín pro zaslání objednávek vypršel ({{
-                shopingStopDate | formatDate
-            }})!
+            Příjem objednávek od&nbsp;{{shopingStartDate | formatDate}} do&nbsp;{{shopingStopDate | formatDate}}!
         </div>
     </div>
 </template>

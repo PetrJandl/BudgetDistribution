@@ -64,7 +64,7 @@
                         <router-link
                             to="/eshop/knihy"
                             v-slot="{ href, navigate, isExactActive }"
-                            v-if="isShopingAlowed"
+                            v-if="isShopingAlowed || isAdminAlowed"
                             custom
                         >
                             <li class="nav-link">
@@ -82,7 +82,7 @@
                         <router-link
                             to="/eshop/pomucky"
                             v-slot="{ href, navigate, isExactActive }"
-                            v-if="isShopingAlowed"
+                            v-if="isShopingAlowed || isAdminAlowed"
                             custom
                         >
                             <li
@@ -105,7 +105,7 @@
                         <router-link
                             to="/eshop/nakupniKosik"
                             v-slot="{ href, navigate, isExactActive }"
-                            v-if="isShopingAlowed"
+                            v-if="isShopingAlowed || isAdminAlowed"
                             custom
                         >
                             <li
@@ -233,16 +233,6 @@ export default {
     methods: {
         getInitSet() {
             axios
-                .get("/api/allowAdmin.json")
-                .then((response) => {
-                    if (response.data == "ok") {
-                        this.isAdminAlowed = true;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            axios
                 .get("/api/allowShoping.json")
                 .then((response) => {
                     if (response.data != "ok") {
@@ -252,6 +242,17 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+                    axios
+                        .get("/api/allowAdmin.json")
+                        .then((response) => {
+                            if (response.data == "ok") {
+                                this.isAdminAlowed = true;
+                                this.isShopingAlowed = false;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
 
             //console.log(this.books)
         },
@@ -275,7 +276,7 @@ export default {
             //console.log(this.books)
         },
         addToBasked: function ($newItem) {
-            var maxPriceSum = 4550;
+            var maxPriceSum = 4200;
             if (this.sumPrice + $newItem.price * $newItem.piece < maxPriceSum) {
                 var update = 0;
                 this.basked.forEach((item) => {

@@ -23,16 +23,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 
-Route::middleware('api')->get('/items.json', function () {
-    if (request()->ajax() && ModelsAllowed::shoping()) {
+Route::middleware('api')->get('/items.json', function (Request $request) {
+    if (request()->ajax() && ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )) {
         return \DB::table('items')->where('visible', '=', 1)->get();
     } else {
         return "NOPE";
     }
 });
 
-Route::middleware('api')->get('/librarys.json', function () {
-    if (request()->ajax() && ModelsAllowed::shoping()) {
+Route::middleware('api')->get('/librarys.json', function (Request $request) {
+    if (request()->ajax() && ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )) {
         //vytahne registrovane na bookstartu
 //        $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
         //print_r($newLibrarys);

@@ -281,7 +281,7 @@ export default {
             axios
                 .get("/api/isLastYearArchived.json")
                 .then((response) => {
-                    console.log("response:" + response.data);
+                    //console.log("response:" + response.data);
                     this.lastYearArchived = !response.data;
                 })
                 .catch((error) => {
