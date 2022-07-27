@@ -14,7 +14,7 @@ class eshopData extends Controller
     public function send(Request $request)
     {
 
-        if ($request->accepts(['text/html', 'application/json']) && ModelsAllowed::shoping()) {
+        if ($request->accepts(['text/html', 'application/json']) && (ModelsAllowed::shoping() || ModelsAllowed::adminIP( $request->ip() ) )) {
 
             $response = (new \ReCaptcha\ReCaptcha(config('services.recaptcha.secret')))
                 ->setExpectedAction('sendOrder')

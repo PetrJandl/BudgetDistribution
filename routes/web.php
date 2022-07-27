@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\eshopData;
 use App\Http\Controllers\topSecret;
 use App\Models\Allowed as ModelsAllowed;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::redirect('/', '/eshop/');
 
 
 // all sub pages /eshop/ is vue
-if (ModelsAllowed::shoping()) {
+if (ModelsAllowed::shoping() || ModelsAllowed::adminIP( \Request::ip() ) ) {
   // send form make order
   Route::post('/eshopNewOrder', [eshopData::class, 'send']);
   // open shop subpage
