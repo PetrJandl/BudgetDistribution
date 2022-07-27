@@ -27,7 +27,40 @@ Route::middleware('api')->get('/items.json', function (Request $request) {
     if (request()->ajax() && ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )) {
         return \DB::table('items')->where('visible', '=', 1)->get();
     } else {
-        return "NOPE";
+        return '[
+            {
+               "iditem":33597,
+               "item_type_idtype":1,
+               "item_name":"NE",
+               "url":"",
+               "isbn":null,
+               "cover_medium_url":"",
+               "price":0,
+               "description":"Jste mimo termín objednávek!",
+               "visible":1,
+               "item_autor":null,
+               "source":"",
+               "cover_icon_url":null,
+               "rating_url":null,
+               "updated_at":"2022-07-27 10:20:20"
+            },
+            {
+               "iditem":33598,
+               "item_type_idtype":2,
+               "item_name":"NE",
+               "url":"",
+               "isbn":null,
+               "cover_medium_url":"",
+               "price":0,
+               "description":"Jste mimo termín objednávek!",
+               "visible":1,
+               "item_autor":null,
+               "source":"",
+               "cover_icon_url":null,
+               "rating_url":null,
+               "updated_at":"2022-07-27 10:20:20"
+            }
+         ]';
     }
 });
 
