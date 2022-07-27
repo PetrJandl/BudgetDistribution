@@ -34,15 +34,15 @@ Route::middleware('api')->get('/items.json', function () {
 Route::middleware('api')->get('/librarys.json', function () {
     if (request()->ajax() && ModelsAllowed::shoping()) {
         //vytahne registrovane na bookstartu
-        $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
+//        $newLibrarys = \DB::connection('mysql2')->select('SELECT * FROM librarys');
         //print_r($newLibrarys);
         //natahnout vlastni seznam (cely vcetne jiz objednanych)
-        $uploadedLibrarys = \DB::table('librarys')
+//        $uploadedLibrarys = \DB::table('librarys')
             /*->leftJoin('library_has_order', 'librarys.idlibrary', '=', 'library_has_order.library_idlibrary')*/
-            ->select('librarys.*')
+//            ->select('librarys.*')
             /*->whereNull('library_has_order.order_idorder')*/
-            ->orderby('librarys.libCity')
-            ->get();
+//            ->orderby('librarys.libCity')
+//            ->get();
 
         // pokud jsou nejake registrovane na bookstartu
         //if (count($newLibrarys) > 0) {
