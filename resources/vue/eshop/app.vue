@@ -257,6 +257,7 @@ export default {
             //console.log(this.books)
         },
         getItems() {
+            if(this.isShopingAlowed || this.isAdminAlowed){
             axios
                 .get("/api/items.json")
                 .then((response) => {
@@ -273,6 +274,7 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+            }
             //console.log(this.books)
         },
         addToBasked: function ($newItem) {
