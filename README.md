@@ -16,6 +16,11 @@ Data must be entered into the database by external applications (<a href="https:
 
 The system intentionally does not allow registration, but only the selection or modification of information about the customer. The list of customers is in the librars table.
 
+## Database schema
+<div>
+<p><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/DBbshop.png"></p>
+</div>
+
 ## ScreenShots
 <div>
 <p><div>Home Page</div><img src="https://raw.githubusercontent.com/PetrJandl/BudgetDistribution/main/web_screenshots/bshop-Home.png"></p>
