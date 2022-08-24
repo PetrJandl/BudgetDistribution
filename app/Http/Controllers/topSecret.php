@@ -67,12 +67,13 @@ class topSecret extends Controller
             librarys.libName AS knihovna,
             SUM(IF(items.item_type_idtype=1,1,0)) AS knih,
             SUM(IF(items.item_type_idtype=2,1,0)) AS pomucek,
+            
+            SUM(IF(items.item_type_idtype=1, order_has_item.item_count * items.price,0)) AS knih_kc,
+            SUM(IF(items.item_type_idtype=2, order_has_item.item_count * items.price,0)) AS pomucek_kc,
             /*
-            SUM(IF(items.item_type_idtype=1,items.price,0)) AS knih_kc,
-            SUM(IF(items.item_type_idtype=2,items.price,0)) AS pomucek_kc,
             count(*) AS celkem,
             */
-            sum(items.price) AS celkem_kc
+            sum(order_has_item.item_count * items.price) AS celkem_kc
             FROM `orders` 
             JOIN library_has_order ON orders.idorder=library_has_order.order_idorder
             JOIN librarys ON library_has_order.library_idlibrary=librarys.idlibrary

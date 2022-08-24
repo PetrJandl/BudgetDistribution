@@ -26,7 +26,7 @@ Položky:
 @if ($last!=$item['item_type_idtype'] && $ordersSum[$order['idorder']]->knih!=0)
 <tr style="border-bottom: 1px dotted gray; border-top: 1px solid gray; height: 18pt;">
     <td style="text-align: right;" colspan="3">knih : {{ $ordersSum[$order['idorder']]->knih }} druhů, {{ $subtotalPieces }} kusů</td>
-    <th style="text-align: right; padding-right: 10pt;">{{ $subtotalPrice }}</th>
+    <th style="text-align: right; padding-right: 10pt;">{{ $ordersSum[$order['idorder']]->knih_kc }}&nbsp;Kč</th>
     @php ($subtotalPieces = 0)
     @php ($subtotalPrice = 0)
 </tr>
@@ -44,7 +44,7 @@ Položky:
         {{  Illuminate\Support\Str::limit($item['item_autor'], 18, $end='...') }}
     </td>@endif
     <td style="text-align: right;"><small style="color:gray">{{ $item['price'] }}&nbsp;x&nbsp;</small><strong>{{ $item['item_count'] }}</strong><small>&nbsp;=</small></td>
-    <td style="text-align: right; padding-right: 10pt;">{{ $item['price']*$item['item_count'] }}</td>
+    <td style="text-align: right; padding-right: 10pt;">{{ $item['price']*$item['item_count'] }}&nbsp;Kč</td>
     <td style="width: 18pt; border: 1px dotted gray;"></td>
 </tr>
 @php ($subtotalPieces += $item['item_count'])
@@ -54,12 +54,12 @@ Položky:
 @if ($ordersSum[$order['idorder']]->pomucek!=0)
 <tr style="border-top: 1px solid gray; height: 18pt;">
     <td style="text-align: right;" colspan="3">pomůcek : {{ $ordersSum[$order['idorder']]->pomucek }} druhů, {{ $subtotalPieces }} kusů</td>
-    <th style="text-align: right; padding-right: 10pt;">{{ $subtotalPrice }}</th>
+    <th style="text-align: right; padding-right: 10pt;">{{ $ordersSum[$order['idorder']]->pomucek_kc }}&nbsp;Kč</th>
 </tr>
 @endif
 <tr style="border-top: 4px double gray; height: 18pt;">
     <th style="text-align: left;" colspan="3"> Celkem</th>
-    <th style="text-align: right; padding-right: 10pt;"> {{ $ordersSum[$order['idorder']]->celkem_kc }}</th>
+    <th style="text-align: right; padding-right: 10pt;"> {{ $ordersSum[$order['idorder']]->celkem_kc }}&nbsp;Kč</th>
 </tr>
 </table>
 
@@ -74,7 +74,7 @@ Položky:
 
 <script type="text/javascript">
 <!--
-window.print();
+//window.print();
 //-->
 </script>
 
