@@ -232,7 +232,8 @@ Route::middleware('api')->get('/orders.json', function (Request $request) {
         SELECT
         orders.idorder AS idorder,
         orders.created_at,
-        librarys.libName AS knihovna,
+        /*librarys.libName AS knihovna,*/
+        IF(librarys.libName LIKE CONCAT("%", TRIM(librarys.libCity),"%"), librarys.libName, CONCAT(librarys.libName," (",librarys.libCity,")")) AS knihovna,
         SUM(IF(items.item_type_idtype=1,order_has_item.item_count,0)) AS knih,
         SUM(IF(items.item_type_idtype=2,order_has_item.item_count,0)) AS pomucek,
         
