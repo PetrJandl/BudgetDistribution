@@ -20,7 +20,7 @@ class Allowed extends Model
             or
             $ip == "192.168.20.250" //jandl mobile home
             or
-            $ip == "192.168.20.250" //jandl pc home
+            $ip == "192.168.20.235" //jandl pc home
             or
             $ip == "192.168.99.218" //jandl mobile work
             or

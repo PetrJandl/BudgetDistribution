@@ -1,10 +1,11 @@
 ## About BudgetDistribution
 
-BudgetDistribution is a simple web application for dividing the subsidy into books and aids from the region to the catchment libraries. Využívá ty to technologie
+BudgetDistribution is a simple web application for dividing the subsidy into books and aids from the region to the catchment libraries. It uses these technologies
 
-- Laravel
-- Vue.js
-- MariaDB
+- Laravel 8.4
+- Bootstrap 5
+- Vue.js 2
+- MariaDB 10
 
 It does not contain administration for entering data, only overviews of inserted orders.
 
