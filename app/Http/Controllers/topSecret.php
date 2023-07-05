@@ -12,7 +12,7 @@ class topSecret extends Controller
         if (ModelsAllowed::adminIP($request->ip())) {
             return view('admin/admin');
         } else {
-            return "NOPE";
+            return "NOPE-".$request->ip();
         }
     }
     public function printAllOrders(Request $request)

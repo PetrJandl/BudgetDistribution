@@ -1,6 +1,6 @@
 <template>
     <div class="home col-12 col-sm-12 col-md-12 col-lg-10 col-xl-8">
-        <h1>Výběr knih / pomůcek z dotace Královéhradeckého kraje</h1>
+        <h1>Výběr knih / pomůcek z dotace Zlínského kraje</h1>
         <div v-if="isShopingAlowed">
             <img
                 class="mb-4 mt-4"
@@ -22,7 +22,7 @@
 import axios from "axios";
 
 export default {
-    title: "Bookstart eShop",
+    title: "Bookstart eShop - Zlínský kraj",
     data() {
         return {
             isShopingAlowed: true,

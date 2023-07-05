@@ -14,21 +14,23 @@ class Allowed extends Model
         if (
             $ip == "::1" //localhost ipv6 - jandl
             or
-            $ip == "127.0.0.1" //localhost - jandl
+            $ip == "127.0.0.1"		//localhost - jandl
             or
-            $ip == "192.168.133.80" //jandl pc work
+            $ip == "192.168.133.80"	// jandl pc work
             or
-            $ip == "192.168.20.250" //jandl mobile home
+            $ip == "192.168.20.250"	// jandl mobile home
             or
-            $ip == "192.168.20.235" //jandl pc home
+            $ip == "192.168.20.235"	// jandl pc home
             or
-            $ip == "192.168.99.218" //jandl mobile work
+            $ip == "192.168.99.218"	// jandl mobile work
             or
-            $ip == "192.168.132.9" // cizinska
+            $ip == "192.168.132.9"	// cizinska
             or
-            $ip == "192.168.132.36" // rychtrmocova
+            $ip == "192.168.132.36"	// rychtrmocova
             or
-            $ip == "192.168.132.43" // hubertova
+            $ip == "192.168.132.43"	// hubertova
+	    or
+	    $ip == "192.168.20.87"	// jandl home NB
         ) {
             return true;
         } else {
@@ -49,7 +51,7 @@ class Allowed extends Model
             $dStart = array(0 => "0001", 1 => "01", 2 => "01");
             $dStop = array(0 => "0001", 1 => "01", 2 => "01");
             DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStartShopping', '2020-01-02']);
-            DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStopShopping', '2020-01-01']);
+            DB::insert('insert into settings (pointer, value) values (?, ?)', ['dateStopShopping', '2050-01-01']);
         }
         //print_r($dS);
         //die();

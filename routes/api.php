@@ -146,10 +146,10 @@ Route::middleware('api')->get('/allowAdmin.json', function (Request $request) {
         ) {
             return json_encode("ok");
         } else {
-            return "NOPE";
+            return "NOPE-".$request->ip();
         }
     } else {
-        return "NOPE";
+        return "NOPE-".$request->ip();
     }
 });
 
