@@ -29,6 +29,8 @@ class Allowed extends Model
             $ip == "192.168.132.36" // rychtrmocova
             or
             $ip == "192.168.132.43" // hubertova
+            or
+            $ip == "192.168.20.87" // jandl home NB
         ) {
             return true;
         } else {
