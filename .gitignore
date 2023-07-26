@@ -16,3 +16,6 @@ yarn-error.log
 /public/phpmyadmin
 /public/js/
 /public/img/*
+/public/img/tools/*
+/public/img/books/*
+
