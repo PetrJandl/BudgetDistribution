@@ -100,13 +100,13 @@ class SendEmails extends Command
                         ->update(array('isSend' => 1));
                 }
                 if (env('APP_DEBUG')) {
-                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
+                    Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($value));
                 } else {
                     Mail::to($value['order']->contactPersonEmail)->send(new OrderShipped($value));
                     if ($value['order']->contactPersonEmail != $value['order']->libEmail) {
                         Mail::to($value['order']->libEmail)->send(new OrderShipped($value));
                     }
-                    Mail::to("jandl@knihovnahk.cz")->send(new OrderShipped($value));
+                    Mail::to("petr.jandl@gmail.com")->send(new OrderShipped($value));
                     Mail::to("cizinska@knihovnahk.cz")->send(new OrderShipped($value));
                 }
             }

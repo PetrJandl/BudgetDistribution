@@ -25,7 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('api')->get('/items.json', function (Request $request) {
     if (request()->ajax() && ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )) {
-        return \DB::table('items')->where('visible', '=', 1)->get();
+        return \DB::table('items')->where('visible', '=', 1)->where("price","<=",800)->get();
     } else {
         return '[
             {
