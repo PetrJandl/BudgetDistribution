@@ -11,7 +11,8 @@ class Allowed extends Model
 {
     public static function adminIP($ip)
     {
-        if (
+    
+	if (
             $ip == "::1" //localhost ipv6 - jandl
             or
             $ip == "127.0.0.1" //localhost - jandl
@@ -30,7 +31,7 @@ class Allowed extends Model
             or
             $ip == "192.168.132.43" // hubertova
             or
-            $ip == "192.168.20.87" // jandl home NB
+            $ip == "172.16.24.20" // jandl home NB
         ) {
             return true;
         } else {
