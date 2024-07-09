@@ -31,7 +31,7 @@ class Allowed extends Model
             or
             $ip == "192.168.132.43" // hubertova
             or
-            $ip == "172.16.24.20" // jandl home NB
+            $ip == "172.16.24.20" // jandl VPN
         ) {
             return true;
         } else {
