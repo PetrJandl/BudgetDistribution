@@ -40,9 +40,13 @@ class HarvestBooklets extends Command
     {
         $ObalkyKnih = 'http://cache.obalkyknih.cz/api/books?multi=[';
         $count = 0;
-        foreach (Item::whereNotNull("isbn")->WhereNull('item_autor')->get() as $book) {
-            $ObalkyKnih = $ObalkyKnih . '{"isbn":"' . trim($book->isbn) . '"},';
-            $count++;
+        foreach ( Item::whereNotNull("isbn")->WhereNull('item_name')->get() as $book ) {
+		if( preg_match("/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/m", trim($book->isbn) ) ){
+			$ObalkyKnih = $ObalkyKnih . '{"isbn":"' . urlencode(trim($book->isbn)) . '"},';
+        		$count++;
+		}else{
+			echo "Tohle ISBN je asi spatne?: \" " . $book->isbn . "\"\n";
+		}
         }
         $ObalkyKnih = substr($ObalkyKnih, 0, -1) . ']';
         //print_r($ObalkyKnih);
@@ -79,7 +83,7 @@ class HarvestBooklets extends Command
                 }
                 if (isset($books[$value->bibinfo->isbn])) {
                     Item::where('isbn', '=', $value->bibinfo->isbn)->update($books[$value->bibinfo->isbn]);
-                    //echo $value->bibinfo->isbn." OK \n\n";
+                    echo $value->bibinfo->isbn." OK \n\n";
                 } else {
                     Item::where('isbn', '=', $value->bibinfo->isbn)->update(array("item_name" => "-", "item_autor" => "-"));
                     echo "Kniha " . $value->bibinfo->isbn . " neni na serveru obalkyknih.cz\n";
@@ -91,10 +95,6 @@ class HarvestBooklets extends Command
         }
         //print_r($books);
         //Item::update($books)->save();
-
-
-
-
         return 0;
     }
 }
