@@ -91,6 +91,5 @@
     <strong>Omlouvame se ale tento web, neumí pracovat bez JavaScriptu. Prosím zapňete jej.</strong>
   </noscript>
   @yield('content')
-    
 </body>
 </html>

@@ -14,7 +14,7 @@ přijali jsme objednávku dotovaných pomůcek a knih :
 @endcomponent
 
 <b>Objednal/a:</b><br>{{ $order->libName }}<br> {{ $order->libStreet }}<br> {{ $order->libPSC }} {{ $order->libCity }}<br> (IČ: {{ $order->ic }} - {{ $order->oName }}),<br>
-<b>s doručučením 
+<b>s doručením 
 @if (!$order->deliveryAddress)
 do sdídla knihovny</b><br>
 {{ $order->libName }}<br> {{ $order->libStreet }}<br> {{ $order->libPSC }} {{ $order->libCity }})
