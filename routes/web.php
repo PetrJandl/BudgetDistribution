@@ -40,6 +40,22 @@ if (ModelsAllowed::shoping() || ModelsAllowed::adminIP( \Request::ip() ) ) {
   });
 }
 
+// open shop subpage
+Route::get('/recommend/{any?}', function () {
+  return view('recommend/recommend');
+})->where('any', '.*');
+
+
+/*
+Route::get('/recommend/knihy/', function () {
+    return view('recommend/recommend');
+});
+*/
+
+//Route::get('/admin/recommend/knihy', function () {
+//    return view('recommend/recommend')
+//});
+
 /* Administration links */
 Route::get('/admin/vsechyObjednavky', [topSecret::class, 'printAllOrders']);
 Route::get('/admin/vsechyAdresy/', [topSecret::class, 'printAllAddress']);

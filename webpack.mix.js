@@ -11,6 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.js('resources/js/recommend/app.js', 'public/js/recommend').vue({ version: 2 });
+
 mix.js('resources/js/eshop/app.js', 'public/js/eshop').vue({ version: 2 });
 /*
 .sass('resources/sass/app.scss', 'public/css')
@@ -21,3 +23,11 @@ mix.js('resources/js/eshop/app.js', 'public/js/eshop').vue({ version: 2 });
 */
 
 mix.js('resources/js/admin/app.js', 'public/js/admin').vue({ version: 2 });
+
+module.exports = {
+  configureWebpack: {
+    externals: {
+      vue: "Vue" // Vytvoří globální proměnnou Vue
+    }
+  }
+};

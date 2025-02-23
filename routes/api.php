@@ -24,19 +24,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 Route::middleware('api')->get('/items.json', function (Request $request) {
-    if (request()->ajax() && ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )) {
+    if (request()->ajax() /*&& ( ModelsAllowed::shoping() || ModelsAllowed::adminIP($request->ip()) )*/) {
         return \DB::table('items')->where('visible', '=', 1)->get();
+
     } else {
         return '[
             {
                "iditem":33597,
                "item_type_idtype":1,
-               "item_name":"NE",
+               "item_name":"NOPE",
                "url":"",
                "isbn":null,
                "cover_medium_url":"",
                "price":0,
-               "description":"Jste mimo termín objednávek!",
+               "description":"Unauthorized data download!",
                "visible":1,
                "item_autor":null,
                "source":"",
@@ -47,12 +48,12 @@ Route::middleware('api')->get('/items.json', function (Request $request) {
             {
                "iditem":33598,
                "item_type_idtype":2,
-               "item_name":"NE",
+               "item_name":"NOPE",
                "url":"",
                "isbn":null,
                "cover_medium_url":"",
                "price":0,
-               "description":"Jste mimo termín objednávek!",
+               "description":"unauthorized data download!",
                "visible":1,
                "item_autor":null,
                "source":"",
@@ -62,6 +63,7 @@ Route::middleware('api')->get('/items.json', function (Request $request) {
             }
          ]';
     }
+
 });
 
 Route::middleware('api')->get('/librarys.json', function (Request $request) {

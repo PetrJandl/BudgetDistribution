@@ -1,8 +1,9 @@
 {
+    "/js/recommend/app.js": "/js/recommend/app.js",
     "/js/eshop/app.js": "/js/eshop/app.js",
     "/js/admin/app.js": "/js/admin/app.js",
-    "/js/eshop/books.js": "/js/eshop/books.js",
-    "/js/eshop/tools.js": "/js/eshop/tools.js",
-    "/js/eshop/basked.js": "/js/eshop/basked.js",
-    "/js/eshop/order.js": "/js/eshop/order.js"
+    "/js/recommend/books.js": "/js/recommend/books.js",
+    "/js/recommend/tools.js": "/js/recommend/tools.js",
+    "/js/recommend/basked.js": "/js/recommend/basked.js",
+    "/js/recommend/order.js": "/js/recommend/order.js"
 }
